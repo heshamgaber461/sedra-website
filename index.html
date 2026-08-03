@@ -1,0 +1,1526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sedra Electric — Smart Systems · Security · Energy</title>
+<meta name="description" content="Sedra Electric engineers integrated smart-building, security, network, energy and EV-charging solutions across Egypt, UAE and KSA.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#143F63; --navy-d:#0d2c47; --navy-dd:#081c2e; --ink0:#05131f;
+  --cyan:#1FA6C4; --cyan-l:#38d0ec; --cyan-d:#127a94;
+  --ink:#0f1e29; --muted:#5A6B7B; --line:#e6edf3; --bg:#f4f8fb; --white:#fff;
+  --maxw:1240px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
+body{font-family:'Manrope',system-ui,sans-serif;color:var(--ink);background:var(--white);line-height:1.6;overflow-x:hidden}
+h1,h2,h3,h4,.disp{font-family:'Outfit',sans-serif;line-height:1.02;letter-spacing:-1px}
+.mono{font-family:'Outfit',monospace}
+a{text-decoration:none;color:inherit}
+img{max-width:100%;display:block}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 26px}
+.pad{padding:120px 0}
+.eyebrow{display:inline-flex;align-items:center;gap:9px;font-family:'Outfit';font-weight:600;font-size:12.5px;letter-spacing:3px;text-transform:uppercase;color:var(--cyan-d)}
+.eyebrow::before{content:"";width:30px;height:2px;background:var(--cyan)}
+.center{text-align:center}.center .eyebrow{justify-content:center}
+.btn{display:inline-flex;align-items:center;gap:10px;font-family:'Outfit';font-weight:600;font-size:15px;padding:15px 28px;border-radius:50px;border:none;cursor:pointer;transition:.3s;position:relative;overflow:hidden}
+.btn-primary{background:var(--cyan);color:#04222c}
+.btn-primary:hover{background:var(--cyan-l);transform:translateY(-3px);box-shadow:0 16px 36px rgba(31,166,196,.5)}
+.btn-ghost{background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,.35)}
+.btn-ghost:hover{background:#fff;color:var(--navy);border-color:#fff;transform:translateY(-3px)}
+.btn-dark{background:var(--ink0);color:#fff}.btn-dark:hover{transform:translateY(-3px);box-shadow:0 16px 36px rgba(5,19,31,.35)}
+
+/* ===== mask reveal ===== */
+.rv{overflow:hidden;display:block}
+.rv>*{display:block;transform:translateY(115%);transition:transform .9s cubic-bezier(.16,1,.3,1)}
+.rv.in>*{transform:none}
+.fade{opacity:0;transform:translateY(30px);transition:.8s cubic-bezier(.16,1,.3,1)}
+.fade.in{opacity:1;transform:none}
+
+/* ===== NAV ===== */
+header.nav{position:fixed;inset:0 0 auto 0;z-index:100;transition:.35s}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;padding:20px 26px;max-width:var(--maxw);margin:0 auto}
+.logo{display:flex;align-items:center;gap:11px;color:#fff;font-family:'Outfit';font-weight:800;font-size:23px;letter-spacing:0}
+.logo .mark{width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg,var(--cyan),var(--cyan-l));display:grid;place-items:center;box-shadow:0 8px 20px rgba(31,166,196,.5)}
+.logo .mark svg{width:22px;height:22px}
+.logo small{display:block;font-family:'Outfit';font-weight:500;font-size:9px;letter-spacing:2.5px;color:var(--cyan-l);text-transform:uppercase;margin-top:1px}
+.nav-links{display:flex;align-items:center;gap:4px}
+.nav-links a{color:rgba(255,255,255,.85);font-family:'Outfit';font-weight:500;font-size:14.5px;padding:9px 15px;border-radius:8px;transition:.2s}
+.nav-links a:hover{color:#fff;background:rgba(255,255,255,.1)}
+.nav-cta{margin-left:8px}
+.nav-portal{color:#fff!important;border:1.5px solid rgba(255,255,255,.32);border-radius:50px;padding:8px 15px!important;font-family:'Outfit';font-weight:600;font-size:14px;transition:.22s}
+.nav-portal:hover{background:rgba(255,255,255,.12);border-color:#fff}
+.nav-app{border-color:rgba(56,208,236,.55)!important;color:var(--cyan-l)!important}
+.nav-app:hover{background:rgba(31,166,196,.18);border-color:var(--cyan-l)!important}
+header.nav.scrolled{background:rgba(8,28,46,.9);backdrop-filter:blur(16px);box-shadow:0 10px 34px rgba(0,0,0,.3)}
+header.nav.scrolled .nav-inner{padding:13px 26px}
+.burger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:8px;z-index:101}
+.burger span{width:26px;height:2.5px;background:#fff;border-radius:2px;transition:.3s}
+
+/* ===== HERO ===== */
+.hero{min-height:100vh;background:radial-gradient(1100px 640px at 78% 20%,rgba(31,166,196,.22),transparent),linear-gradient(165deg,var(--ink0),var(--navy) 60%,var(--navy-d));color:#fff;display:flex;align-items:center;overflow:hidden;position:relative}
+.hero .grid-bg{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.045) 1px,transparent 1px);background-size:58px 58px;mask-image:radial-gradient(900px 620px at 72% 45%,#000,transparent)}
+.blob{position:absolute;border-radius:50%;filter:blur(80px);pointer-events:none}
+.blob.a{width:440px;height:440px;background:#1FA6C4;opacity:.4;top:-130px;right:-60px;animation:fl 10s ease-in-out infinite}
+.blob.b{width:360px;height:360px;background:#38d0ec;opacity:.22;bottom:-120px;left:-90px;animation:fl 13s ease-in-out infinite reverse}
+@keyframes fl{0%,100%{transform:translateY(0)}50%{transform:translateY(34px)}}
+.hero-inner{position:relative;z-index:3;width:100%;padding-top:80px}
+.hero-badge{display:inline-flex;align-items:center;gap:9px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.16);padding:8px 17px;border-radius:50px;font-family:'Outfit';font-size:12.5px;letter-spacing:1px;margin-bottom:26px}
+.hero-badge b{color:var(--cyan-l)}
+.hero h1{font-size:clamp(48px,10vw,140px);font-weight:800;letter-spacing:-3px;text-transform:uppercase}
+.hero h1 .l2{color:transparent;-webkit-text-stroke:1.5px rgba(255,255,255,.55)}
+.hero h1 .grad{background:linear-gradient(110deg,var(--cyan-l),#bff0fb);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.hero-row{display:flex;justify-content:space-between;align-items:flex-end;gap:30px;margin-top:34px;flex-wrap:wrap}
+.hero p.lead{font-size:19px;color:rgba(255,255,255,.8);max-width:480px}
+.hero-cta{display:flex;gap:13px;flex-wrap:wrap}
+.scroll-hint{position:absolute;bottom:26px;left:50%;transform:translateX(-50%);z-index:3;color:rgba(255,255,255,.5);font-family:'Outfit';font-size:11px;letter-spacing:2px;display:flex;flex-direction:column;align-items:center;gap:7px}
+.scroll-hint .ln{width:1px;height:34px;background:linear-gradient(rgba(255,255,255,.5),transparent);animation:drop 1.8s infinite}
+@keyframes drop{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+
+/* ===== MARQUEE ===== */
+.marquee{background:var(--navy-dd);color:rgba(255,255,255,.7);padding:18px 0;overflow:hidden;white-space:nowrap;border-top:1px solid rgba(255,255,255,.08);border-bottom:1px solid rgba(255,255,255,.08)}
+.mq-track{display:inline-flex;gap:0;animation:mq 34s linear infinite}
+.mq-track span{font-family:'Manrope';font-weight:600;font-size:15px;letter-spacing:1px;padding:0 22px;display:inline-flex;align-items:center;gap:22px;color:rgba(255,255,255,.72)}
+.mq-track span::after{content:"";width:5px;height:5px;border-radius:50%;background:var(--cyan)}
+@keyframes mq{to{transform:translateX(-50%)}}
+
+/* ===== ABOUT ===== */
+.about{background:var(--bg)}
+.about-head{display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:end;margin-bottom:60px}
+.about h2{font-size:clamp(34px,5vw,66px);font-weight:800;color:var(--navy);text-transform:uppercase}
+.about h2 em{font-style:normal;color:var(--cyan-d)}
+.about-lead{color:var(--muted);font-size:18px;max-width:440px}
+.about-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.acard{background:#fff;border:1px solid var(--line);border-radius:20px;padding:32px;transition:.35s}
+.acard:hover{transform:translateY(-8px);box-shadow:0 30px 60px rgba(13,44,71,.12);border-color:transparent}
+.acard .num{font-family:'Outfit';font-weight:800;font-size:15px;color:var(--cyan);letter-spacing:1px}
+.acard .aic{width:54px;height:54px;border-radius:14px;background:linear-gradient(135deg,var(--navy),var(--navy-d));display:grid;place-items:center;margin:16px 0 18px}
+.acard .aic svg{width:26px;height:26px;stroke:var(--cyan-l);stroke-width:1.7;fill:none}
+.acard h3{font-size:21px;color:var(--navy);margin-bottom:9px}
+.acard p{font-size:14.5px;color:var(--muted)}
+
+/* ===== STICKY SHOWCASE ===== */
+.showcase{background:var(--ink0);color:#fff;position:relative}
+.sc-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start}
+.sc-visual{position:sticky;top:0;height:100vh;display:flex;align-items:center;justify-content:center}
+.sc-stage{width:100%;max-width:440px;aspect-ratio:1/1;border-radius:30px;position:relative;overflow:hidden;background:linear-gradient(150deg,var(--navy),var(--navy-dd));border:1px solid rgba(255,255,255,.1);box-shadow:0 40px 100px rgba(0,0,0,.5)}
+.sc-stage::before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px);background-size:38px 38px}
+.sc-art{position:absolute;inset:0;display:grid;place-items:center;opacity:0;transform:scale(.85) rotate(-6deg);transition:.6s cubic-bezier(.16,1,.3,1)}
+.sc-art.on{opacity:1;transform:none}
+.sc-art svg{width:150px;height:150px;stroke-width:1;fill:none}
+.sc-art img{width:100%;height:100%;object-fit:cover;border-radius:30px}
+.sc-art:has(img){background:none!important;border-color:rgba(56,208,236,.28)}.sc-art:has(img)::after{display:none}
+.sc-art{background:linear-gradient(160deg,#173a5a,var(--navy-dd));border-radius:30px;border:1px solid rgba(56,208,236,.22);box-shadow:inset 0 1px 0 rgba(255,255,255,.05)}
+.sc-art::after{content:"";position:absolute;inset:0;border-radius:30px;background-image:linear-gradient(rgba(56,208,236,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(56,208,236,.06) 1px,transparent 1px);background-size:26px 26px;-webkit-mask-image:radial-gradient(70% 70% at 50% 45%,#000,transparent);mask-image:radial-gradient(70% 70% at 50% 45%,#000,transparent)}
+.sc-art svg{position:relative;z-index:2;width:120px;height:120px;stroke:var(--cyan-l);fill:none;stroke-width:1.3;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 6px 20px rgba(31,166,196,.4))}
+.sc-artglow{position:absolute;width:60%;height:60%;border-radius:50%;filter:blur(70px);background:var(--cyan);opacity:.35;transition:.6s}
+.sc-index{position:absolute;top:24px;left:26px;font-family:'Outfit';font-weight:800;font-size:80px;color:rgba(255,255,255,.08)}
+.sc-stepimg{display:none}
+.sc-steps{padding:14vh 0}
+.sc-step{min-height:78vh;display:flex;flex-direction:column;justify-content:center;opacity:.32;transition:.4s}
+.sc-step.active{opacity:1}
+.sc-step .st-n{font-family:'Outfit';color:var(--cyan-l);font-size:13px;letter-spacing:3px;margin-bottom:14px}
+.sc-step h3{font-size:clamp(30px,4.4vw,54px);font-weight:800;text-transform:uppercase;margin-bottom:16px}
+.sc-step p{font-size:17px;color:rgba(255,255,255,.72);max-width:420px}
+.sc-step .tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:20px}
+.sc-step .tags span{font-family:'Outfit';font-size:12px;border:1px solid rgba(255,255,255,.2);padding:6px 13px;border-radius:50px;color:rgba(255,255,255,.8)}
+
+/* ===== LINEUP / SERVICES ===== */
+.lineup{background:#fff}
+.lu-top{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;margin-bottom:16px}
+.lineup h2{font-size:clamp(40px,8vw,110px);font-weight:800;color:var(--navy);text-transform:uppercase;letter-spacing:-3px}
+.lineup h2 .out{color:transparent;-webkit-text-stroke:2px var(--navy)}
+.lu-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-top:40px}
+.lu{border:1px solid var(--line);border-radius:20px;overflow:hidden;transition:.35s;background:#fff;cursor:default}
+.lu:hover{transform:translateY(-8px);box-shadow:0 30px 60px rgba(13,44,71,.14);border-color:transparent}
+.lu .art{aspect-ratio:5/4;position:relative;display:grid;place-items:center;overflow:hidden}
+.lu .art svg{width:70px;height:70px;stroke:#fff;stroke-width:1.4;fill:none;z-index:2;transition:.4s}
+.lu:hover .art svg{transform:scale(1.12) rotate(-5deg)}
+.lu .art::after{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.08) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.08) 1px,transparent 1px);background-size:28px 28px}
+.g1{background:linear-gradient(150deg,#143F63,#1FA6C4)}.g2{background:linear-gradient(150deg,#0d2c47,#127a94)}
+.g3{background:linear-gradient(150deg,#1a4d78,#38d0ec)}.g4{background:linear-gradient(150deg,#081c2e,#143F63)}
+.g5{background:linear-gradient(150deg,#127a94,#38d0ec)}.g6{background:linear-gradient(150deg,#143F63,#0d2c47)}
+.g7{background:linear-gradient(150deg,#0a3350,#1FA6C4)}.g8{background:linear-gradient(150deg,#0d2c47,#1a4d78)}
+.lu .body{padding:20px 22px 24px}
+.lu .body .n{font-family:'Outfit';color:var(--cyan-d);font-size:12px;font-weight:600;letter-spacing:1px}
+.lu .body h3{font-size:19px;color:var(--navy);margin:6px 0 8px;text-transform:uppercase}
+.lu .body p{font-size:13.5px;color:var(--muted)}
+
+/* ===== PROJECTS ===== */
+.projects{background:var(--bg)}
+.filters{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:34px 0 40px}
+.filters button{font-family:'Outfit';font-weight:500;font-size:14px;padding:10px 22px;border-radius:50px;border:1.5px solid var(--line);background:#fff;color:var(--muted);cursor:pointer;transition:.25s}
+.filters button.active,.filters button:hover{background:var(--navy);color:#fff;border-color:var(--navy)}
+.pj-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.pj{border-radius:20px;overflow:hidden;position:relative;aspect-ratio:4/5;box-shadow:0 20px 50px rgba(13,44,71,.1);cursor:pointer;transition:.4s}
+.pj:hover{transform:translateY(-6px)}
+.pj .thumb{position:absolute;inset:0;display:grid;place-items:center;transition:.6s}
+.pj:hover .thumb{transform:scale(1.06)}
+.pj .thumb svg{width:80px;height:80px;stroke:rgba(255,255,255,.5);stroke-width:1;fill:none}
+.pj .thumb::after{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.06) 1px,transparent 1px);background-size:32px 32px}
+.pj .thumb.photo::after{display:none}.pj .thumb.photo{background-size:cover!important;background-position:center!important}
+.pj .ov{position:absolute;inset:0;background:linear-gradient(to top,rgba(5,19,31,.94) 6%,transparent 60%);display:flex;flex-direction:column;justify-content:flex-end;padding:26px;color:#fff}
+.pj .tag{align-self:flex-start;background:var(--cyan);color:#04222c;font-family:'Outfit';font-size:11px;font-weight:600;padding:5px 13px;border-radius:50px;margin-bottom:auto}
+.pj h4{font-size:22px;margin-bottom:4px;text-transform:uppercase}
+.pj p{font-size:13px;color:rgba(255,255,255,.75)}
+
+/* ===== STATS ===== */
+.stats{background:linear-gradient(120deg,var(--ink0),var(--navy) 62%,var(--navy-d));color:#fff;padding:80px 0}
+.st-row{display:grid;grid-template-columns:repeat(4,1fr);gap:30px;text-align:center}
+.st-row .n{font-family:'Outfit';font-weight:800;font-size:clamp(44px,6vw,72px);line-height:1;background:linear-gradient(120deg,#fff,var(--cyan-l));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.st-row .l{color:rgba(255,255,255,.65);font-family:'Outfit';font-size:13px;margin-top:10px;letter-spacing:1px}
+
+/* ===== TESTIMONIALS ===== */
+.testi{background:#fff}
+.tgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:50px}
+.tc{background:var(--bg);border:1px solid var(--line);border-radius:20px;padding:32px;transition:.35s}
+.tc:hover{transform:translateY(-6px);box-shadow:0 26px 56px rgba(13,44,71,.12);background:#fff}
+.tc .stars{color:#f5b301;letter-spacing:3px;font-size:15px}
+.tc p{font-size:15.5px;margin:16px 0 22px;color:var(--ink)}
+.tc .who{display:flex;align-items:center;gap:13px}
+.tc .av{width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,var(--navy),var(--cyan));display:grid;place-items:center;color:#fff;font-family:'Outfit';font-weight:800}
+.tc .who b{font-family:'Outfit';font-size:15px;color:var(--navy);display:block}
+.tc .who small{font-size:12.5px;color:var(--muted)}
+
+/* ===== PARTNERS ===== */
+.partners{background:var(--bg);padding:80px 0}
+.pl{display:grid;grid-template-columns:repeat(6,1fr);gap:16px;margin-top:34px}
+.pl div{background:#fff;border:1px solid var(--line);border-radius:14px;height:84px;display:grid;place-items:center;font-family:'Outfit';font-weight:700;color:var(--navy);transition:.3s;text-align:center;padding:8px;font-size:15px}
+.pl div:hover{transform:translateY(-4px);box-shadow:0 18px 40px rgba(13,44,71,.1);color:var(--cyan-d)}
+
+/* ===== CTA ===== */
+.ctaband{background:var(--ink0);color:#fff;padding:110px 0;text-align:center;position:relative;overflow:hidden}
+.ctaband .blob.a{opacity:.3}
+.ctaband h2{font-size:clamp(38px,7vw,96px);font-weight:800;text-transform:uppercase;letter-spacing:-3px;position:relative;z-index:2}
+.ctaband h2 .grad{background:linear-gradient(110deg,var(--cyan-l),#bff0fb);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.ctaband p{color:rgba(255,255,255,.75);max-width:520px;margin:20px auto 34px;font-size:18px;position:relative;z-index:2}
+
+/* ===== CONTACT ===== */
+.contact{background:#fff}
+.ct-grid{display:grid;grid-template-columns:.85fr 1.15fr;gap:52px;margin-top:50px}
+.cinfo h3{font-size:24px;color:var(--navy);margin-bottom:8px;text-transform:uppercase}
+.cinfo>p{color:var(--muted);margin-bottom:28px}
+.cline{display:flex;gap:15px;align-items:flex-start;margin-bottom:20px}
+.cline .cic{flex:0 0 48px;height:48px;border-radius:13px;background:linear-gradient(135deg,var(--navy),var(--navy-d));display:grid;place-items:center}
+.cline .cic svg{width:22px;height:22px;stroke:var(--cyan-l);stroke-width:1.8;fill:none}
+.cline b{font-family:'Outfit';font-size:15px;color:var(--navy);display:block}
+.cline span{font-size:14.5px;color:var(--muted)}
+.branches{display:flex;gap:10px;margin-top:22px;flex-wrap:wrap}
+.branch{background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:12px 18px;font-family:'Outfit';font-weight:600;font-size:14px;color:var(--navy);display:flex;align-items:center;gap:8px}
+.form{background:var(--ink0);border-radius:24px;padding:38px;color:#fff}
+.form h3{font-size:24px;margin-bottom:6px;text-transform:uppercase}
+.form>p{color:rgba(255,255,255,.6);font-size:14.5px;margin-bottom:24px}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.field{margin-bottom:15px}
+.field label{display:block;font-family:'Outfit';font-weight:500;font-size:12.5px;color:rgba(255,255,255,.7);margin-bottom:7px;letter-spacing:.5px}
+.field input,.field select,.field textarea{width:100%;border:1.5px solid rgba(255,255,255,.14);border-radius:11px;padding:13px 15px;font-family:'Manrope';font-size:14.5px;background:rgba(255,255,255,.05);color:#fff;transition:.2s}
+.field input::placeholder,.field textarea::placeholder{color:rgba(255,255,255,.4)}
+.field select{color:#fff}.field select option{color:#111}
+.field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--cyan);background:rgba(31,166,196,.1)}
+.field textarea{resize:vertical;min-height:96px}
+.form .btn{width:100%;justify-content:center;margin-top:6px}
+.form-note{font-size:12px;color:rgba(255,255,255,.45);text-align:center;margin-top:13px}
+
+/* ===== FOOTER ===== */
+footer{background:var(--ink0);color:rgba(255,255,255,.66);padding:70px 0 28px}
+.fgrid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr 1.2fr;gap:36px}
+.fbrand p{font-size:14px;max-width:300px;color:rgba(255,255,255,.55);margin-top:16px}
+.socials{display:flex;gap:10px;margin-top:22px}
+.socials a{width:42px;height:42px;border-radius:11px;background:rgba(255,255,255,.07);display:grid;place-items:center;transition:.25s}
+.socials a:hover{background:var(--cyan);transform:translateY(-3px)}
+.socials a svg{width:18px;height:18px;fill:#fff}
+.fcol h4{font-family:'Outfit';font-size:14px;color:#fff;margin-bottom:18px;letter-spacing:1px;text-transform:uppercase}
+.fcol a{display:block;font-size:14px;padding:6px 0;color:rgba(255,255,255,.55);transition:.2s}
+.fcol a:hover{color:var(--cyan-l);padding-left:5px}
+.fbot{border-top:1px solid rgba(255,255,255,.1);margin-top:48px;padding-top:22px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-family:'Outfit';font-size:13px;color:rgba(255,255,255,.45)}
+
+/* ===== HERO SMART-HOME SCENE ===== */
+.hero-center{text-align:center;padding-top:30px}
+.hero-center h1{font-size:clamp(27px,4.3vw,54px);letter-spacing:-1.5px;margin-bottom:4px}
+.hero-center .lead{font-size:16px;color:rgba(255,255,255,.75);max-width:540px;margin:12px auto 2px}
+.hero-center .hero-cta{justify-content:center;margin-top:18px}
+.hero-stage{position:relative;height:560px;max-width:860px;margin:16px auto 0}
+.hero-conn{position:absolute;inset:0;width:100%;height:100%;z-index:1;pointer-events:none;overflow:visible}
+.hero-conn line{stroke:rgba(56,208,236,.45);stroke-width:1.2;vector-effect:non-scaling-stroke;stroke-dasharray:120;stroke-dashoffset:120;animation:draw 1.1s forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+.stage-glow{position:absolute;top:50%;left:50%;width:340px;height:340px;border-radius:50%;transform:translate(-50%,-50%);background:radial-gradient(circle,rgba(31,166,196,.32),transparent 65%);filter:blur(20px);transition:.7s;z-index:0}
+.lights-on .stage-glow{background:radial-gradient(circle,rgba(31,166,196,.6),transparent 62%)}
+.hub{position:absolute;top:52%;left:50%;width:13px;height:13px;border-radius:50%;background:var(--cyan-l);transform:translate(-50%,-50%);box-shadow:0 0 18px var(--cyan-l);z-index:3;animation:hubp 2s infinite}
+@keyframes hubp{50%{box-shadow:0 0 30px var(--cyan-l);transform:translate(-50%,-50%) scale(1.25)}}
+.smart-scene{position:absolute;inset:0}
+.home-panel{position:absolute;inset:0;border-radius:30px;background:linear-gradient(160deg,rgba(255,255,255,.09),rgba(255,255,255,.02));border:1px solid rgba(255,255,255,.15);backdrop-filter:blur(6px);overflow:hidden;box-shadow:0 40px 110px rgba(0,0,0,.5)}
+.home-panel::before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px);background-size:34px 34px;mask-image:radial-gradient(360px 300px at 50% 45%,#000,transparent)}
+.iso-house{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:360px;max-width:54%;height:auto;overflow:visible;z-index:2}
+.ih-floor{fill:rgba(9,30,50,.92);stroke:rgba(56,208,236,.3);stroke-width:1.2}
+.ih-wall{fill:#0f2c46;stroke:rgba(56,208,236,.28);stroke-width:1.2}
+.ih-wall.dark{fill:#0b2338}
+.ih-win polygon{fill:rgba(56,208,236,.14);transition:.7s}
+.lights-on .ih-win polygon{fill:rgba(56,208,236,.82);filter:drop-shadow(0 0 6px rgba(56,208,236,.95))}
+.ih-dev ellipse{fill:rgba(245,179,1,.22);transition:.6s}
+.lights-on .ih-dev ellipse{fill:rgba(245,179,1,.9);filter:drop-shadow(0 0 8px rgba(245,179,1,.95))}
+.ih-roof{transform-box:fill-box;transform-origin:center;animation:roofLift 1.5s .35s cubic-bezier(.16,1,.3,1) both}
+.ih-roof-in{transform-box:fill-box;transform-origin:center;animation:roofFloat 4.6s 1.9s ease-in-out infinite}
+@keyframes roofLift{from{transform:translateY(46px);opacity:0}to{transform:translateY(0);opacity:1}}
+@keyframes roofFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.roof-face{fill:#123a5c;stroke:rgba(56,208,236,.35);stroke-width:1}
+.roof-face.f-fl{fill:#1a4d78}.roof-face.f-fr{fill:#154063}
+.roof-rim{fill:none;stroke:rgba(56,208,236,.55);stroke-width:1.4}
+.logo-img{height:42px;width:auto;display:block;transition:.3s}
+header.nav.scrolled .logo-img{height:36px}
+.lamp-glow{position:absolute;width:130px;height:130px;border-radius:50%;filter:blur(40px);background:var(--cyan-l);opacity:.12;transition:.7s;pointer-events:none}
+.lamp-glow.g-a{top:26%;left:30%}.lamp-glow.g-b{top:24%;right:30%}
+.lights-on .lamp-glow{opacity:.5}
+/* nodes */
+.node{position:absolute;display:flex;align-items:center;gap:8px;background:rgba(8,28,46,.78);border:1px solid rgba(56,208,236,.45);border-radius:50px;padding:7px 13px 7px 8px;font-family:'Outfit';font-size:12px;font-weight:600;color:#fff;white-space:nowrap;opacity:0;transform:scale(.5) translateY(10px);animation:pop .7s forwards;box-shadow:0 10px 28px rgba(0,0,0,.4);z-index:4}
+.node .nic{width:26px;height:26px;border-radius:8px;background:rgba(56,208,236,.2);display:grid;place-items:center;flex:0 0 26px}
+.node .nic svg{width:15px;height:15px;stroke:var(--cyan-l);fill:none;stroke-width:1.8}
+.node .dt{width:7px;height:7px;border-radius:50%;background:#3ce08a;box-shadow:0 0 9px #3ce08a;animation:blink 1.6s infinite}
+@keyframes pop{to{opacity:1;transform:none}}
+@keyframes blink{50%{opacity:.3}}
+.n-bulb{top:5%;left:12%;animation-delay:.9s}
+.n-cam{top:2%;right:13%;animation-delay:1.05s}
+.n-therm{top:37%;left:0;animation-delay:1.2s}
+.n-lock{top:33%;right:0;animation-delay:1.35s}
+.n-ev{bottom:12%;left:13%;animation-delay:1.5s}
+.n-bulb .dt{background:#f5b301;box-shadow:0 0 9px #f5b301}
+/* phone */
+.phone{position:absolute;right:4%;bottom:3%;width:166px;height:338px;border-radius:34px;background:linear-gradient(160deg,#12293f,#05131f);border:6px solid #1b2f42;box-shadow:0 44px 90px rgba(0,0,0,.6);animation:bob 5.5s ease-in-out infinite;z-index:6;opacity:0;transform:translateY(20px);animation:bob 5.5s ease-in-out infinite,phoneIn .8s 1.5s forwards}
+@keyframes phoneIn{to{opacity:1;transform:translateY(0)}}
+@keyframes bob{0%,100%{margin-top:0}50%{margin-top:-14px}}
+.phone .notch{position:absolute;top:9px;left:50%;transform:translateX(-50%);width:52px;height:6px;border-radius:6px;background:#1b2f42;z-index:3}
+.phone .scr{position:absolute;inset:7px;border-radius:30px;background:linear-gradient(165deg,#123049,#081c2e);padding:24px 15px 15px;color:#fff;overflow:hidden}
+.ph-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+.ph-top b{font-family:'Outfit';font-size:15px}
+.ph-st{font-family:'Outfit';font-size:9.5px;color:#3ce08a;display:flex;align-items:center;gap:4px}
+.ph-st::before{content:"";width:6px;height:6px;border-radius:50%;background:#3ce08a;box-shadow:0 0 7px #3ce08a}
+.ph-card{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:14px;display:flex;justify-content:space-between;align-items:center;transition:.5s}
+.lights-on .ph-card{background:rgba(56,208,236,.14);border-color:rgba(56,208,236,.4)}
+.ph-room{font-family:'Outfit';font-weight:600;font-size:13px}
+.ph-sub{font-size:10px;color:rgba(255,255,255,.5)}
+.lights-on .ph-sub{color:var(--cyan-l)}
+.tgl{width:50px;height:27px;border-radius:50px;background:rgba(255,255,255,.16);position:relative;transition:.45s;flex:0 0 50px}
+.tgl .knob{position:absolute;top:3px;left:3px;width:21px;height:21px;border-radius:50%;background:#fff;transition:.45s cubic-bezier(.16,1,.3,1);box-shadow:0 2px 6px rgba(0,0,0,.3)}
+.lights-on .tgl{background:var(--cyan)}
+.lights-on .tgl .knob{left:26px}
+.ph-rows{margin-top:12px;display:flex;flex-direction:column;gap:9px}
+.ph-row{display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,.05);border-radius:11px;padding:10px 12px;font-family:'Outfit';font-size:11px}
+.ph-row span:last-child{color:var(--cyan-l);font-weight:600}
+.ph-tap{position:absolute;width:34px;height:34px;border-radius:50%;border:2px solid var(--cyan-l);top:64px;right:26px;opacity:0;animation:tap 4.4s infinite}
+@keyframes tap{0%,100%{opacity:0;transform:scale(.4)}8%{opacity:.9;transform:scale(.6)}20%{opacity:0;transform:scale(1.4)}}
+/* custom cursor */
+.cursor,.cursor-ring{position:fixed;top:0;left:0;border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);will-change:transform}
+.cursor{width:8px;height:8px;background:var(--cyan)}
+.cursor-ring{width:36px;height:36px;border:1.5px solid rgba(31,166,196,.6);transition:width .25s,height .25s,background .25s,border-color .25s}
+.cursor-ring.big{width:60px;height:60px;background:rgba(31,166,196,.12);border-color:var(--cyan)}
+@media(hover:none),(max-width:980px){ .cursor,.cursor-ring{display:none!important} }
+@media(max-width:980px){ .hero-stage{display:none} }
+
+/* ===== HERO APP DASHBOARD ===== */
+.app{max-width:980px;margin:26px auto 0;background:linear-gradient(160deg,#0d2c47,#05131f);border:1px solid rgba(255,255,255,.12);border-radius:26px;box-shadow:0 50px 120px rgba(0,0,0,.55);overflow:hidden;text-align:left}
+.app-bar{display:flex;align-items:center;gap:12px;padding:15px 20px;border-bottom:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.03)}
+.app-bar .dots{display:flex;gap:6px}
+.app-bar .dots i{width:11px;height:11px;border-radius:50%;background:rgba(255,255,255,.16)}
+.app-bar b{font-family:'Outfit';color:#fff;font-size:16px;margin-left:4px}
+.app-bar .ph-st{margin-left:auto;font-family:'Outfit';font-size:11px;color:#3ce08a;display:flex;align-items:center;gap:5px}
+.app-bar .ph-st::before{content:"";width:7px;height:7px;border-radius:50%;background:#3ce08a;box-shadow:0 0 8px #3ce08a}
+.app-body{display:grid;grid-template-columns:1.12fr .88fr}
+.app-house{position:relative;min-height:470px;border-right:1px solid rgba(255,255,255,.08);overflow:hidden;display:grid;place-items:center}
+.app-house .iso-house{position:relative;top:auto;left:auto;transform:none;width:310px;max-width:84%}
+.app-house .stage-glow{width:300px;height:300px}
+.app-house .hub{top:50%}
+.app-controls{padding:18px;display:grid;grid-template-columns:1fr 1fr;gap:12px;align-content:start;background:rgba(255,255,255,.02)}
+.ctl{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:14px;cursor:pointer;transition:.28s;color:#fff;user-select:none}
+.ctl:hover{background:rgba(255,255,255,.09);transform:translateY(-3px)}
+.ctl.on{background:rgba(31,166,196,.16);border-color:rgba(56,208,236,.5)}
+.ctl .top{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+.ctl .cic{width:38px;height:38px;border-radius:11px;background:rgba(255,255,255,.08);display:grid;place-items:center;transition:.28s}
+.ctl.on .cic{background:rgba(56,208,236,.24)}
+.ctl .cic svg{width:20px;height:20px;stroke:rgba(255,255,255,.7);fill:none;stroke-width:1.8;transition:.28s}
+.ctl.on .cic svg{stroke:var(--cyan-l)}
+.ctl .nm{font-family:'Outfit';font-size:13.5px;font-weight:600}
+.ctl .stt{font-size:11px;color:rgba(255,255,255,.5);margin-top:2px}
+.ctl.on .stt{color:var(--cyan-l)}
+.mini-tgl{width:40px;height:22px;border-radius:50px;background:rgba(255,255,255,.16);position:relative;transition:.4s;flex:0 0 40px}
+.mini-tgl i{position:absolute;top:3px;left:3px;width:16px;height:16px;border-radius:50%;background:#fff;transition:.4s cubic-bezier(.16,1,.3,1)}
+.ctl.on .mini-tgl{background:var(--cyan)}
+.ctl.on .mini-tgl i{left:21px}
+.app.on-lights .ih-win polygon{fill:rgba(56,208,236,.82);filter:drop-shadow(0 0 6px rgba(56,208,236,.95))}
+.app.on-lights .ih-dev ellipse{fill:rgba(245,179,1,.9);filter:drop-shadow(0 0 8px rgba(245,179,1,.95))}
+.app.on-lights .stage-glow{background:radial-gradient(circle,rgba(31,166,196,.6),transparent 62%)}
+.hz{position:absolute;display:inline-flex;align-items:center;gap:7px;background:rgba(8,28,46,.82);border:1px solid rgba(255,255,255,.14);border-radius:50px;padding:6px 12px;font-family:'Outfit';font-size:11.5px;font-weight:600;color:rgba(255,255,255,.5);opacity:.5;transition:.35s;z-index:4;white-space:nowrap}
+.hz .d{width:7px;height:7px;border-radius:50%;background:#5a6b7b;transition:.35s}
+.app.on-security .hz-security,.app.on-climate .hz-climate,.app.on-audio .hz-audio,.app.on-door .hz-door,.app.on-ev .hz-ev{opacity:1;border-color:rgba(56,208,236,.55);color:#fff}
+.app.on-security .hz-security .d,.app.on-climate .hz-climate .d,.app.on-audio .hz-audio .d,.app.on-door .hz-door .d,.app.on-ev .hz-ev .d{background:#3ce08a;box-shadow:0 0 8px #3ce08a}
+@media(max-width:820px){ .app-body{grid-template-columns:1fr} .app-house{min-height:330px} }
+/* 360 spin + camera preview + energy */
+.app-house{perspective:1300px}
+.iso-spin{transform-style:preserve-3d;animation:spin360 26s linear infinite}
+.app-house:hover .iso-spin{animation-play-state:paused}
+@keyframes spin360{to{transform:rotateY(360deg)}}
+.cam-preview{position:absolute;bottom:12px;right:12px;width:124px;height:80px;border-radius:10px;overflow:hidden;border:1px solid rgba(56,208,236,.55);background:linear-gradient(160deg,#0a2338,#05131f);opacity:0;transform:translateY(10px) scale(.92);transition:.45s;z-index:7}
+.cam-preview::before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(56,208,236,.08) 1px,transparent 1px),linear-gradient(90deg,rgba(56,208,236,.08) 1px,transparent 1px);background-size:16px 16px}
+.app.on-cameras .cam-preview{opacity:1;transform:none}
+.cam-scan{position:absolute;left:0;right:0;height:2px;top:0;background:linear-gradient(90deg,transparent,var(--cyan-l),transparent);box-shadow:0 0 10px var(--cyan-l);animation:scan 2.4s linear infinite}
+@keyframes scan{0%{top:-2px}100%{top:82px}}
+.cam-rec{position:absolute;top:6px;left:8px;font-family:'Outfit';font-size:9px;font-weight:700;color:#ff5b5b;display:flex;align-items:center;gap:4px;z-index:2;letter-spacing:1px;animation:blink 1.4s infinite}
+.ebar{height:5px;border-radius:3px;background:rgba(255,255,255,.12);margin-top:9px;overflow:hidden}
+.ebar i{display:block;height:100%;width:72%;background:linear-gradient(90deg,var(--cyan),var(--cyan-l));transition:.5s}
+.ctl.on .ebar i{width:34%}
+.app.on-blinds .hz-blinds{opacity:1;border-color:rgba(56,208,236,.55);color:#fff}
+.app.on-blinds .hz-blinds .d{background:#3ce08a;box-shadow:0 0 8px #3ce08a}
+/* ===== REALISTIC ROOM SCENE ===== */
+.room{position:absolute;inset:0;width:100%;height:100%}
+.room-dim{position:absolute;inset:0;background:radial-gradient(120% 90% at 50% 22%,rgba(2,10,20,.05),rgba(2,8,18,.72));opacity:.62;transition:.6s;pointer-events:none;z-index:2}
+.app.on-lights .room-dim{opacity:0}
+.r-bulb,.r-lampglow{transition:.5s}
+.app.on-lights .r-bulb{filter:drop-shadow(0 0 18px #ffd98a)}
+.app.on-lights .r-lampglow{filter:drop-shadow(0 0 16px #ffd98a)}
+.r-ceilcone{fill:#ffe6a8;opacity:0;transition:.6s}
+.app.on-lights .r-ceilcone{opacity:.16}
+.r-lampglow{opacity:.35}
+.app.on-lights .r-lampglow{opacity:1}
+.r-curtain-l,.r-curtain-r{transition:transform 1.05s cubic-bezier(.5,0,.15,1)}
+.app.on-blinds .r-curtain-l{transform:translateX(-104px)}
+.app.on-blinds .r-curtain-r{transform:translateX(104px)}
+.r-tv-screen{transition:.5s}
+.app.on-audio .r-tv-screen{fill:#12507a;filter:drop-shadow(0 0 12px rgba(56,208,236,.6))}
+.r-sound{opacity:0;transition:.4s;transform-box:fill-box;transform-origin:0 50%}
+.app.on-audio .r-sound{opacity:1;animation:snd 1.1s ease-in-out infinite}
+@keyframes snd{50%{transform:scaleX(1.18)}}
+.r-ac-flow{opacity:0;transition:.4s}
+.app.on-climate .r-ac-flow{opacity:.9;animation:acflow 1.6s linear infinite}
+@keyframes acflow{to{stroke-dashoffset:-48}}
+.r-scan{opacity:0;transition:.4s;transform-box:fill-box;transform-origin:0 50%}
+.app.on-cameras .r-scan{opacity:.22;animation:camsweep 3.4s ease-in-out infinite}
+@keyframes camsweep{0%,100%{transform:rotate(-14deg)}50%{transform:rotate(14deg)}}
+.r-door-panel{transition:transform .85s cubic-bezier(.16,1,.3,1);transform-box:fill-box;transform-origin:0 50%}
+.app.on-door .r-door-panel{transform:scaleX(.16)}
+.r-door-h{transition:.6s}
+.app.on-door .r-door-h{opacity:0}
+.rbadge{position:absolute;display:inline-flex;align-items:center;gap:7px;background:rgba(6,20,34,.85);border:1px solid rgba(56,208,236,.5);border-radius:50px;padding:6px 12px;font-family:'Outfit';font-size:11.5px;font-weight:600;color:#fff;opacity:0;transform:translateY(6px);transition:.35s;z-index:6}
+.rbadge .d{width:7px;height:7px;border-radius:50%;background:#3ce08a;box-shadow:0 0 8px #3ce08a}
+.b-security{top:14px;left:14px}
+.b-ev{bottom:14px;right:14px}
+.app.on-security .b-security{opacity:1;transform:none}
+.app.on-ev .b-ev{opacity:1;transform:none}
+/* ===== FULL-WIDTH HERO v3 ===== */
+.hero{flex-direction:column;justify-content:center;align-items:stretch;padding:104px 0 0}
+.hero-head{text-align:center;max-width:840px;margin:0 auto;padding:0 24px;position:relative;z-index:3}
+.hero-head h1{font-size:clamp(30px,4.6vw,58px);font-weight:800;letter-spacing:-1.5px;margin-bottom:8px}
+.hero-head .lead{font-size:16.5px;color:rgba(255,255,255,.78);max-width:560px;margin:8px auto 0}
+.hero-head .hero-cta{display:flex;justify-content:center;gap:13px;margin-top:20px}
+.app{width:100%;max-width:none;margin:36px 0 0;border-radius:0;border:none;box-shadow:none;background:transparent;overflow:visible}
+.stage{position:relative;width:100%;height:clamp(380px,56vh,600px);overflow:hidden;border-top:1px solid rgba(255,255,255,.1);border-bottom:1px solid rgba(255,255,255,.1)}
+.stage .room{position:absolute;inset:0;width:100%;height:100%}
+.stage .room-dim{z-index:2}
+.stage .cam-preview{width:154px;height:98px;bottom:18px;right:18px}
+.dock{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;padding:22px 16px 4px;max-width:1120px;margin:0 auto;position:relative;z-index:3}
+.dchip{display:inline-flex;align-items:center;gap:9px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.13);border-radius:14px;padding:11px 17px;color:rgba(255,255,255,.8);font-family:'Outfit';font-weight:600;font-size:13.5px;cursor:pointer;transition:.25s;user-select:none}
+.dchip:hover{background:rgba(255,255,255,.1);transform:translateY(-2px)}
+.dchip.on{background:linear-gradient(135deg,#1FA6C4,#38d0ec);color:#042630;border-color:transparent;box-shadow:0 10px 26px rgba(31,166,196,.45)}
+.dchip svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.9}
+.app.on-blinds .r-curtain-l{transform:translateX(-178px)}
+.app.on-blinds .r-curtain-r{transform:translateX(178px)}
+.r-door-panel{transition:transform 1s cubic-bezier(.16,1,.3,1);transform-box:fill-box;transform-origin:0 50%}
+.app.on-door .r-door-panel{transform:perspective(900px) rotateY(-78deg)}
+.r-doorspill{transition:.8s}
+.app.on-door .r-doorspill{opacity:.4}
+.r-eq{opacity:0;transition:.4s}
+.app.on-audio .r-eq{opacity:1}
+.r-eq rect{transform-box:fill-box;transform-origin:center bottom}
+.app.on-audio .r-eq rect{animation:eq .9s ease-in-out infinite}
+.app.on-audio .r-eq rect:nth-child(2){animation-delay:.12s}
+.app.on-audio .r-eq rect:nth-child(3){animation-delay:.22s}
+.app.on-audio .r-eq rect:nth-child(4){animation-delay:.16s}
+.app.on-audio .r-eq rect:nth-child(5){animation-delay:.26s}
+.app.on-audio .r-eq rect:nth-child(6){animation-delay:.06s}
+@keyframes eq{50%{transform:scaleY(.35)}}
+.r-temp{opacity:0;transition:.4s}
+.app.on-climate .r-temp{opacity:1}
+.r-secmark{opacity:0;transition:.4s}
+.app.on-security .r-secmark{opacity:1;animation:secpulse 1.6s infinite}
+@keyframes secpulse{50%{stroke-opacity:.25}}
+.r-evbar{opacity:0;transition:.4s}
+.app.on-ev .r-evbar{opacity:1;animation:evp 1.3s ease-in-out infinite}
+@keyframes evp{50%{transform:translateY(-7px);opacity:.5}}
+@media(max-width:820px){ .stage{height:44vh} .dchip{font-size:12.5px;padding:9px 13px} }
+/* steppers */
+.dstep{display:inline-flex;align-items:center;gap:9px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.13);border-radius:14px;padding:8px 10px 8px 15px;font-family:'Outfit';font-weight:600;color:rgba(255,255,255,.8)}
+.dstep .dsl{display:inline-flex;align-items:center;gap:7px;color:rgba(255,255,255,.62);font-size:12.5px}
+.dstep .dsl svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.9}
+.dstep .dsv{min-width:52px;text-align:center;color:#fff;font-weight:700;font-size:14.5px;font-variant-numeric:tabular-nums}
+.dm,.dp{width:26px;height:26px;border-radius:8px;border:none;background:rgba(255,255,255,.1);color:#fff;font-size:17px;line-height:1;cursor:pointer;transition:.2s;font-family:'Outfit';display:grid;place-items:center}
+.dm:hover,.dp:hover{background:var(--cyan);color:#042630}
+.dstep.saving .dsv{color:#3ce08a}
+/* partial shutter via --shut */
+.r-curtain-l{transform:translateX(calc(var(--shut,0) * -178px));transition:transform .7s cubic-bezier(.4,0,.2,1)}
+.r-curtain-r{transform:translateX(calc(var(--shut,0) * 178px));transition:transform .7s cubic-bezier(.4,0,.2,1)}
+/* CCTV feed */
+.cam-feed{position:absolute;inset:0;width:100%;height:100%;filter:saturate(1.4) contrast(1.08)}
+.cam-preview::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(rgba(0,0,0,.16) 0 2px,transparent 2px 4px);pointer-events:none;z-index:3}
+.cam-person{transform-box:fill-box;transform-origin:center;animation:walk 6.5s ease-in-out infinite}
+@keyframes walk{0%,100%{transform:translateX(-44px)}50%{transform:translateX(44px)}}
+.cam-ts{position:absolute;bottom:5px;left:7px;font-family:'Manrope';font-size:8.5px;font-weight:600;color:#7effc0;z-index:4;letter-spacing:.4px;text-shadow:0 1px 2px #000}
+.r-evled{transition:.3s}
+.app.on-ev .r-evled{animation:blink 1.2s infinite}
+
+.wa{position:fixed;bottom:26px;right:26px;width:60px;height:60px;border-radius:50%;background:#25D366;display:grid;place-items:center;box-shadow:0 14px 34px rgba(37,211,102,.5);z-index:90;transition:.3s;animation:pulse 2.4s infinite}
+.wa:hover{transform:scale(1.1)}.wa svg{width:33px;height:33px;fill:#fff}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(37,211,102,.5)}70%{box-shadow:0 0 0 18px rgba(37,211,102,0)}100%{box-shadow:0 0 0 0 rgba(37,211,102,0)}}
+
+@media(max-width:980px){
+  .pad{padding:80px 0}
+  .about-head,.sc-grid,.ct-grid{grid-template-columns:1fr}
+  .about-cards,.tgrid{grid-template-columns:1fr 1fr}
+  .lu-grid{grid-template-columns:repeat(3,1fr)}
+  .pj-grid{grid-template-columns:1fr 1fr}
+  .pl{grid-template-columns:repeat(3,1fr)}
+  .st-row{grid-template-columns:1fr 1fr;gap:34px}
+  .fgrid{grid-template-columns:1fr 1fr}
+  .sc-visual{display:none}.sc-stepimg{display:block;margin-bottom:16px;border-radius:16px;overflow:hidden;border:1px solid rgba(56,208,236,.28);box-shadow:0 18px 44px rgba(0,0,0,.45)}.sc-stepimg img{width:100%;display:block}
+  .sc-stage{max-width:320px}
+  .sc-step{min-height:auto;padding:30px 0;opacity:1}
+  .sc-steps{padding:20px 0}
+  .nav-links{position:fixed;inset:0 0 0 auto;width:280px;flex-direction:column;background:var(--ink0);padding:96px 24px 24px;gap:6px;align-items:stretch;transform:translateX(100%);transition:.35s;box-shadow:-24px 0 60px rgba(0,0,0,.5)}
+  .nav-links.open{transform:none}
+  .nav-links a{padding:14px 16px;font-size:16px}
+  .burger{display:flex}
+}
+@media(max-width:600px){
+  .about-cards,.lu-grid,.pj-grid,.tgrid,.pl,.st-row,.fgrid,.frow{grid-template-columns:1fr}
+  .pl{grid-template-columns:1fr 1fr}
+  .form{padding:28px 22px}
+}
+
+/* ================= SX cinematic smart-home experience ================= */
+#sx{position:relative;background:#04101b;color:#fff;font-family:'Manrope',system-ui,sans-serif}
+#sx .progress{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,var(--cyan),var(--cyan-l));z-index:98;box-shadow:0 0 12px var(--cyan)}
+#sx .story{position:relative}
+#sx .stage{position:sticky;top:0;height:100vh;overflow:hidden;background:#04101b;border:0}
+#sx .bimg{position:absolute;inset:0;background-position:center;background-size:cover;opacity:0;will-change:transform,opacity;transform:scale(1.06)}
+#sx .stage .veil{position:absolute;inset:0;z-index:20;pointer-events:none;background:radial-gradient(130% 100% at 50% 42%,transparent 40%,rgba(2,8,16,.78) 100%)}
+#sx .cap{position:absolute;left:6%;bottom:12%;z-index:22;max-width:760px;opacity:0;transform:translateY(24px);transition:opacity .5s,transform .5s;text-shadow:0 6px 40px rgba(0,0,0,.7)}
+#sx .cap.show{opacity:1;transform:none}
+#sx .cap .ey{font-family:'Outfit';font-weight:700;font-size:14px;letter-spacing:3px;color:var(--cyan-l);margin-bottom:10px}
+#sx .cap h2{font-size:clamp(38px,6.4vw,84px);font-weight:900;line-height:.98;letter-spacing:-2px;color:#fff}
+#sx .cap .cta{margin-top:24px;display:inline-flex;pointer-events:auto}
+#sx .xbtn{display:inline-flex;align-items:center;gap:10px;font-family:'Outfit';font-weight:700;font-size:16px;padding:16px 30px;border-radius:50px;border:none;cursor:pointer;transition:.3s;text-decoration:none}
+#sx .xbtn-primary{background:linear-gradient(135deg,var(--cyan),var(--cyan-l));color:#042630;box-shadow:0 14px 34px rgba(31,166,196,.5)}
+#sx .xbtn-primary:hover{transform:translateY(-3px)}
+#sx .xbtn-ghost{background:rgba(255,255,255,.12);color:#fff;border:1.5px solid rgba(255,255,255,.3);margin-left:10px}
+#sx .scrollcue{position:absolute;left:50%;bottom:26px;transform:translateX(-50%);z-index:22;font-family:'Outfit';font-size:12px;letter-spacing:2px;color:rgba(255,255,255,.7);animation:sxbob 1.8s infinite}
+@keyframes sxbob{50%{transform:translate(-50%,7px)}}
+#sx .tryhero{position:relative;min-height:100vh;overflow:hidden;display:flex;flex-direction:column;align-items:center;padding:80px 0 0}
+#sx .tryhero .bg{position:absolute;inset:0;background:var(--living) center/cover no-repeat;transition:filter 1.1s;transform:scale(1.05)}
+#sx .tryhero .warm{position:absolute;inset:0;background:radial-gradient(55% 55% at 55% 45%,rgba(255,196,120,.5),transparent 62%),linear-gradient(180deg,rgba(20,10,4,.1),rgba(20,10,4,.4));mix-blend-mode:soft-light;opacity:0;transition:1.1s}
+#sx .tryhero .night{position:absolute;inset:0;background:radial-gradient(120% 90% at 55% 40%,rgba(4,10,18,.15),rgba(2,6,12,.75));opacity:.4;transition:1.1s}
+#sx .tryhero .vig{position:absolute;inset:0;background:radial-gradient(130% 100% at 50% 40%,transparent 42%,rgba(2,8,16,.7) 100%);pointer-events:none}
+#sx .tryhero.lights-on .bg{filter:brightness(.9) saturate(1.05)}
+#sx .tryhero.lights-on .warm{opacity:1}#sx .tryhero.lights-on .night{opacity:.3}
+#sx .tryhero.lights-off .bg{filter:brightness(.4) saturate(.8)}
+#sx .tryhero.lights-off .night{opacity:.9}
+#sx .drape{position:absolute;top:0;bottom:0;width:34%;z-index:2;pointer-events:none;transition:transform 1.2s cubic-bezier(.7,0,.2,1);background:linear-gradient(90deg,rgba(28,24,20,0),rgba(38,32,26,.92) 30%,rgba(24,20,16,.96));box-shadow:inset 0 0 60px rgba(0,0,0,.5)}
+#sx .drape::before{content:"";position:absolute;inset:0;opacity:.5;background:repeating-linear-gradient(90deg,rgba(0,0,0,.28) 0 10px,rgba(255,255,255,.05) 10px 22px)}
+#sx .drape.l{left:0;transform:translateX(-101%)}#sx .drape.r{right:0;transform:translateX(101%);background:linear-gradient(270deg,rgba(28,24,20,0),rgba(38,32,26,.92) 30%,rgba(24,20,16,.96))}
+#sx .tryhero.curtains .drape.l,#sx .tryhero.curtains .drape.r{transform:translateX(0)}
+#sx .tryhero.curtains .bg{filter:brightness(.55) saturate(.85)}
+#sx .secmark{position:absolute;inset:16px;z-index:3;border:2px solid rgba(56,208,236,0);border-radius:20px;transition:.5s;pointer-events:none}
+#sx .tryhero.armed .secmark{border-color:rgba(56,208,236,.7);animation:sxsecp 1.8s infinite}@keyframes sxsecp{50%{border-color:rgba(56,208,236,.25)}}
+#sx .scan{position:absolute;inset:0;z-index:3;pointer-events:none;opacity:0;transition:.4s;background:linear-gradient(100deg,transparent 44%,rgba(56,208,236,.14) 50%,transparent 56%);background-size:250% 100%}
+#sx .tryhero.armed .scan{opacity:1;animation:sxsweep 3.2s linear infinite}@keyframes sxsweep{0%{background-position:120% 0}100%{background-position:-120% 0}}
+#sx .try-head{position:relative;z-index:5;text-align:center;max-width:820px;padding:0 22px;transition:.6s}
+#sx .badge{display:inline-flex;align-items:center;gap:9px;background:rgba(6,20,34,.4);border:1px solid rgba(255,255,255,.22);padding:8px 17px;border-radius:50px;font-family:'Outfit';font-size:12.5px;letter-spacing:1px;margin-bottom:18px;backdrop-filter:blur(6px);color:#fff}
+#sx .badge b{color:var(--cyan-l)}
+#sx .try-head h2{font-size:clamp(30px,4.6vw,54px);font-weight:800;letter-spacing:-1px;line-height:1.04;text-shadow:0 6px 40px rgba(0,0,0,.7);color:#fff}
+#sx .try-head p{font-size:16px;color:rgba(255,255,255,.9);margin:12px auto 20px;max-width:520px;text-shadow:0 2px 20px rgba(0,0,0,.8)}
+#sx .tryhero.live .try-cta{display:none}#sx .tryhero.live .try-head{transform:scale(.94) translateY(-6px)}
+#sx .pulse{position:relative}#sx .pulse::after{content:"";position:absolute;inset:-4px;border-radius:50px;border:2px solid var(--cyan-l);opacity:.6;animation:sxring 2.2s infinite}@keyframes sxring{100%{transform:scale(1.18);opacity:0}}
+#sx .live-wrap{position:relative;z-index:5;width:100%;max-width:1180px;margin:auto auto 30px;padding:0 22px;display:grid;grid-template-columns:1fr 288px;gap:24px;align-items:end;opacity:0;transform:translateY(28px);pointer-events:none;transition:.7s cubic-bezier(.16,1,.3,1)}
+#sx .tryhero.live .live-wrap{opacity:1;transform:none;pointer-events:auto}
+#sx .dock{display:flex;gap:10px;flex-wrap:wrap;align-content:flex-end;padding:0;margin:0;max-width:none;justify-content:flex-start}
+#sx .chip{display:inline-flex;align-items:center;gap:9px;background:rgba(9,22,36,.5);border:1px solid rgba(255,255,255,.16);border-radius:14px;padding:11px 15px;color:rgba(255,255,255,.9);font-family:'Outfit';font-weight:600;font-size:13.5px;cursor:pointer;transition:.25s;backdrop-filter:blur(10px);user-select:none}
+#sx .chip svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.9}
+#sx .chip:hover{background:rgba(255,255,255,.14);transform:translateY(-2px)}
+#sx .chip.on{background:linear-gradient(135deg,var(--cyan),var(--cyan-l));color:#042630;border-color:transparent;box-shadow:0 10px 26px rgba(31,166,196,.4)}
+#sx .chip.step{cursor:default}#sx .chip.step .sbtn{width:23px;height:23px;border:none;border-radius:7px;background:rgba(255,255,255,.16);color:#fff;font-size:16px;line-height:1;cursor:pointer;display:grid;place-items:center}
+#sx .chip.step .sbtn:hover{background:var(--cyan);color:#042630}#sx .chip.step .sval{min-width:48px;text-align:center;font-weight:700}
+#sx .sxphone{position:relative;width:270px;height:552px;border-radius:42px;background:linear-gradient(160deg,#16324c,#05131f);border:8px solid #1b2f42;box-shadow:0 44px 90px rgba(0,0,0,.6);justify-self:end;overflow:hidden;animation:none}
+#sx .notch{position:absolute;top:12px;left:50%;transform:translateX(-50%);width:120px;height:24px;border-radius:14px;background:#0a1826;z-index:5}
+#sx .scr{position:absolute;inset:8px;border-radius:34px;background:linear-gradient(170deg,#0e2a41,#061726);overflow:hidden;display:flex;flex-direction:column;padding:0}
+#sx .ph-top{padding:26px 18px 10px;display:flex;align-items:center;justify-content:space-between}
+#sx .ph-top b{font-family:'Outfit';font-size:16px}#sx .ph-top .who{font-size:11px;color:rgba(255,255,255,.55)}
+#sx .ph-live{font-family:'Outfit';font-size:10px;color:#3ce08a;display:flex;align-items:center;gap:5px}#sx .ph-live::before{content:"";width:7px;height:7px;border-radius:50%;background:#3ce08a;box-shadow:0 0 8px #3ce08a}
+#sx .ph-hero{margin:4px 16px 10px;border-radius:16px;padding:13px;background:linear-gradient(135deg,rgba(31,166,196,.16),rgba(20,63,99,.3));border:1px solid rgba(56,208,236,.25)}
+#sx .ph-hero .lbl{font-size:10px;letter-spacing:1px;color:var(--cyan-l);font-family:'Outfit';font-weight:600}#sx .ph-hero .big{font-family:'Outfit';font-weight:800;font-size:21px;margin-top:3px}#sx .ph-hero .sub{font-size:11px;color:rgba(255,255,255,.6);margin-top:2px}
+#sx .ph-list{flex:1;padding:2px 14px 14px;display:flex;flex-direction:column;gap:8px}
+#sx .prow{display:flex;align-items:center;gap:11px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:10px 12px;cursor:pointer;transition:.25s}
+#sx .prow:hover{background:rgba(255,255,255,.09)}
+#sx .prow .pic{width:32px;height:32px;border-radius:10px;background:rgba(255,255,255,.08);display:grid;place-items:center;flex:0 0 32px}
+#sx .prow .pic svg{width:17px;height:17px;stroke:rgba(255,255,255,.7);fill:none;stroke-width:1.9;transition:.25s}
+#sx .prow .nm{flex:1}#sx .prow .nm b{font-family:'Outfit';font-size:13px;display:block}#sx .prow .nm span{font-size:10.5px;color:rgba(255,255,255,.5)}
+#sx .ptgl{width:42px;height:24px;border-radius:50px;background:rgba(255,255,255,.16);position:relative;flex:0 0 42px;transition:.35s}
+#sx .ptgl i{position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fff;transition:.35s cubic-bezier(.16,1,.3,1)}
+#sx .prow.on .ptgl{background:var(--cyan)}#sx .prow.on .ptgl i{left:21px}
+#sx .prow.on .pic{background:rgba(56,208,236,.22)}#sx .prow.on .pic svg{stroke:var(--cyan-l)}#sx .prow.on .nm span{color:var(--cyan-l)}
+@media(max-width:900px){#sx .live-wrap{grid-template-columns:1fr;justify-items:center}#sx .sxphone{justify-self:center}}
+:root{--cyan:#1FA6C4;--cyan-l:#38d0ec;--scene:url(assets/iot-room.jpg)}
+
+.iot{position:relative;min-height:100vh;overflow:hidden;display:flex;flex-direction:column;align-items:center;padding:70px 0 0}
+.iot-scene{position:absolute;inset:0;overflow:hidden}
+.iot-bg{position:absolute;inset:0;background:var(--scene) center/cover no-repeat;transform:scale(1.05);transition:filter 1.1s,transform 6s ease-out}
+.iot.dim .iot-bg{filter:brightness(.3) saturate(.78)}
+.iot.bright .iot-bg{filter:brightness(1.14) saturate(1.06)}
+.iot.movie .iot-bg{filter:brightness(.14) saturate(.6)}
+/* light zones */
+.iz{position:absolute;border-radius:50%;filter:blur(34px);opacity:0;transition:opacity .8s;mix-blend-mode:screen;pointer-events:none}
+.iz.on{opacity:1}
+.z-living{left:34%;top:40%;width:34%;height:34%;background:radial-gradient(circle,rgba(255,200,130,.85),transparent 68%)}
+.z-kitchen{left:60%;top:34%;width:24%;height:26%;background:radial-gradient(circle,rgba(255,210,150,.8),transparent 66%)}
+.z-facade{left:6%;top:20%;width:18%;height:60%;background:radial-gradient(circle,rgba(255,190,120,.7),transparent 60%)}
+.z-garden{left:0%;top:66%;width:40%;height:30%;background:radial-gradient(circle,rgba(255,214,150,.6),transparent 62%)}
+/* climate tint */
+.iot-tint{position:absolute;inset:0;opacity:0;transition:opacity 1s,background 1s;mix-blend-mode:soft-light;pointer-events:none}
+/* ===== CINEMA scene (Movie) ===== */
+.iot-cinema{position:absolute;inset:0;z-index:4;opacity:0;transition:opacity 1.1s;pointer-events:none}
+.iot.movie .iot-cinema{opacity:1}
+.iot-cinema svg{width:100%;height:100%;display:block}
+.cine-screen{animation:cineFlick 6s ease-in-out infinite;transform-origin:center}
+@keyframes cineFlick{0%,100%{opacity:1}30%{opacity:.9}45%{opacity:.99}62%{opacity:.88}80%{opacity:.97}}
+/* letterbox bars for cinematic scenes */
+.iot-bars{position:absolute;left:0;right:0;z-index:9;height:0;background:#000;transition:height 1s cubic-bezier(.7,0,.2,1);pointer-events:none}
+.iot-bars.t{top:0}.iot-bars.b{bottom:0}
+.iot.movie .iot-bars{height:6.2vh}
+/* party — soft, slow ambient wash (no more cheap blobs) */
+.iot-party{position:absolute;inset:0;opacity:0;transition:.8s;pointer-events:none;mix-blend-mode:screen}
+.iot.party .iot-party{opacity:.42;animation:party 9s ease-in-out infinite}
+@keyframes party{
+0%,100%{background:radial-gradient(52% 62% at 20% 32%,rgba(255,70,150,.55),transparent 62%),radial-gradient(52% 62% at 82% 70%,rgba(60,140,255,.55),transparent 62%)}
+50%{background:radial-gradient(52% 62% at 30% 62%,rgba(160,80,255,.55),transparent 62%),radial-gradient(52% 62% at 72% 34%,rgba(40,210,230,.55),transparent 62%)}}
+/* curtains */
+.idrape{position:absolute;top:0;bottom:0;width:34%;z-index:3;pointer-events:none;transition:transform 1.2s cubic-bezier(.7,0,.2,1);background:linear-gradient(90deg,rgba(24,20,16,0),rgba(34,28,22,.94) 30%,rgba(20,16,12,.97));box-shadow:inset 0 0 60px rgba(0,0,0,.5)}
+.idrape::before{content:"";position:absolute;inset:0;opacity:.5;background:repeating-linear-gradient(90deg,rgba(0,0,0,.3) 0 10px,rgba(255,255,255,.05) 10px 22px)}
+.idrape.r{right:0;transform:translateX(101%);background:linear-gradient(270deg,rgba(24,20,16,0),rgba(34,28,22,.94) 30%,rgba(20,16,12,.97))}
+.idrape.l{left:0;transform:translateX(-101%)}
+.iot-vig{position:absolute;inset:0;pointer-events:none;background:radial-gradient(130% 100% at 50% 40%,transparent 44%,rgba(2,8,16,.72) 100%)}
+/* security */
+.isecmark{position:absolute;inset:14px;z-index:5;border:2px solid rgba(56,208,236,0);border-radius:18px;transition:.5s;pointer-events:none}
+.iot.armed .isecmark{border-color:rgba(56,208,236,.7);animation:secp 1.8s infinite}@keyframes secp{50%{border-color:rgba(56,208,236,.25)}}
+.iscan{position:absolute;inset:0;z-index:5;pointer-events:none;opacity:0;transition:.4s;background:linear-gradient(100deg,transparent 44%,rgba(56,208,236,.14) 50%,transparent 56%);background-size:250% 100%}
+.iot.armed .iscan{opacity:1;animation:sweep 3.2s linear infinite}@keyframes sweep{0%{background-position:120% 0}100%{background-position:-120% 0}}
+/* thermostat floating */
+.ithermo{position:absolute;left:24px;top:96px;z-index:6;width:120px;height:120px;border-radius:50%;display:grid;place-items:center;background:rgba(6,20,34,.6);border:1px solid rgba(255,255,255,.14);backdrop-filter:blur(8px);opacity:0;transform:scale(.9);transition:.4s;text-align:center}
+.iot.show-climate .ithermo{opacity:1;transform:none}
+.ithermo .tv{font-family:'Outfit';font-weight:800;font-size:30px;line-height:1}
+.ithermo .tl{font-size:10px;letter-spacing:1px;color:var(--cyan-l);font-family:'Outfit'}
+.ithermo .ring{position:absolute;inset:0;border-radius:50%;border:3px solid transparent}
+/* EV */
+.iev{position:absolute;left:2.5%;bottom:13%;z-index:5;display:flex;align-items:flex-end;gap:10px;opacity:0;transform:translateY(14px);transition:.5s}
+.iot.show-ev .iev{opacity:1;transform:none}
+.iev .charger{width:26px;height:60px;border-radius:6px;background:linear-gradient(#0a2233,#05131f);border:1px solid rgba(56,208,236,.5);position:relative;display:grid;place-items:center}
+.iev .charger .bolt{color:var(--cyan-l);font-size:15px}
+.iev .car{position:relative}
+.iev .car svg{width:190px;height:auto;filter:drop-shadow(0 14px 24px rgba(0,0,0,.6))}
+.iev .cable{position:absolute;left:14px;bottom:16px;width:60px;height:26px;border-bottom:3px solid var(--cyan-l);border-left:3px solid var(--cyan-l);border-radius:0 0 0 14px;opacity:.9}
+.iev .pct{position:absolute;top:-42px;left:50%;transform:translateX(-50%);background:rgba(6,20,34,.85);border:1px solid rgba(56,208,236,.5);border-radius:10px;padding:5px 10px;font-family:'Outfit';font-weight:700;font-size:13px;white-space:nowrap}
+.iev .pct b{color:#3ce08a}
+/* camera markers on scene */
+.icam-dot{position:absolute;z-index:6;width:26px;height:26px;border-radius:50%;background:rgba(6,20,34,.7);border:1px solid rgba(56,208,236,.6);display:grid;place-items:center;cursor:pointer;opacity:0;transition:.4s}
+.iot.show-cams-dots .icam-dot{opacity:1}
+.icam-dot svg{width:14px;height:14px;stroke:var(--cyan-l);fill:none;stroke-width:2}
+.icam-dot::after{content:"";position:absolute;inset:-5px;border-radius:50%;border:1px solid rgba(56,208,236,.5);animation:ring 2s infinite}
+@keyframes ring{100%{transform:scale(1.5);opacity:0}}
+
+/* HUD badges */
+.ihud{position:absolute;left:24px;top:24px;z-index:6;display:flex;flex-direction:column;gap:8px}
+.ibadge{display:inline-flex;align-items:center;gap:8px;background:rgba(6,20,34,.66);border:1px solid rgba(56,208,236,.4);border-radius:50px;padding:7px 13px;font-family:'Outfit';font-size:12px;font-weight:600;opacity:0;transform:translateX(-10px);transition:.4s}
+.ibadge .d{width:8px;height:8px;border-radius:50%;background:#3ce08a;box-shadow:0 0 8px #3ce08a}
+.iot.armed .b-armed{opacity:1;transform:none}.iot.show-ev .b-ev{opacity:1;transform:none}.iot.playing .b-snd{opacity:1;transform:none}
+
+/* head + UI */
+.iot-head{position:relative;z-index:7;text-align:center;max-width:820px;padding:0 22px;transition:.5s}
+.ibadge2{display:inline-flex;align-items:center;gap:9px;background:rgba(6,20,34,.4);border:1px solid rgba(255,255,255,.22);padding:8px 17px;border-radius:50px;font-family:'Outfit';font-size:12.5px;letter-spacing:1px;margin-bottom:16px;backdrop-filter:blur(6px)}
+.ibadge2 b{color:var(--cyan-l)}
+.iot-head h2{font-size:clamp(28px,4.4vw,50px);font-weight:800;letter-spacing:-1px;text-shadow:0 6px 40px rgba(0,0,0,.7)}
+.iot-head p{font-size:15px;color:rgba(255,255,255,.9);margin:10px auto 0;max-width:520px;text-shadow:0 2px 20px rgba(0,0,0,.8)}
+.iot.live .iot-head{opacity:0;height:0;overflow:hidden;margin:0}
+.iot-start{margin-top:20px}
+.btn{display:inline-flex;align-items:center;gap:10px;font-family:'Outfit';font-weight:700;font-size:15px;padding:15px 28px;border-radius:50px;border:none;cursor:pointer;transition:.3s}
+.btn-primary{background:linear-gradient(135deg,var(--cyan),var(--cyan-l));color:#042630;box-shadow:0 14px 34px rgba(31,166,196,.5)}
+.btn-primary:hover{transform:translateY(-3px)}
+
+/* scene label chip (bottom-left, appears with scene) */
+.iscene-tag{position:absolute;left:24px;bottom:150px;z-index:8;display:flex;align-items:center;gap:9px;background:rgba(6,20,34,.7);border:1px solid rgba(255,255,255,.16);border-radius:50px;padding:8px 16px;font-family:'Outfit';font-weight:600;font-size:13px;backdrop-filter:blur(8px);opacity:0;transform:translateY(8px);transition:.45s}
+.iscene-tag.show{opacity:1;transform:none}
+.iscene-tag .sd{width:8px;height:8px;border-radius:50%;background:var(--cyan-l);box-shadow:0 0 10px var(--cyan-l)}
+
+/* scenes row */
+.iot-ui{position:relative;z-index:7;margin-top:auto;width:100%;max-width:1200px;padding:0 20px 20px;opacity:0;transform:translateY(24px);transition:.6s;pointer-events:none}
+.iot.live .iot-ui{opacity:1;transform:none;pointer-events:auto}
+.iscenes{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:12px}
+.iscene{font-family:'Outfit';font-weight:600;font-size:12.5px;padding:8px 15px;border-radius:50px;background:rgba(9,22,36,.6);border:1px solid rgba(255,255,255,.16);color:#fff;cursor:pointer;transition:.25s;backdrop-filter:blur(8px)}
+.iscene:hover{background:rgba(255,255,255,.14)}
+.iscene.on{background:linear-gradient(135deg,var(--cyan),var(--cyan-l));color:#042630;border-color:transparent}
+/* device rail */
+.irail{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+.ichip{display:inline-flex;align-items:center;gap:8px;background:rgba(9,22,36,.62);border:1px solid rgba(255,255,255,.16);border-radius:13px;padding:10px 14px;color:rgba(255,255,255,.9);font-family:'Outfit';font-weight:600;font-size:13px;cursor:pointer;transition:.25s;backdrop-filter:blur(10px);user-select:none}
+.ichip svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:1.9}
+.ichip:hover{background:rgba(255,255,255,.14);transform:translateY(-2px)}
+.ichip.active{background:linear-gradient(135deg,var(--cyan),var(--cyan-l));color:#042630;border-color:transparent}
+
+/* control panel popover */
+.ipanel{position:absolute;left:50%;bottom:120px;transform:translateX(-50%) translateY(10px);z-index:8;width:min(440px,92vw);background:rgba(7,20,32,.9);border:1px solid rgba(255,255,255,.14);border-radius:18px;padding:16px 18px;backdrop-filter:blur(16px);box-shadow:0 30px 70px rgba(0,0,0,.5);opacity:0;pointer-events:none;transition:.3s}
+.ipanel.show{opacity:1;pointer-events:auto;transform:translateX(-50%)}
+.ipanel h4{font-family:'Outfit';font-size:14px;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center}
+.ipanel .x{cursor:pointer;color:rgba(255,255,255,.6);font-size:18px;line-height:1}
+.ptab{display:none}.ptab.on{display:block}
+/* light zones toggles */
+.zrow{display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-top:1px solid rgba(255,255,255,.07)}
+.zrow:first-child{border-top:none}
+.zrow b{font-family:'Outfit';font-size:13px;font-weight:600}
+.tgl{width:44px;height:25px;border-radius:50px;background:rgba(255,255,255,.16);position:relative;cursor:pointer;transition:.3s;flex:0 0 44px}
+.tgl i{position:absolute;top:3px;left:3px;width:19px;height:19px;border-radius:50%;background:#fff;transition:.3s cubic-bezier(.16,1,.3,1)}
+.tgl.on{background:var(--cyan)}.tgl.on i{left:22px}
+/* climate control */
+.clima{text-align:center}
+.clima .big{font-family:'Outfit';font-weight:800;font-size:52px;line-height:1}
+.clima .st{font-size:12px;color:var(--cyan-l);font-family:'Outfit';letter-spacing:1px;margin-bottom:10px}
+.clima .ctrls{display:flex;gap:12px;justify-content:center;align-items:center;margin-top:8px}
+.rbtn{width:46px;height:46px;border-radius:50%;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.08);color:#fff;font-size:24px;cursor:pointer;transition:.2s}
+.rbtn:hover{background:var(--cyan);color:#042630}
+.clima .hint{font-size:11px;color:rgba(255,255,255,.5);margin-top:10px}
+/* curtains buttons */
+.seg{display:flex;gap:8px}
+.seg button{flex:1;padding:12px;border-radius:12px;border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.06);color:#fff;font-family:'Outfit';font-weight:600;font-size:13px;cursor:pointer;transition:.2s}
+.seg button.on{background:linear-gradient(135deg,var(--cyan),var(--cyan-l));color:#042630;border-color:transparent}
+/* sound */
+.snd .eq{display:flex;gap:4px;align-items:flex-end;height:44px;justify-content:center;margin-bottom:12px}
+.snd .eq i{width:6px;background:linear-gradient(var(--cyan-l),var(--cyan));border-radius:3px;height:20%}
+.iot.playing .snd .eq i{animation:eq .8s ease-in-out infinite}
+.snd .eq i:nth-child(2){animation-delay:.1s}.snd .eq i:nth-child(3){animation-delay:.25s}.snd .eq i:nth-child(4){animation-delay:.15s}.snd .eq i:nth-child(5){animation-delay:.3s}.snd .eq i:nth-child(6){animation-delay:.05s}.snd .eq i:nth-child(7){animation-delay:.2s}
+@keyframes eq{0%,100%{height:20%}50%{height:95%}}
+.snd .tracks{display:flex;flex-direction:column;gap:7px}
+.trk{display:flex;align-items:center;gap:10px;padding:9px 11px;border-radius:11px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);cursor:pointer;transition:.2s;font-size:12.5px}
+.trk:hover{background:rgba(255,255,255,.09)}
+.trk.on{border-color:var(--cyan);background:rgba(31,166,196,.14)}
+.trk .pi{width:26px;height:26px;border-radius:8px;background:rgba(56,208,236,.2);display:grid;place-items:center;color:var(--cyan-l);flex:0 0 26px}
+.trk b{font-family:'Outfit'}
+.snd .playbar{display:flex;align-items:center;gap:12px;margin-top:12px}
+.pbtn{width:44px;height:44px;border-radius:50%;border:none;background:linear-gradient(135deg,var(--cyan),var(--cyan-l));color:#042630;font-size:18px;cursor:pointer;flex:0 0 44px}
+
+/* cameras modal */
+.icams{position:absolute;inset:0;z-index:20;background:rgba(2,8,16,.82);backdrop-filter:blur(6px);display:none;place-items:center;padding:40px}
+.icams.show{display:grid}
+.icams .wrap{width:min(880px,94vw)}
+.icams .top{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.icams .top b{font-family:'Outfit';font-size:18px}
+.icams .cx{cursor:pointer;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#fff;border-radius:10px;padding:8px 14px;font-family:'Outfit';cursor:pointer}
+.camgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.feed{position:relative;aspect-ratio:16/10;border-radius:12px;overflow:hidden;border:1px solid rgba(56,208,236,.4);background:linear-gradient(160deg,#0a2338,#05131f)}
+.feed .noise{position:absolute;inset:0;opacity:.06;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='.9'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.feed .scanl{position:absolute;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--cyan-l),transparent);box-shadow:0 0 10px var(--cyan-l);animation:scanl 3s linear infinite}
+@keyframes scanl{0%{top:0}100%{top:100%}}
+.feed .rec{position:absolute;top:8px;left:10px;font-family:'Outfit';font-size:10px;font-weight:700;color:#ff5b5b;letter-spacing:1px}
+.feed .rec::before{content:"● ";animation:blink 1.4s infinite}
+@keyframes blink{50%{opacity:.3}}
+.feed .lbl{position:absolute;bottom:8px;left:10px;font-family:'Outfit';font-size:11px;color:#7effc0}
+.feed .ts{position:absolute;bottom:8px;right:10px;font-size:10px;color:rgba(255,255,255,.6)}
+.feed .fig{position:absolute;bottom:14%;left:50%;width:5%;height:26%;background:#2fef9f;border-radius:40% 40% 8px 8px;filter:blur(.4px);animation:walk 7s ease-in-out infinite}
+.feed .fig::before{content:"";position:absolute;top:-46%;left:50%;transform:translateX(-50%);width:150%;aspect-ratio:1;border-radius:50%;background:#2fef9f}
+@keyframes walk{0%,100%{left:20%}50%{left:74%}}
+.feed .car2{position:absolute;bottom:16%;left:60%;width:26%;height:14%;background:#2a4a63;border-radius:8px 12px 4px 4px}
+
+/* intercom */
+.iintercom{position:absolute;right:24px;top:96px;z-index:21;width:250px;background:rgba(7,20,32,.94);border:1px solid rgba(56,208,236,.5);border-radius:16px;overflow:hidden;box-shadow:0 30px 70px rgba(0,0,0,.55);transform:translateX(120%);transition:.5s cubic-bezier(.16,1,.3,1)}
+.iintercom.show{transform:none}
+.iintercom .vid{aspect-ratio:4/3;background:linear-gradient(160deg,#123049,#05131f);position:relative}
+.iintercom .vid .scanl{position:absolute;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--cyan-l),transparent);animation:scanl 3s linear infinite}
+.iintercom .vid .fig{position:absolute;bottom:10%;left:50%;transform:translateX(-50%);width:34%;height:60%;background:#3a5566;border-radius:40% 40% 12px 12px}
+.iintercom .vid .fig::before{content:"";position:absolute;top:-30%;left:50%;transform:translateX(-50%);width:60%;aspect-ratio:1;border-radius:50%;background:#4a6579}
+.iintercom .vid .rec{position:absolute;top:8px;left:10px;font-size:10px;color:#ff5b5b;font-family:'Outfit'}
+.iintercom .body{padding:12px 14px}
+.iintercom .body b{font-family:'Outfit';font-size:14px}
+.iintercom .body p{font-size:11.5px;color:rgba(255,255,255,.6);margin:2px 0 10px}
+.iintercom .acts{display:flex;gap:8px}
+.iintercom .acts button{flex:1;padding:9px;border-radius:10px;border:none;font-family:'Outfit';font-weight:600;font-size:12px;cursor:pointer}
+.a-open{background:linear-gradient(135deg,var(--cyan),var(--cyan-l));color:#042630}
+.a-ign{background:rgba(255,255,255,.12);color:#fff}
+
+/* phone mirror */
+.iphone{position:absolute;right:22px;bottom:22px;z-index:7;width:220px;height:450px;border-radius:36px;background:linear-gradient(160deg,#16324c,#05131f);border:7px solid #1b2f42;box-shadow:0 40px 80px rgba(0,0,0,.6);overflow:hidden;opacity:0;transform:translateY(20px);transition:.6s}
+.iot.live .iphone{opacity:1;transform:none}
+.iphone .scr{position:absolute;inset:7px;border-radius:29px;background:linear-gradient(170deg,#0e2a41,#061726);overflow:hidden;padding:22px 14px 14px;display:flex;flex-direction:column;gap:8px}
+.iphone .ph-h{display:flex;justify-content:space-between;align-items:center}
+.iphone .ph-h b{font-family:'Outfit';font-size:14px}
+.iphone .ph-h .lv{font-size:9px;color:#3ce08a;font-family:'Outfit'}
+.iphone .big{font-family:'Outfit';font-weight:800;font-size:17px;margin-top:2px}
+.iphone .sub{font-size:10px;color:rgba(255,255,255,.55)}
+.iphone .grid{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:4px}
+.iphone .cell{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:11px;padding:8px 9px}
+.iphone .cell .cl{font-size:9px;color:rgba(255,255,255,.5);font-family:'Outfit'}
+.iphone .cell .cv{font-family:'Outfit';font-weight:700;font-size:13px;margin-top:2px}
+.iphone .cell.on{background:rgba(31,166,196,.16);border-color:rgba(56,208,236,.3)}
+.iphone .cell.on .cv{color:var(--cyan-l)}
+@media(max-width:820px){.iphone{display:none}.ipanel{bottom:150px}.iscene-tag{bottom:180px}}
+
+.sc-link{display:inline-flex;align-items:center;gap:6px;margin-top:16px;font-family:'Outfit';font-weight:600;font-size:13.5px;color:var(--cyan-d);transition:.25s}
+.sc-link span{transition:.25s}
+.sc-link:hover{color:var(--cyan)}
+.sc-link:hover span{transform:translateX(4px)}
+.lu{cursor:pointer}
+.lu-link{display:inline-flex;align-items:center;gap:6px;margin-top:14px;font-family:'Outfit';font-weight:600;font-size:13px;color:var(--cyan-d);transition:.25s}
+.lu-link span{transition:.25s}.lu-link:hover span{transform:translateX(4px)}
+.pj{cursor:pointer}
+
+/* ===== MOBILE POLISH (simulator + spacing) ===== */
+@media(max-width:600px){
+  /* interactive simulator: declutter + readable controls */
+  .iot{min-height:86vh;padding-top:60px}
+  .iev,.ithermo,.iscene-tag{display:none!important}
+  .iot-ui{padding:70px 12px 92px;background:linear-gradient(180deg,rgba(4,16,27,0) 0%,rgba(4,16,27,.80) 32%,rgba(4,16,27,.95) 100%)}
+  .iscenes{gap:6px;margin-bottom:8px}
+  .iscene{font-size:11.5px;padding:7px 12px}
+  .irail{gap:6px}
+  .ichip{font-size:11.5px;padding:8px 11px;gap:6px;border-radius:11px}
+  .ichip svg{width:15px;height:15px}
+  .iot-head{padding:0 16px}
+  .ipanel{bottom:110px;width:min(440px,94vw)}
+  /* headings: a touch more breathing room so nothing reads as clipped */
+  h1,h2,h3,h4,.disp{line-height:1.06}
+  .pad{padding:64px 0}
+}
+
+/* ===== HOW WE WORK — numbered process ===== */
+.flow{display:grid;grid-template-columns:repeat(5,1fr);margin-top:50px;position:relative}
+.fstep{position:relative;text-align:center;padding:0 14px}
+.fstep::after{content:"";position:absolute;top:27px;left:50%;width:100%;height:2px;background:linear-gradient(90deg,rgba(31,166,196,.55),rgba(31,166,196,.14));z-index:0}
+.fstep:last-child::after{display:none}
+.fnum{position:relative;z-index:2;width:56px;height:56px;margin:0 auto 16px;border-radius:50%;background:linear-gradient(135deg,var(--cyan),var(--cyan-l));color:#04222c;font-family:'Outfit';font-weight:800;font-size:19px;display:grid;place-items:center;box-shadow:0 12px 28px rgba(31,166,196,.34)}
+.fico{width:28px;height:28px;margin:0 auto 12px;color:var(--navy)}
+.fico svg{width:100%;height:100%;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.fstep h3{font-size:18px;color:var(--navy);letter-spacing:-.4px;margin-bottom:8px;line-height:1.2}
+.fstep p{font-size:13.5px;color:var(--muted);line-height:1.55;max-width:210px;margin:0 auto}
+@media(max-width:980px){.flow{grid-template-columns:1fr 1fr;gap:44px 10px}.fstep::after{display:none}}
+@media(max-width:600px){.flow{grid-template-columns:1fr;gap:36px}}
+
+.csocials{display:flex;align-items:center;gap:11px;margin-top:26px;flex-wrap:wrap}
+.csoc-lbl{font-family:'Outfit';font-weight:700;font-size:12px;color:var(--navy);letter-spacing:1.5px;text-transform:uppercase;margin-right:4px}
+.csocials a{width:42px;height:42px;border-radius:11px;background:var(--navy);display:grid;place-items:center;transition:.25s}
+.csocials a:hover{background:var(--cyan);transform:translateY(-3px);box-shadow:0 10px 22px rgba(31,166,196,.35)}
+.csocials a svg{width:18px;height:18px;fill:#fff}
+
+/* ===== HOW WE WORK — image gallery ===== */
+.hwgrid{display:flex;flex-wrap:wrap;justify-content:center;gap:20px;margin-top:46px}
+.hwcard{flex:0 1 340px;max-width:372px;border-radius:18px;overflow:hidden;border:1px solid var(--line);box-shadow:0 14px 34px rgba(20,63,99,.10);transition:.35s;background:#05131f}
+.hwcard:hover{transform:translateY(-6px);box-shadow:0 26px 54px rgba(20,63,99,.2);border-color:rgba(31,166,196,.45)}
+.hwcard img{width:100%;display:block;aspect-ratio:1/1;object-fit:cover}
+@media(max-width:820px){.hwcard{flex:0 1 300px}}
+@media(max-width:600px){.hwcard{flex:0 1 100%;max-width:440px}}
+
+/* ===== HOW WE WORK — image + text cards ===== */
+.hsteps{display:flex;flex-wrap:wrap;justify-content:center;gap:22px;margin-top:46px}
+.hstep{flex:0 1 336px;max-width:356px;background:#fff;border:1px solid var(--line);border-radius:18px;overflow:hidden;box-shadow:0 14px 34px rgba(20,63,99,.08);transition:.35s;display:flex;flex-direction:column}
+.hstep:hover{transform:translateY(-6px);box-shadow:0 26px 54px rgba(20,63,99,.18);border-color:rgba(31,166,196,.4)}
+.hstep-img{position:relative;aspect-ratio:16/11;overflow:hidden;background:#05131f}
+.hstep-img img{width:100%;height:100%;object-fit:cover;object-position:center}
+.hstep-img::after{content:"";position:absolute;inset:0;box-shadow:inset 0 -40px 50px -30px rgba(5,19,31,.6)}
+.hstep-b{padding:20px 22px 24px}
+.hstep-n{font-family:'Outfit';font-weight:800;font-size:14px;color:var(--cyan-d);letter-spacing:1.5px;margin-bottom:6px}
+.hstep h3{font-size:19px;color:var(--navy);letter-spacing:-.4px;margin-bottom:8px;line-height:1.2}
+.hstep p{font-size:14px;color:var(--muted);line-height:1.55}
+@media(max-width:600px){.hstep{flex:0 1 100%;max-width:440px}}
+
+.iev .evcard{position:relative;width:230px;border-radius:12px;overflow:hidden;border:1px solid rgba(56,208,236,.5);box-shadow:0 16px 34px rgba(0,0,0,.55)}
+.iev .evcard img{width:100%;height:132px;object-fit:cover;display:block}
+.iev .evbadge{position:absolute;bottom:8px;left:8px;background:rgba(6,20,34,.85);border:1px solid rgba(56,208,236,.5);border-radius:9px;padding:5px 11px;font-family:'Outfit';font-weight:700;font-size:12.5px}
+.iev .evbadge b{color:#3ce08a}
+.iot.bright .iot-bg{filter:brightness(1.5) saturate(1.05) contrast(1.02)!important}
+.iot-bg-day{position:absolute;inset:0;z-index:1;background:url(assets/iot-room-day.jpg) center/cover no-repeat;transform:scale(1.05);opacity:0;transition:opacity 1.3s}
+.fday{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;transition:opacity 1s;pointer-events:none;z-index:0}
+.iot.bright .fday{opacity:1}
+
+.iot.bright .iot-bg-day{opacity:1}
+
+.iot-sky{position:absolute;inset:0;z-index:2;opacity:0;transition:opacity 1.3s;pointer-events:none;mix-blend-mode:screen;background:radial-gradient(64% 60% at 82% 6%,rgba(255,226,150,.9),transparent 58%),radial-gradient(130% 90% at 50% -8%,rgba(150,200,255,.42),transparent 55%)}
+.iot.bright .iot-sky{opacity:.32}
+.iot-night{position:absolute;inset:0;z-index:2;opacity:0;transition:opacity 1.3s;pointer-events:none;mix-blend-mode:multiply;background:linear-gradient(180deg,rgba(26,46,100,.92),rgba(8,16,46,.72))}
+.iot.dim .iot-night{opacity:.78}
+.feed .lbl{text-shadow:0 1px 4px rgba(0,0,0,.9)}.feed .noise{opacity:.05}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<header class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="#home" class="logo"><img src="assets/logo-white.png" alt="Sedra Electric — Reach the nature energy" class="logo-img"></a>
+    <nav class="nav-links" id="navLinks">
+      <a href="#about">About</a><a href="#solutions">Solutions</a><a href="#services">Services</a>
+      <a href="#projects">Projects</a><a href="page.html?id=academy">Academy</a>
+      <a href="https://sedraelectric.pages.dev" target="_blank" rel="noopener" class="nav-portal">Portal ↗</a>
+      
+      <a href="#contact" class="btn btn-primary nav-cta">Get a Quote</a>
+    </nav>
+    <button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<!-- HERO -->
+<section id="sx">
+  <div class="progress" id="prog"></div>
+  <div class="story" id="story">
+    <div class="stage" id="stage">
+      <div class="bimg" data-i="0"></div><div class="bimg" data-i="1"></div><div class="bimg" data-i="2"></div>
+      <div class="bimg" data-i="3"></div><div class="bimg" data-i="4"></div><div class="bimg" data-i="5"></div><div class="bimg" data-i="6"></div>
+      <div class="veil"></div>
+      <div class="cap" data-cap="0"><div class="ey">SEDRA &middot; SMART HOME</div><h2>Reach the<br>Nature Energy</h2></div>
+      <div class="cap" data-cap="1"><div class="ey">SOLAR ENERGY SYSTEMS</div><h2>Use Cleaner,<br>Cheaper Energy</h2></div>
+      <div class="cap" data-cap="2"><div class="ey">SURVEILLANCE &amp; ACCESS CONTROL</div><h2>Smart Security,<br>Always Watching</h2></div>
+      <div class="cap" data-cap="3"><div class="ey">LIGHTING &middot; CLIMATE &middot; WINDOWS</div><h2>Advanced Home<br>Automation</h2></div>
+      <div class="cap" data-cap="4"><div class="ey">ONE APP &middot; EVERY SYSTEM</div><h2>Control Everything,<br>One Place</h2></div>
+      <div class="cap" data-cap="5"><div class="ey">EV CHARGING</div><h2>Charge Where<br>You Live</h2></div>
+      <div class="cap" data-cap="6"><div class="ey">CHOOSE SEDRA ELECTRIC</div><h2>Choose a<br>Preeminent Life</h2><div class="cta"><a class="xbtn xbtn-primary" href="#sxtry">&#9889; Try Your Smart Home</a></div></div>
+      <div class="scrollcue" id="cue">SCROLL TO EXPLORE &darr;</div>
+    </div>
+    <div style="height:100vh"></div><div style="height:100vh"></div><div style="height:100vh"></div>
+    <div style="height:100vh"></div><div style="height:100vh"></div><div style="height:100vh"></div><div style="height:100vh"></div>
+  </div>
+<section class="iot live" id="iot">
+  <div class="iot-scene">
+    <div class="iot-bg"></div>
+    <div class="iot-bg-day"></div>
+    <div class="iot-sky"></div>
+    <div class="iot-night"></div>
+    <div class="iz z-living"></div><div class="iz z-kitchen"></div><div class="iz z-facade"></div><div class="iz z-garden"></div>
+    <div class="iot-tint" id="tint"></div>
+    <div class="iot-party"></div>
+    <div class="idrape l" id="drapeL"></div><div class="idrape r" id="drapeR"></div>
+    <!-- cinema scene -->
+    <div class="iot-cinema" id="cinema" aria-hidden="true">
+      <svg viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="cwall" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0c141d"/><stop offset="1" stop-color="#04070b"/></linearGradient>
+          <linearGradient id="csky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#12325c"/><stop offset="40%" stop-color="#7a4b8c"/><stop offset="60%" stop-color="#e08b3e"/><stop offset="80%" stop-color="#e2532e"/><stop offset="100%" stop-color="#3a1526"/></linearGradient>
+          <radialGradient id="csun" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#fff3d6"/><stop offset="42%" stop-color="#ffd27a"/><stop offset="100%" stop-color="rgba(255,180,90,0)"/></radialGradient>
+          <radialGradient id="cspill" cx="50%" cy="36%" r="62%"><stop offset="0" stop-color="rgba(226,150,90,.55)"/><stop offset="55%" stop-color="rgba(120,90,150,.18)"/><stop offset="100%" stop-color="rgba(0,0,0,0)"/></radialGradient>
+          <radialGradient id="cvig" cx="50%" cy="40%" r="78%"><stop offset="52%" stop-color="rgba(0,0,0,0)"/><stop offset="100%" stop-color="rgba(0,0,0,.9)"/></radialGradient>
+        </defs>
+        <rect width="1600" height="900" fill="url(#cwall)"/>
+        <rect width="1600" height="900" fill="url(#cspill)"/>
+        <!-- ceiling downlights -->
+        <g fill="#ffcf8a" opacity=".45"><circle cx="300" cy="66" r="5"/><circle cx="640" cy="50" r="5"/><circle cx="960" cy="50" r="5"/><circle cx="1300" cy="66" r="5"/></g>
+        <!-- acoustic side panels -->
+        <g stroke="rgba(255,255,255,.045)" stroke-width="2">
+          <line x1="70" y1="120" x2="70" y2="640"/><line x1="150" y1="120" x2="150" y2="660"/><line x1="230" y1="130" x2="230" y2="680"/>
+          <line x1="1530" y1="120" x2="1530" y2="640"/><line x1="1450" y1="120" x2="1450" y2="660"/><line x1="1370" y1="130" x2="1370" y2="680"/>
+        </g>
+        <!-- projector beam -->
+        <path d="M800 620 L470 250 L1130 250 Z" fill="rgba(255,240,210,.035)"/>
+        <!-- SCREEN -->
+        <g class="cine-screen">
+          <rect x="366" y="150" width="868" height="430" rx="8" fill="#000"/>
+          <clipPath id="cclip"><rect x="378" y="176" width="844" height="378" rx="3"/></clipPath>
+          <g clip-path="url(#cclip)">
+            <rect x="378" y="176" width="844" height="378" fill="url(#csky)"/>
+            <circle cx="800" cy="432" r="150" fill="url(#csun)"/>
+            <circle cx="800" cy="432" r="44" fill="#fff6e0"/>
+            <path d="M378 470 L520 360 L640 442 L770 340 L900 452 L1040 360 L1160 452 L1222 410 L1222 554 L378 554 Z" fill="#3a2233" opacity=".85"/>
+            <path d="M378 522 L560 432 L720 502 L900 420 L1080 506 L1222 446 L1222 554 L378 554 Z" fill="#190e1b"/>
+            <rect x="378" y="500" width="844" height="54" fill="#c96a34" opacity=".22"/>
+          </g>
+          <!-- letterbox inside screen -->
+          <rect x="378" y="176" width="844" height="30" fill="#000" opacity=".88"/>
+          <rect x="378" y="524" width="844" height="30" fill="#000" opacity=".88"/>
+          <rect x="378" y="176" width="844" height="378" fill="url(#cspill)" opacity=".14"/>
+        </g>
+        <!-- foreground sofa + heads -->
+        <path d="M0 900 L0 762 Q0 720 60 716 L560 690 Q684 684 684 762 L684 900 Z" fill="#020407"/>
+        <path d="M916 900 L916 762 Q916 684 1040 690 L1540 716 Q1600 720 1600 762 L1600 900 Z" fill="#020407"/>
+        <ellipse cx="356" cy="700" rx="52" ry="58" fill="#010305"/>
+        <ellipse cx="1244" cy="700" rx="52" ry="58" fill="#010305"/>
+        <rect width="1600" height="900" fill="url(#cvig)"/>
+      </svg>
+    </div>
+    <div class="iot-vig"></div>
+    <div class="iot-bars t"></div><div class="iot-bars b"></div>
+    <div class="iscan"></div><div class="isecmark"></div>
+    <div class="ithermo"><div class="ring" id="thRing"></div><div><div class="tv" id="thVal">23°</div><div class="tl">CLIMATE</div></div></div>
+    <div class="iev">
+      <div class="evcard"><img src="assets/beat5-ev.jpg" alt="EV charging"><div class="fday" style="background-image:url(assets/beat5-ev-day.jpg)"></div><div class="evbadge">EV · <b id="evPct">41%</b> · <span id="evEtaC">~41 min</span></div></div>
+    </div>
+    <div class="icam-dot" style="left:42%;top:64%" data-cam="0"><svg viewBox="0 0 24 24"><path d="M3 7h13v10H3zM16 10l5-3v10l-5-3"/></svg></div>
+    <div class="icam-dot" style="left:74%;top:52%" data-cam="1"><svg viewBox="0 0 24 24"><path d="M3 7h13v10H3zM16 10l5-3v10l-5-3"/></svg></div>
+    <div class="ihud">
+      <div class="ibadge b-armed"><span class="d"></span>System Armed</div>
+      <div class="ibadge b-ev"><span class="d"></span>EV · Charging</div>
+    </div>
+    <div class="iscene-tag" id="sceneTag"><span class="sd"></span><span id="sceneTagT">Morning</span></div>
+  </div>
+
+  <div class="iot-head" id="head">
+    <span class="ibadge2">⚡ LIVE SMART-HOME DEMO — <b>control the villa</b></span>
+    <h2>Now try it yourself</h2>
+    <p>Tap any device below and watch the villa respond — lights, climate, curtains, EV, sound, cameras and more.</p>
+  </div>
+
+  <div class="iot-ui" id="ui">
+    <div class="iscenes" id="scenes">
+      <button class="iscene" data-scene="morning">☀️ Morning</button>
+      <button class="iscene" data-scene="goodbye">👋 Goodbye</button>
+    </div>
+    <div class="irail" id="rail">
+      <div class="ichip" data-dev="lights"><svg viewBox="0 0 24 24"><path d="M9 18h6M10 22h4M12 2a7 7 0 00-4 12c.6.5 1 1.3 1 2h6c0-.7.4-1.5 1-2a7 7 0 00-4-12z"/></svg>Lights</div>
+      <div class="ichip" data-dev="climate"><svg viewBox="0 0 24 24"><path d="M14 14V5a2 2 0 10-4 0v9a4 4 0 104 0z"/></svg>Climate</div>
+      <div class="ichip" data-dev="curtains"><svg viewBox="0 0 24 24"><path d="M4 3h16M5 3v18M19 3v18M9 3v18M15 3v18"/></svg>Curtains</div>
+      <div class="ichip" data-dev="ev"><svg viewBox="0 0 24 24"><path d="M7 3h7l-1 7h4l-8 11 2-8H6l1-10z"/></svg>EV</div>
+      <div class="ichip" data-dev="security"><svg viewBox="0 0 24 24"><path d="M12 2 4 6v6c0 5 3.5 8 8 10 4.5-2 8-5 8-10V6l-8-4z"/></svg>Security</div>
+      <div class="ichip" data-dev="cameras"><svg viewBox="0 0 24 24"><path d="M3 7h13v10H3zM16 10l5-3v10l-5-3"/></svg>Cameras</div>
+      <div class="ichip" data-dev="intercom"><svg viewBox="0 0 24 24"><path d="M12 2a7 7 0 00-7 7v4l-2 3h18l-2-3V9a7 7 0 00-7-7zM9 21a3 3 0 006 0"/></svg>Intercom</div>
+    </div>
+  </div>
+
+  <!-- panels -->
+  <div class="ipanel" id="panel">
+    <h4><span id="panelTitle">Lights</span><span class="x" id="panelX">✕</span></h4>
+    <div class="ptab" data-p="lights">
+      <div class="zrow"><b>All Lights</b><div class="tgl" data-zone="all"><i></i></div></div>
+      <div class="zrow"><b>Living Room</b><div class="tgl" data-zone="living"><i></i></div></div>
+      <div class="zrow"><b>Kitchen</b><div class="tgl" data-zone="kitchen"><i></i></div></div>
+      <div class="zrow"><b>Facade</b><div class="tgl" data-zone="facade"><i></i></div></div>
+      <div class="zrow"><b>Garden</b><div class="tgl" data-zone="garden"><i></i></div></div>
+    </div>
+    <div class="ptab clima" data-p="climate">
+      <div class="st">THERMOSTAT</div><div class="big"><span id="climBig">23</span>°</div>
+      <div class="ctrls"><button class="rbtn" data-clim="-1">−</button><button class="rbtn" data-clim="1">+</button></div>
+      <div class="hint" id="climHint">Comfortable</div>
+    </div>
+    <div class="ptab" data-p="curtains">
+      <div class="seg" id="curSeg"><button data-cur="100">Open</button><button data-cur="50">Half</button><button data-cur="0">Closed</button></div>
+    </div>
+    <div class="ptab clima" data-p="ev">
+      <div class="st">EV CHARGER</div><div class="big"><span id="evBig">41</span>%</div>
+      <div class="ctrls"><button class="rbtn" id="evToggle" style="width:auto;border-radius:50px;padding:0 20px;font-size:14px">Stop</button></div>
+      <div class="hint" id="evHint">Charging · ~41 min to full</div>
+    </div>
+    <div class="ptab" data-p="security">
+      <div class="zrow"><b>Arm System</b><div class="tgl" data-sec="1"><i></i></div></div>
+      <div class="hint" style="font-size:11px;color:rgba(255,255,255,.5);margin-top:8px">Arming enables perimeter scanning & alerts.</div>
+    </div>
+  </div>
+
+  <!-- cameras modal -->
+  <div class="icams" id="cams">
+    <div class="wrap">
+      <div class="top"><b>📹 Live Cameras · 4 online</b><button class="cx" id="camClose">Close ✕</button></div>
+      <div class="camgrid">
+        <div class="feed" style="background:url(assets/beat0-hero.jpg) center/cover"><div class="fday" style="background-image:url(assets/beat0-hero-day.jpg)"></div><div class="noise"></div><div class="scanl"></div><span class="rec">REC</span><span class="lbl">CAM 01 · Front</span><span class="ts feedts"></span></div>
+        <div class="feed" style="background:url(assets/beat5-ev.jpg) center/cover"><div class="fday" style="background-image:url(assets/beat5-ev-day.jpg)"></div><div class="noise"></div><div class="scanl"></div><span class="rec">REC</span><span class="lbl">CAM 02 · Garage</span><span class="ts feedts"></span></div>
+        <div class="feed" style="background:url(assets/beat2-security.jpg) center/cover"><div class="fday" style="background-image:url(assets/beat2-security-day.jpg)"></div><div class="noise"></div><div class="scanl"></div><span class="rec">REC</span><span class="lbl">CAM 03 · Gate</span><span class="ts feedts"></span></div>
+        <div class="feed" style="background:url(assets/beat6-final.jpg) center/cover"><div class="fday" style="background-image:url(assets/beat6-final-day.jpg)"></div><div class="noise"></div><div class="scanl"></div><span class="rec">REC</span><span class="lbl">CAM 04 · Perimeter</span><span class="ts feedts"></span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- intercom -->
+  <div class="iintercom" id="intercom">
+    <div class="vid" style="background:url(assets/beat2-security.jpg) center/cover"><div class="fday" style="background-image:url(assets/beat2-security-day.jpg)"></div><div class="scanl"></div><span class="rec">● LIVE</span></div>
+    <div class="body"><b>Front Gate</b><p>📦 Delivery at the gate…</p>
+      <div class="acts"><button class="a-open" id="icOpen">Unlock</button><button class="a-ign" id="icIgnore">Ignore</button></div>
+    </div>
+  </div>
+
+  <!-- phone -->
+  <div class="iphone">
+    <div class="scr">
+      <div class="ph-h"><b>My Villa</b><span class="lv">● Live</span></div>
+      <div class="big" id="phScene">Custom</div><div class="sub" id="phSub">Tap a device</div>
+      <div class="grid">
+        <div class="cell" id="cLights"><div class="cl">LIGHTS</div><div class="cv" id="phLights">0 on</div></div>
+        <div class="cell" id="cClim"><div class="cl">CLIMATE</div><div class="cv" id="phClim">23°</div></div>
+        <div class="cell" id="cCur"><div class="cl">CURTAINS</div><div class="cv" id="phCur">Open</div></div>
+        <div class="cell" id="cEv"><div class="cl">EV</div><div class="cv" id="phEv">80%</div></div>
+        <div class="cell" id="cSec"><div class="cl">SECURITY</div><div class="cv" id="phSec">Off</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+</section>
+
+
+<section class="about pad" id="about">
+  <div class="wrap">
+    <div class="about-head">
+      <h2 class="rv"><span>One partner.<br>Every <em>system.</em></span></h2>
+      <p class="about-lead fade">Founded in 2014, Sedra Electric is an engineering house for light-current systems, smart automation and sustainable energy — serving residential, commercial, hospitality, industrial and healthcare projects across Egypt, the UAE and Saudi Arabia. From first consultation to lifetime support, we deliver every system end to end.</p>
+    </div>
+    <div class="about-cards">
+      <div class="acard fade"><div class="num">/ 01</div><div class="aic"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></div><h3>Turnkey</h3><p>One accountable team for consultation, design, installation, programming and maintenance — no hand-off gaps.</p></div>
+      <div class="acard fade"><div class="num">/ 02</div><div class="aic"><svg viewBox="0 0 24 24"><path d="M12 2 4 6v6c0 5 3.5 8 8 10 4.5-2 8-5 8-10V6l-8-4z"/></svg></div><h3>Engineered</h3><p>Rigorous quality management and certified components — attention to every detail for performance that lasts.</p></div>
+      <div class="acard fade"><div class="num">/ 03</div><div class="aic"><svg viewBox="0 0 24 24"><path d="M12 8v4l3 2M12 3a9 9 0 100 18 9 9 0 000-18z"/></svg></div><h3>Supported</h3><p>Responsive maintenance and support from our own offices in Egypt, the UAE and Saudi Arabia.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- STICKY SHOWCASE -->
+<section class="showcase" id="solutions">
+  <div class="wrap sc-grid">
+    <div class="sc-visual">
+      <div class="sc-stage">
+        <div class="sc-index" id="scIndex">01</div>
+        <div class="sc-artglow"></div>
+        <div class="sc-art on" data-i=""" role="img" aria-label="Home Automation"><img src="assets/sol-automation.jpg" alt="Home Automation" loading="lazy"></div>
+        <div class="sc-art" data-i=""" role="img" aria-label="Security Systems"><img src="assets/sol-security.jpg" alt="Security Systems" loading="lazy"></div>
+        <div class="sc-art" data-i=""" role="img" aria-label="Network Cabling & Structure"><img src="assets/sol-networks.jpg" alt="Network Cabling & Structure" loading="lazy"></div>
+        <div class="sc-art" data-i=""" role="img" aria-label="Light Current Systems"><img src="assets/sol-lightcurrent.jpg" alt="Light Current Systems" loading="lazy"></div>
+        <div class="sc-art" data-i=""" role="img" aria-label="Solar Energy"><img src="assets/sol-solar.jpg" alt="Solar Energy" loading="lazy"></div>
+        <div class="sc-art" data-i=""" role="img" aria-label="EV Charger"><img src="assets/sol-ev.jpg" alt="EV Charger" loading="lazy"></div>
+      </div>
+    </div>
+    <div class="sc-steps">
+      <div class="sc-step active" data-i="0"><div class="sc-stepimg"><img src="assets/sol-automation.jpg" alt="Home Automation" loading="lazy"></div><div class="st-n">/ 01 — AUTOMATION</div><h3>Home Automation</h3><p>Lighting, climate, curtains, security and multimedia — your whole home controlled from a single tap, anywhere in the world.</p><div class="tags"><span>Lighting</span><span>Climate</span><span>Curtains</span><span>Scenes</span></div><a class="sc-link" href="page.html?id=home-automation">Explore service <span>&rarr;</span></a></div>
+      <div class="sc-step" data-i="1"><div class="sc-stepimg"><img src="assets/sol-security.jpg" alt="Security Systems" loading="lazy"></div><div class="st-n">/ 02 — SECURITY</div><h3>Security Systems</h3><p>CCTV, access control, fire alarm and intrusion detection — complete protection for your home or business, always watching.</p><div class="tags"><span>CCTV</span><span>Access Control</span><span>Fire Alarm</span><span>Intrusion</span></div><a class="sc-link" href="page.html?id=security">Explore service <span>&rarr;</span></a></div>
+      <div class="sc-step" data-i="2"><div class="sc-stepimg"><img src="assets/sol-networks.jpg" alt="Network Cabling & Structure" loading="lazy"></div><div class="st-n">/ 03 — NETWORKS</div><h3>Network Cabling &amp; Structure</h3><p>Structured cabling and network infrastructure engineered for speed, full coverage and rock-solid reliability.</p><div class="tags"><span>Structured Cabling</span><span>Networking</span><span>Wi-Fi</span><span>Data</span></div><a class="sc-link" href="page.html?id=networks">Explore service <span>&rarr;</span></a></div>
+      <div class="sc-step" data-i="3"><div class="sc-stepimg"><img src="assets/sol-lightcurrent.jpg" alt="Light Current Systems" loading="lazy"></div><div class="st-n">/ 04 — LIGHT CURRENT</div><h3>Light Current Systems</h3><p>Audio/video, MATV and telephone systems — the integrated low-current backbone of a modern building.</p><div class="tags"><span>Audio / Video</span><span>MATV</span><span>Telephone</span><span>Sound</span></div><a class="sc-link" href="page.html?id=light-current">Explore service <span>&rarr;</span></a></div>
+      <div class="sc-step" data-i="4"><div class="sc-stepimg"><img src="assets/sol-solar.jpg" alt="Solar Energy" loading="lazy"></div><div class="st-n">/ 05 — SOLAR</div><h3>Solar Energy</h3><p>On-grid, off-grid and thermal solar systems that cut your electricity bill and carbon footprint — for homes and businesses.</p><div class="tags"><span>On-grid</span><span>Off-grid</span><span>Thermal</span><span>Net-metering</span></div><a class="sc-link" href="page.html?id=solar">Explore service <span>&rarr;</span></a></div>
+      <div class="sc-step" data-i="5"><div class="sc-stepimg"><img src="assets/sol-ev.jpg" alt="EV Charger" loading="lazy"></div><div class="st-n">/ 06 — EV CHARGING</div><h3>EV Charger</h3><p>Locally-manufactured, smart-managed charging for electric cars, neighborhood EVs and plug-in hybrids.</p><div class="tags"><span>Home</span><span>Business</span><span>Fleet</span><span>Egypt-made</span></div><a class="sc-link" href="page.html?id=ev-charging">Explore service <span>&rarr;</span></a></div>
+    </div>
+  </div>
+</section>
+
+<!-- LINEUP / SERVICES -->
+<section class="lineup pad" id="services">
+  <div class="wrap">
+    <div class="lu-top">
+      <h2 class="rv"><span>How we <span class="out">work</span></span></h2>
+      <p class="about-lead fade" style="margin-bottom:8px">Five phases, one accountable team — from the first consultation to lifetime support.</p>
+    </div>
+    <div class="flow">
+      <div class="fstep fade"><div class="fnum">01</div><div class="fico"><svg viewBox="0 0 24 24"><path d="M8 21h8M12 17v4M4 4h16v10a2 2 0 01-2 2H6a2 2 0 01-2-2z"/></svg></div><h3>Consultation</h3><p>Onsite or in-office, we scope your project, requirements and budget into a clear plan.</p></div>
+      <div class="fstep fade"><div class="fnum">02</div><div class="fico"><svg viewBox="0 0 24 24"><path d="M12 20h9M3 20l1-5 11-11 4 4L8 19z"/></svg></div><h3>Design &amp; Engineering</h3><p>Wiring, hardware, interfaces and power — planned with your architects for reliability.</p></div>
+      <div class="fstep fade"><div class="fnum">03</div><div class="fico"><svg viewBox="0 0 24 24"><path d="M14 7l-1.5-1.5a2 2 0 00-3 0L3 12l4 4 6.5-6.5a2 2 0 000-3zM14 7l4 4 3-3-4-4z"/></svg></div><h3>Installation</h3><p>Trained technicians deploy every system with precision and flawless execution.</p></div>
+      <div class="fstep fade"><div class="fnum">04</div><div class="fico"><svg viewBox="0 0 24 24"><path d="M8 3v4M16 3v4M4 9h16M6 5h12a2 2 0 012 2v12a2 2 0 01-2 2H6a2 2 0 01-2-2V7a2 2 0 012-2zM9 14l2 2 4-4"/></svg></div><h3>Programming</h3><p>We integrate every subsystem to speak one language — audio, video and lighting as one.</p></div>
+      <div class="fstep fade"><div class="fnum">05</div><div class="fico"><svg viewBox="0 0 24 24"><path d="M12 8v4l3 2M12 3a9 9 0 100 18 9 9 0 000-18z"/></svg></div><h3>Maintenance &amp; Support</h3><p>World-class ongoing support to keep systems optimized and resolve issues fast.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section class="projects pad" id="projects">
+  <div class="wrap">
+    <div class="center"><span class="eyebrow fade">Our work</span><h2 class="rv" style="font-size:clamp(34px,6vw,72px);color:var(--navy);text-transform:uppercase;margin:14px 0"><span>Selected Projects</span></h2></div>
+    <div class="filters fade">
+      <button class="active" data-f="all">All</button><button data-f="residential">Residential</button>
+      <button data-f="commercial">Commercial</button><button data-f="hospitality">Hospitality</button><button data-f="government">Government</button>
+    </div>
+    <div class="pj-grid">
+      <a class="pj fade" href="page.html?id=seagate-hq" data-c="commercial"><div class="thumb photo" style="background:url(assets/proj-burjkhalifa.jpg) center/cover"></div><div class="ov"><span class="tag">Commercial</span><h4>Seagate HQ — Burj Khalifa</h4><p>Corporate fit-out · Floor 146, Dubai</p></div></a>
+      <a class="pj fade" href="page.html?id=tolip-hotel" data-c="hospitality"><div class="thumb photo" style="background:url(assets/proj-tolip.jpg) center/cover"></div><div class="ov"><span class="tag">Hospitality</span><h4>Tolip Hotel</h4><p>CCTV, IPTV, data network & sound</p></div></a>
+      <a class="pj fade" href="page.html?id=peerage-residence" data-c="residential"><div class="thumb photo" style="background:url(assets/proj-peerage.jpg) center/cover"></div><div class="ov"><span class="tag">Residential</span><h4>Peerage Residence</h4><p>Smart residential systems · Riyadh</p></div></a>
+      <a class="pj fade" href="page.html?id=atyab-farooj" data-c="hospitality"><div class="thumb photo" style="background:url(assets/proj-atyab.jpg) center/cover"></div><div class="ov"><span class="tag">Hospitality</span><h4>Atyab Farooj Restaurant</h4><p>ACS, data, CCTV, electrical & sound</p></div></a>
+      <a class="pj fade" href="page.html?id=superpark" data-c="commercial"><div class="thumb photo" style="background:url(assets/proj-superpark.jpg) center/cover"></div><div class="ov"><span class="tag">Commercial</span><h4>SuperPark — Mall of Arabia</h4><p>Digital signage system</p></div></a>
+      <a class="pj fade" href="page.html?id=neptune-villa" data-c="residential"><div class="thumb g5"><svg viewBox="0 0 24 24"><path d="M7 3h7l-1 7h4l-8 11 2-8H6l1-10z"/></svg></div><div class="ov"><span class="tag">Residential</span><h4>Neptune Floating Villa</h4><p>KNX, DALI, data & sound · Kempinski</p></div></a>
+      <a class="pj fade" href="page.html?id=lake-view" data-c="residential"><div class="thumb g6"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h10M6 3v18"/></svg></div><div class="ov"><span class="tag">Residential</span><h4>Lake View Residence</h4><p>Smart parking & integration</p></div></a>
+      <a class="pj fade" href="page.html?id=golden-hall" data-c="government"><div class="thumb g8"><svg viewBox="0 0 24 24"><path d="M3 5h18v11H3zM8 20h8M12 16v4"/></svg></div><div class="ov"><span class="tag">Government</span><h4>Golden Hall — Eng. Authority</h4><p>KNX automation & AV system</p></div></a>
+      <a class="pj fade" href="page.html?id=hazaa-mosque" data-c="government"><div class="thumb g2"><svg viewBox="0 0 24 24"><path d="M12 2 4 6v6c0 5 3.5 8 8 10 4.5-2 8-5 8-10V6l-8-4z"/></svg></div><div class="ov"><span class="tag">Government</span><h4>Sheikh Hazaa Mosque</h4><p>KNX & DALI lighting · Abu Dhabi</p></div></a>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="stats">
+  <div class="wrap st-row">
+    <div class="fade"><div class="n" data-count="500" data-plus="1">0</div><div class="l">PROJECTS DELIVERED</div></div>
+    <div class="fade"><div class="n" data-count="12">0</div><div class="l">YEARS EXPERIENCE</div></div>
+    <div class="fade"><div class="n" data-count="98">0</div><div class="l">% SATISFACTION</div></div>
+    <div class="fade"><div class="n" data-count="3">0</div><div class="l">COUNTRIES</div></div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="ctaband">
+  <span class="blob a"></span>
+  <div class="wrap">
+    <h2 class="rv"><span>Let's build it <span class="grad">smarter.</span></span></h2>
+    <p class="fade">Tell us about your project — our engineers design a tailored solution built around your needs.</p>
+    <a href="#contact" class="btn btn-primary fade">Request a Consultation
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact pad" id="contact">
+  <div class="wrap">
+    <div class="center"><span class="eyebrow fade">Get in touch</span><h2 class="rv" style="font-size:clamp(34px,5vw,64px);color:var(--navy);text-transform:uppercase;margin:14px 0"><span>Start a project</span></h2></div>
+    <div class="ct-grid">
+      <div class="cinfo fade">
+        <h3>Talk to us</h3>
+        <p>Three offices across the region — reach the nearest one, or send the form. We usually reply within one business day.</p>
+        <div class="cline"><div class="cic"><svg viewBox="0 0 24 24"><path d="M22 16.9v3a2 2 0 01-2.2 2 19.8 19.8 0 01-8.6-3 19.5 19.5 0 01-6-6 19.8 19.8 0 01-3-8.6A2 2 0 014.1 2h3a2 2 0 012 1.7c.1.9.3 1.8.6 2.6a2 2 0 01-.5 2.1L8.1 9.9a16 16 0 006 6l1.5-1.1a2 2 0 012.1-.5c.8.3 1.7.5 2.6.6a2 2 0 011.7 2z"/></svg></div><div><b>🇪🇬 Cairo</b><span>+20 2 2678 3581 · +20 115 551 0024<br>Villa 297, Teseen St, Fifth Settlement, New Cairo</span></div></div>
+        <div class="cline"><div class="cic"><svg viewBox="0 0 24 24"><path d="M22 16.9v3a2 2 0 01-2.2 2 19.8 19.8 0 01-8.6-3 19.5 19.5 0 01-6-6 19.8 19.8 0 01-3-8.6A2 2 0 014.1 2h3a2 2 0 012 1.7c.1.9.3 1.8.6 2.6a2 2 0 01-.5 2.1L8.1 9.9a16 16 0 006 6l1.5-1.1a2 2 0 012.1-.5c.8.3 1.7.5 2.6.6a2 2 0 011.7 2z"/></svg></div><div><b>🇦🇪 Dubai</b><span>+971 52 981 8538<br>E11, Office No 217, Al Ittihad Rd, Dubai Int'l Airport, Dubai, UAE</span></div></div>
+        <div class="cline"><div class="cic"><svg viewBox="0 0 24 24"><path d="M22 16.9v3a2 2 0 01-2.2 2 19.8 19.8 0 01-8.6-3 19.5 19.5 0 01-6-6 19.8 19.8 0 01-3-8.6A2 2 0 014.1 2h3a2 2 0 012 1.7c.1.9.3 1.8.6 2.6a2 2 0 01-.5 2.1L8.1 9.9a16 16 0 006 6l1.5-1.1a2 2 0 012.1-.5c.8.3 1.7.5 2.6.6a2 2 0 011.7 2z"/></svg></div><div><b>🇸🇦 Riyadh</b><span>+966 54 249 9681<br>Building 44, Ibn Katheer St, King Abdul Aziz, Riyadh 13334</span></div></div>
+        <div class="cline"><div class="cic"><svg viewBox="0 0 24 24"><path d="M4 4h16v16H4zM4 6l8 6 8-6"/></svg></div><div><b>Email</b><span>Info@sedra-electric.com</span></div></div>
+        <div class="cline"><div class="cic"><svg viewBox="0 0 24 24"><path d="M12 8v4l3 2M12 3a9 9 0 100 18 9 9 0 000-18z"/></svg></div><div><b>Working hours</b><span>Sat – Wed: 9:00–17:00 · Thu: 9:00–15:00 · Fri: Closed</span></div></div>
+        <div class="csocials"><span class="csoc-lbl">Follow us</span><a href="https://www.instagram.com/sedra_electric.eg/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24"><path d="M12 2.2c3.2 0 3.6 0 4.9.1 1.2.1 1.8.3 2.2.4.6.2 1 .5 1.4.9.4.4.7.8.9 1.4.2.4.4 1 .4 2.2.1 1.3.1 1.7.1 4.9s0 3.6-.1 4.9c-.1 1.2-.3 1.8-.4 2.2-.2.6-.5 1-.9 1.4-.4.4-.8.7-1.4.9-.4.2-1 .4-2.2.4-1.3.1-1.7.1-4.9.1s-3.6 0-4.9-.1c-1.2-.1-1.8-.3-2.2-.4-.6-.2-1-.5-1.4-.9-.4-.4-.7-.8-.9-1.4-.2-.4-.4-1-.4-2.2C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.9c.1-1.2.3-1.8.4-2.2.2-.6.5-1 .9-1.4.4-.4.8-.7 1.4-.9.4-.2 1-.4 2.2-.4C8.4 2.2 8.8 2.2 12 2.2zm0 3.2A6.6 6.6 0 1018.6 12 6.6 6.6 0 0012 5.4zm0 10.9A4.3 4.3 0 1116.3 12 4.3 4.3 0 0112 16.3zm6.8-11.1a1.5 1.5 0 11-1.5-1.5 1.5 1.5 0 011.5 1.5z"/></svg></a><a href="https://www.facebook.com/profile.php?id=61591642604996" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M22 12a10 10 0 10-11.6 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.2c-1.2 0-1.6.8-1.6 1.6V12h2.7l-.4 2.9h-2.3v7A10 10 0 0022 12z"/></svg></a><a href="https://www.linkedin.com/company/18157184/" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M20.5 2h-17A1.5 1.5 0 002 3.5v17A1.5 1.5 0 003.5 22h17a1.5 1.5 0 001.5-1.5v-17A1.5 1.5 0 0020.5 2zM8 19H5V9h3v10zM6.5 7.7a1.8 1.8 0 110-3.5 1.8 1.8 0 010 3.5zM19 19h-3v-5.3c0-1.3-.5-2.1-1.6-2.1-.9 0-1.4.6-1.6 1.2-.1.2-.1.5-.1.8V19h-3s.04-9.1 0-10h3v1.4c.4-.6 1.1-1.5 2.7-1.5 2 0 3.5 1.3 3.5 4.1V19z"/></svg></a></div>
+
+      </div>
+      <form class="form fade" id="quoteForm" onsubmit="return sendQuote(event)">
+        <h3>Request a Quote</h3>
+        <p>A few details and we'll prepare a tailored proposal.</p>
+        <div class="frow">
+          <div class="field"><label>FULL NAME</label><input id="q_name" required placeholder="Your name"></div>
+          <div class="field"><label>PHONE</label><input id="q_phone" required placeholder="+20 / +971 / +966"></div>
+        </div>
+        <div class="frow">
+          <div class="field"><label>EMAIL</label><input id="q_email" type="email" placeholder="you@email.com"></div>
+          <div class="field"><label>COUNTRY</label><select id="q_branch"><option>Egypt</option><option>UAE</option><option>KSA</option></select></div>
+        </div>
+        <div class="field"><label>SERVICE NEEDED</label><select id="q_service">
+          <option>Smart Home Automation</option><option>Security & Surveillance</option><option>Networks & IT</option>
+          <option>Building Management (BMS)</option><option>EV Charging Stations</option><option>MEP Engineering</option>
+          <option>Low-Current / ELV</option><option>Home Cinema & Audio</option><option>Other / Multiple</option>
+        </select></div>
+        <div class="field"><label>PROJECT DETAILS</label><textarea id="q_msg" placeholder="Project, location and timeline…"></textarea></div>
+        <button type="submit" class="btn btn-primary">Send via WhatsApp
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 00-8.6 15l-1.3 4.7L7 20.4A10 10 0 1012 2zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .1-1.7-.1-.4-.1-.9-.3-1.6-.6-2.8-1.2-4.6-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.8 0-1.3.7-2 .9-2.2.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 1.9c.1.2.1.4 0 .5l-.4.6c-.2.2-.3.4-.1.7.2.3.9 1.4 1.9 2.3 1.3 1.1 2.3 1.4 2.6 1.6.3.1.5.1.6-.1l.7-.9c.2-.2.4-.2.6-.1l1.8.9c.3.1.5.2.5.4.1.2.1.9-.1 1.4z"/></svg>
+        </button>
+        <p class="form-note">Opens WhatsApp with your details ready. Prefer email? info@sedra-electric.com</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap fgrid">
+    <div class="fbrand">
+      <a href="#home" class="logo"><img src="assets/logo-white.png" alt="Sedra Electric — Reach the nature energy" class="logo-img"></a>
+      <p>Integrated smart-building, security and energy solutions — engineered end to end across Egypt, the UAE and KSA.</p>
+      <div class="socials">
+        <a href="https://www.facebook.com/profile.php?id=61591642604996" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M22 12a10 10 0 10-11.6 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.2c-1.2 0-1.6.8-1.6 1.6V12h2.7l-.4 2.9h-2.3v7A10 10 0 0022 12z"/></svg></a>
+        <a href="https://www.instagram.com/sedra_electric.eg/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24"><path d="M12 2.2c3.2 0 3.6 0 4.9.1 1.2.1 1.8.3 2.2.4.6.2 1 .5 1.4.9.4.4.7.8.9 1.4.2.4.4 1 .4 2.2.1 1.3.1 1.7.1 4.9s0 3.6-.1 4.9c-.1 1.2-.3 1.8-.4 2.2-.2.6-.5 1-.9 1.4-.4.4-.8.7-1.4.9-.4.2-1 .4-2.2.4-1.3.1-1.7.1-4.9.1s-3.6 0-4.9-.1c-1.2-.1-1.8-.3-2.2-.4-.6-.2-1-.5-1.4-.9-.4-.4-.7-.8-.9-1.4-.2-.4-.4-1-.4-2.2C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.9c.1-1.2.3-1.8.4-2.2.2-.6.5-1 .9-1.4.4-.4.8-.7 1.4-.9.4-.2 1-.4 2.2-.4C8.4 2.2 8.8 2.2 12 2.2zm0 3.2A6.6 6.6 0 1018.6 12 6.6 6.6 0 0012 5.4zm0 10.9A4.3 4.3 0 1116.3 12 4.3 4.3 0 0112 16.3zm6.8-11.1a1.5 1.5 0 11-1.5-1.5 1.5 1.5 0 011.5 1.5z"/></svg></a>
+        <a href="https://www.linkedin.com/company/18157184/" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M20.5 2h-17A1.5 1.5 0 002 3.5v17A1.5 1.5 0 003.5 22h17a1.5 1.5 0 001.5-1.5v-17A1.5 1.5 0 0020.5 2zM8 19H5V9h3v10zM6.5 7.7a1.8 1.8 0 110-3.5 1.8 1.8 0 010 3.5zM19 19h-3v-5.3c0-1.3-.5-2.1-1.6-2.1-.9 0-1.4.6-1.6 1.2-.1.2-.1.5-.1.8V19h-3s.04-9.1 0-10h3v1.4c.4-.6 1.1-1.5 2.7-1.5 2 0 3.5 1.3 3.5 4.1V19z"/></svg></a>
+      </div>
+    </div>
+    <div class="fcol"><h4>Company</h4><a href="#about">About</a><a href="#solutions">Solutions</a><a href="#services">Services</a><a href="#projects">Projects</a><a href="#contact">Contact</a></div>
+    <div class="fcol"><h4>Access</h4><a href="https://sedraelectric.pages.dev" target="_blank" rel="noopener">Company Portal ↗</a><a href="https://sedraelectric.pages.dev/apply.html" target="_blank" rel="noopener">Join our team ↗</a></div>
+    <div class="fcol"><h4>Solutions</h4><a href="page.html?id=home-automation">Home Automation</a><a href="page.html?id=security">Security Systems</a><a href="page.html?id=networks">Networks</a><a href="page.html?id=light-current">Light Current</a><a href="page.html?id=solar">Solar Energy</a><a href="page.html?id=ev-charging">EV Charger</a></div>
+    <div class="fcol"><h4>Get in touch</h4><a href="mailto:info@sedra-electric.com">info@sedra-electric.com</a><a href="#contact">Request a Quote</a><a href="#">🇪🇬 Cairo, Egypt</a><a href="#">🇦🇪 Dubai, UAE</a><a href="#">🇸🇦 Riyadh, KSA</a></div>
+  </div>
+  <div class="wrap fbot"><span>© <span id="yr"></span> SEDRA ELECTRIC. ALL RIGHTS RESERVED.</span><span>SMART · SECURE · SUSTAINABLE</span></div>
+</footer>
+
+<a class="wa" id="waFloat" href="#" aria-label="WhatsApp"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 00-8.6 15l-1.3 4.7L7 20.4A10 10 0 1012 2zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .1-1.7-.1-.4-.1-.9-.3-1.6-.6-2.8-1.2-4.6-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.8 0-1.3.7-2 .9-2.2.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 1.9c.1.2.1.4 0 .5l-.4.6c-.2.2-.3.4-.1.7.2.3.9 1.4 1.9 2.3 1.3 1.1 2.3 1.4 2.6 1.6.3.1.5.1.6-.1l.7-.9c.2-.2.4-.2.6-.1l1.8.9c.3.1.5.2.5.4.1.2.1.9-.1 1.4z"/></svg></a>
+
+<script>
+var SEDRA={ whatsapp:"201155510024", phoneDisplay:"+20 2 2678 3581", email:"Info@sedra-electric.com" };
+var _cp=document.getElementById('cPhone'); if(_cp)_cp.textContent=SEDRA.phoneDisplay;
+document.getElementById('waFloat').href="https://wa.me/"+SEDRA.whatsapp+"?text="+encodeURIComponent("Hello Sedra Electric, I'd like to know more about your solutions.");
+document.getElementById('yr').textContent=new Date().getFullYear();
+
+var nav=document.getElementById('nav');
+addEventListener('scroll',function(){ nav.classList.toggle('scrolled',scrollY>40); });
+var burger=document.getElementById('burger'),links=document.getElementById('navLinks');
+burger.onclick=function(){ links.classList.toggle('open'); };
+links.querySelectorAll('a').forEach(function(a){ a.onclick=function(){ links.classList.remove('open'); }; });
+
+/* reveal */
+try{
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });},{threshold:.14});
+  document.querySelectorAll('.rv,.fade').forEach(function(el){ io.observe(el); });
+}catch(err){ document.querySelectorAll('.rv,.fade').forEach(function(el){ el.classList.add('in'); }); }
+/* safety net — never leave content invisible if the observer or any script fails */
+setTimeout(function(){ if(!document.querySelector('.fade.in,.rv.in')){ document.querySelectorAll('.rv,.fade').forEach(function(el){ el.classList.add('in'); }); } },2200);
+addEventListener('load',function(){ document.querySelectorAll('.rv,.fade').forEach(function(el){ var r=el.getBoundingClientRect(); if(r.top<innerHeight){ el.classList.add('in'); } }); });
+/* stagger fade groups */
+document.querySelectorAll('.about-cards,.lu-grid,.pj-grid,.tgrid,.pl,.st-row').forEach(function(grp){
+  grp.querySelectorAll('.fade').forEach(function(el,i){ el.style.transitionDelay=(i*80)+'ms'; });
+});
+
+/* count up */
+var counted=false;
+var cio=new IntersectionObserver(function(es){es.forEach(function(e){ if(e.isIntersecting&&!counted){ counted=true;
+  document.querySelectorAll('[data-count]').forEach(function(el){ var t=+el.dataset.count,c=0,step=Math.max(1,Math.ceil(t/55));
+    var iv=setInterval(function(){ c+=step; if(c>=t){c=t;clearInterval(iv);} el.textContent=c+(el.dataset.plus?"+":""); },24); }); } });},{threshold:.4});
+var sb=document.querySelector('.stats'); if(sb)cio.observe(sb);
+
+/* sticky showcase */
+var steps=[].slice.call(document.querySelectorAll('.sc-step'));
+var arts=[].slice.call(document.querySelectorAll('.sc-art'));
+var scIndex=document.getElementById('scIndex');
+var sio=new IntersectionObserver(function(es){es.forEach(function(e){ if(e.isIntersecting){
+  var i=+e.target.dataset.i;
+  steps.forEach(function(s){ s.classList.toggle('active',+s.dataset.i===i); });
+  arts.forEach(function(a){ a.classList.toggle('on',+a.dataset.i===i); });
+  scIndex.textContent='0'+(i+1);
+} });},{threshold:.6});
+steps.forEach(function(s){ sio.observe(s); });
+
+/* filter */
+document.querySelectorAll('.filters button').forEach(function(b){ b.onclick=function(){
+  document.querySelectorAll('.filters button').forEach(function(x){x.classList.remove('active');}); b.classList.add('active');
+  var f=b.dataset.f;
+  document.querySelectorAll('.pj').forEach(function(p){ p.style.display=(f==='all'||p.dataset.c===f)?'':'none'; });
+}; });
+
+/* quote -> whatsapp */
+function sendQuote(ev){ ev.preventDefault();
+  var g=function(id){return (document.getElementById(id).value||'').trim();};
+  var name=g('q_name'),phone=g('q_phone');
+  if(!name||!phone){ alert('Please add your name and phone.'); return false; }
+  var msg="*New Quote Request — Sedra Electric*%0A"+"Name: "+name+"%0A"+"Phone: "+phone+"%0A"+
+    "Email: "+(g('q_email')||'-')+"%0A"+"Country: "+g('q_branch')+"%0A"+"Service: "+g('q_service')+"%0A"+"Details: "+(g('q_msg')||'-');
+  window.open("https://wa.me/"+SEDRA.whatsapp+"?text="+msg,"_blank"); return false;
+}
+
+/* smart-home app — tap any control, the house reacts */
+var app=document.getElementById('smartApp');
+if(app){
+  app.querySelectorAll('.dchip').forEach(function(c){
+    c.addEventListener('click',function(){
+      var on=c.classList.toggle('on');
+      app.classList.toggle('on-'+c.dataset.sys,on);
+      if(c.dataset.sys==='audio') music(on);
+    });
+  });
+  var ST={
+    climate:{v:23,min:16,max:30,step:1,fmt:function(v){return v+'°';},el:'vClimate',apply:function(v){var t=app.querySelector('.r-temp'); if(t)t.textContent=v+'°';}},
+    shutter:{v:0,min:0,max:100,step:20,fmt:function(v){return v+'%';},el:'vShutter',apply:function(v){app.style.setProperty('--shut',(v/100).toFixed(2));}},
+    energy:{v:2.4,min:0.6,max:4.0,step:0.4,fmt:function(v){return v.toFixed(1)+' kW';},el:'vEnergy',apply:function(v){}}
+  };
+  app.querySelectorAll('[data-step]').forEach(function(b){
+    b.addEventListener('click',function(){
+      var s=ST[b.dataset.step], d=+b.dataset.dir;
+      s.v=Math.round(Math.min(s.max,Math.max(s.min,s.v+d*s.step))*10)/10;
+      document.getElementById(s.el).textContent=s.fmt(s.v);
+      s.apply(s.v);
+      if(b.dataset.step==='energy') b.closest('.dstep').classList.toggle('saving', s.v<=1.4);
+    });
+  });
+  setInterval(function(){ var t=document.getElementById('camTs'); if(t){ t.textContent='CAM 01 · '+new Date().toLocaleTimeString(); } },1000);
+}
+/* real music via Web Audio (original, royalty-free) */
+var _actx,_mtimer,_mmaster;
+function music(on){
+  try{
+    if(on){
+      if(!_actx)_actx=new (window.AudioContext||window.webkitAudioContext)();
+      if(_actx.state==='suspended')_actx.resume();
+      _mmaster=_actx.createGain(); _mmaster.gain.value=0.05; _mmaster.connect(_actx.destination);
+      var seq=[261.6,329.6,392.0,523.3,392.0,329.6], i=0;
+      _mtimer=setInterval(function(){
+        var o=_actx.createOscillator(), g=_actx.createGain(), t=_actx.currentTime;
+        o.type='triangle'; o.frequency.value=seq[i%seq.length]; i++;
+        g.gain.setValueAtTime(0,t); g.gain.linearRampToValueAtTime(1,t+0.04); g.gain.exponentialRampToValueAtTime(0.001,t+0.85);
+        o.connect(g); g.connect(_mmaster); o.start(t); o.stop(t+0.9);
+      },430);
+    } else { clearInterval(_mtimer); if(_mmaster){ try{_mmaster.disconnect();}catch(e){} } }
+  }catch(e){}
+}
+
+/* hero parallax */
+var hero=document.getElementById('home');
+if(hero){ hero.addEventListener('mousemove',function(e){
+  var r=hero.getBoundingClientRect(), x=(e.clientX-r.width/2)/r.width, y=(e.clientY-r.height/2)/r.height;
+  document.querySelectorAll('[data-parallax]').forEach(function(el){ el.style.transform='translate('+(x*18)+'px,'+(y*18)+'px)'; });
+}); hero.addEventListener('mouseleave',function(){ document.querySelectorAll('[data-parallax]').forEach(function(el){ el.style.transform=''; }); }); }
+
+/* custom cursor */
+(function(){
+  if(matchMedia('(hover:none)').matches||innerWidth<980) return;
+  var dot=document.createElement('div'); dot.className='cursor';
+  var ring=document.createElement('div'); ring.className='cursor-ring';
+  document.body.appendChild(dot); document.body.appendChild(ring);
+  var mx=0,my=0,rx=0,ry=0;
+  addEventListener('mousemove',function(e){ mx=e.clientX;my=e.clientY; dot.style.transform='translate('+mx+'px,'+my+'px) translate(-50%,-50%)'; });
+  (function loop(){ rx+=(mx-rx)*.18; ry+=(my-ry)*.18; ring.style.transform='translate('+rx+'px,'+ry+'px) translate(-50%,-50%)'; requestAnimationFrame(loop); })();
+  document.querySelectorAll('a,button,.lu,.pj,.acard,.tc,.node,.phone,.filters button').forEach(function(el){
+    el.addEventListener('mouseenter',function(){ ring.classList.add('big'); });
+    el.addEventListener('mouseleave',function(){ ring.classList.remove('big'); });
+  });
+})();
+</script>
+<script>
+(function(){
+  var R=document.getElementById('sx');
+  var BASE="assets/";
+  var FILES=["beat6-final.jpg","beat1-solar.jpg","beat2-security.jpg","beat3-living.jpg","beat4-panel.jpg","beat5-ev.jpg","beat0-hero.jpg"];
+  var imgs=[].slice.call(R.querySelectorAll('.bimg'));
+  imgs.forEach(function(el,i){el.style.backgroundImage='url("'+BASE+FILES[i]+'")';el.style.zIndex=i;});
+  var KB=[[.14,0,-2],[.12,-3,3],[.12,3,-2],[.10,0,2],[.12,-2,0],[.12,2,1],[.14,0,-3]];
+  var N=FILES.length;
+  var caps=[].slice.call(R.querySelectorAll('.cap'));
+  function clamp(v,a,b){return Math.max(a,Math.min(b,v));}
+  var prog=document.getElementById('prog'),cue=document.getElementById('cue');
+  function onScroll(){
+    var vh=innerHeight, p=clamp(window.scrollY/vh,0,N-0.001), cur=Math.floor(p), f=p-cur;
+    imgs.forEach(function(el,i){
+      var op=0; if(i===cur)op=1; else if(i===cur+1)op=f; el.style.opacity=op;
+      var kb=KB[i]||[.12,0,0], t=clamp(p-i+0.3,0,1);
+      el.style.transform='scale('+(1.06+kb[0]*t)+') translate('+(kb[1]*t)+'%,'+(kb[2]*t)+'%)';
+    });
+    caps.forEach(function(c,i){c.classList.toggle('show',(i===cur)&&(f<0.82)&&i!==0);});
+    caps[0].classList.toggle('show',cur===0&&f<0.82);
+    if(cue)cue.style.opacity=(p<0.4)?1:0;
+    var max=document.body.scrollHeight-vh; if(prog)prog.style.width=(window.scrollY/max*100)+'%';
+  }
+  addEventListener('scroll',onScroll,{passive:true});addEventListener('resize',onScroll);onScroll();
+})();
+</script>
+
+<script>
+/* ===== Sedra interactive smart-home simulator ===== */
+(function(){
+const iot=document.getElementById('iot');
+const S={lights:{living:false,kitchen:false,facade:false,garden:false},clim:23,cur:100,ev:{on:true,level:41},sec:false,snd:{on:false,track:0},scene:null};
+const TRACKS=['Ambient Calm','Cinematic Mood','Upbeat Party'];
+
+/* ---------- lights ---------- */
+function applyLights(){
+  ['living','kitchen','facade','garden'].forEach(z=>{
+    document.querySelector('.iz.z-'+z).classList.toggle('on',S.lights[z]);
+    const t=document.querySelector('.tgl[data-zone="'+z+'"]'); if(t)t.classList.toggle('on',S.lights[z]);
+  });
+  const all=Object.values(S.lights).every(v=>v);
+  const anyOn=Object.values(S.lights).some(v=>v);
+  document.querySelector('.tgl[data-zone="all"]').classList.toggle('on',all);
+  if(!S.scene) iot.classList.toggle('dim',!anyOn);
+  sync();
+}
+document.querySelectorAll('.tgl[data-zone]').forEach(t=>t.addEventListener('click',()=>{
+  const z=t.dataset.zone;
+  if(z==='all'){const v=!Object.values(S.lights).every(x=>x);Object.keys(S.lights).forEach(k=>S.lights[k]=v);}
+  else S.lights[z]=!S.lights[z];
+  clearScene(); applyLights();
+}));
+
+/* ---------- climate ---------- */
+function applyClim(){
+  document.getElementById('climBig').textContent=S.clim;
+  document.getElementById('thVal').textContent=S.clim+'°';
+  const tint=document.getElementById('tint');
+  let op=0,col='';
+  if(S.clim>=25){op=Math.min(.6,(S.clim-24)*0.12);col='radial-gradient(120% 100% at 50% 45%,rgba(255,120,40,.9),rgba(255,80,30,.5))';}
+  else if(S.clim<=20){op=Math.min(.6,(21-S.clim)*0.12);col='radial-gradient(120% 100% at 50% 45%,rgba(80,150,255,.9),rgba(40,110,220,.5))';}
+  tint.style.background=col; tint.style.opacity=op;
+  const hint=document.getElementById('climHint');
+  hint.textContent=S.clim>=26?'Warm':S.clim<=19?'Cool':'Comfortable';
+  const ring=document.getElementById('thRing');
+  const c=S.clim>=25?'#ff7a3c':S.clim<=20?'#4aa0ff':'#38d0ec';
+  ring.style.borderColor=c; document.getElementById('thVal').style.color=c;
+  sync();
+}
+document.querySelectorAll('[data-clim]').forEach(b=>b.addEventListener('click',()=>{
+  S.clim=Math.max(16,Math.min(30,S.clim+ +b.dataset.clim)); applyClim();
+}));
+
+/* ---------- curtains ---------- */
+function applyCur(){
+  const open=S.cur/100;
+  document.getElementById('drapeL').style.transform='translateX('+(-101*open)+'%)';
+  document.getElementById('drapeR').style.transform='translateX('+(101*open)+'%)';
+  document.querySelectorAll('#curSeg button').forEach(b=>b.classList.toggle('on',+b.dataset.cur===S.cur));
+  sync();
+}
+document.querySelectorAll('#curSeg button').forEach(b=>b.addEventListener('click',()=>{S.cur=+b.dataset.cur;clearScene();applyCur();}));
+
+/* ---------- EV ---------- */
+let evTimer;
+function applyEv(){
+  var lvl=S.ev.level, eta=Math.max(1,Math.round((100-lvl)*0.7));
+  document.getElementById('evPct').textContent=lvl+'%';
+  document.getElementById('evBig').textContent=lvl;
+  var ec=document.getElementById('evEtaC'); if(ec) ec.textContent=lvl>=100?'Charged ✓':'~'+eta+' min';
+  document.getElementById('evToggle').textContent=S.ev.on?'Stop':'Start';
+  document.getElementById('evHint').textContent=S.ev.on?(lvl>=100?'Fully charged ✓':'Charging · ~'+eta+' min to full'):'Charging paused';
+  sync();
+}
+function evTick(){ if(S.ev.on&&S.ev.level<100){S.ev.level++;applyEv();} }
+document.getElementById('evToggle').addEventListener('click',()=>{S.ev.on=!S.ev.on;applyEv();});
+
+/* ---------- security ---------- */
+function applySec(){ iot.classList.toggle('armed',S.sec); document.querySelector('.tgl[data-sec="1"]').classList.toggle('on',S.sec); sync(); }
+document.querySelector('.tgl[data-sec="1"]').addEventListener('click',()=>{S.sec=!S.sec;clearScene();applySec();});
+
+/* ---------- cameras ---------- */
+function openCams(){document.getElementById('cams').classList.add('show');}
+document.getElementById('camClose').addEventListener('click',()=>document.getElementById('cams').classList.remove('show'));
+document.querySelectorAll('.icam-dot').forEach(d=>d.addEventListener('click',openCams));
+setInterval(()=>{const now=new Date().toLocaleTimeString();document.querySelectorAll('.feedts').forEach(e=>e.textContent=now);},1000);
+
+/* ---------- intercom ---------- */
+function ringIntercom(){document.getElementById('intercom').classList.add('show');}
+document.getElementById('icOpen').addEventListener('click',()=>{document.getElementById('intercom').classList.remove('show');});
+document.getElementById('icIgnore').addEventListener('click',()=>{document.getElementById('intercom').classList.remove('show');});
+
+/* ---------- device rail + panels ---------- */
+const TITLES={lights:'Lights',climate:'Climate',curtains:'Curtains',ev:'EV Charger',security:'Security'};
+let activeDev=null;
+function openPanel(dev){
+  if(dev==='cameras'){openCams();return;}
+  if(dev==='intercom'){ringIntercom();return;}
+  activeDev=dev;
+  document.querySelectorAll('.ichip').forEach(c=>c.classList.toggle('active',c.dataset.dev===dev));
+  document.getElementById('panelTitle').textContent=TITLES[dev];
+  document.querySelectorAll('.ptab').forEach(p=>p.classList.toggle('on',p.dataset.p===dev));
+  iot.classList.toggle('show-climate',dev==='climate');
+  document.getElementById('panel').classList.add('show');
+}
+document.querySelectorAll('.ichip').forEach(c=>c.addEventListener('click',()=>openPanel(c.dataset.dev)));
+document.getElementById('panelX').addEventListener('click',()=>{
+  document.getElementById('panel').classList.remove('show');
+  document.querySelectorAll('.ichip').forEach(c=>c.classList.remove('active'));
+  iot.classList.remove('show-climate'); activeDev=null;
+});
+
+/* ---------- scenes ---------- */
+const SCENE_META={
+  morning:{label:'Morning',ev:true},
+  goodbye:{label:'Goodbye',ev:false}
+};
+const SCENES={
+  morning:()=>{setLights({living:false,kitchen:false,facade:false,garden:false});S.clim=23;S.cur=100;S.sec=false;iot.className='iot live bright';},
+  goodbye:()=>{setLights({living:false,kitchen:false,facade:false,garden:false});S.clim=20;S.cur=0;S.sec=true;iot.className='iot live dim armed';}
+};
+function setLights(o){Object.assign(S.lights,o);}
+function clearScene(){S.scene=null;document.querySelectorAll('.iscene').forEach(x=>x.classList.remove('on'));document.getElementById('sceneTag').classList.remove('show');}
+document.querySelectorAll('.iscene').forEach(b=>b.addEventListener('click',()=>{
+  S.scene=b.dataset.scene; SCENES[b.dataset.scene]();
+  const meta=SCENE_META[b.dataset.scene];
+  if(meta.ev) iot.classList.add('show-ev'); else iot.classList.remove('show-ev');
+  if(S.sec)iot.classList.add('armed');
+  document.querySelectorAll('.iscene').forEach(x=>x.classList.toggle('on',x===b));
+  applyLights();applyClim();applyCur();applySec();applyEv();
+  const tag=document.getElementById('sceneTag');
+  document.getElementById('sceneTagT').textContent=meta.label;
+  document.getElementById('phScene').textContent=meta.label;
+  tag.classList.add('show');
+}));
+
+/* ---------- phone sync ---------- */
+function sync(){
+  const n=Object.values(S.lights).filter(v=>v).length;
+  document.getElementById('phLights').textContent=n+' on';
+  document.getElementById('cLights').classList.toggle('on',n>0);
+  document.getElementById('phClim').textContent=S.clim+'°';
+  document.getElementById('phCur').textContent=S.cur>=100?'Open':S.cur<=0?'Closed':'Half';
+  document.getElementById('cCur').classList.toggle('on',S.cur<100);
+  document.getElementById('phEv').textContent=S.ev.level+'%';
+  document.getElementById('cEv').classList.toggle('on',S.ev.on);
+  document.getElementById('phSec').textContent=S.sec?'Armed':'Off';
+  document.getElementById('cSec').classList.toggle('on',S.sec);
+  if(!S.scene){document.getElementById('phScene').textContent='Custom';document.getElementById('phSub').textContent=(n+(S.sec?1:0)+(S.ev.on?1:0))+' active';}
+  else{document.getElementById('phSub').textContent='Scene active';}
+}
+
+/* init */
+applyLights();applyClim();applyCur();applySec();applyEv();
+iot.classList.add('show-ev');
+evTimer=setInterval(evTick,1300);
+setTimeout(()=>{ ringIntercom(); },6000);
+})();
+</script>
+</body>
+</html>
