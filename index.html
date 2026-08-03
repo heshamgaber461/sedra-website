@@ -119,8 +119,9 @@ header.nav.scrolled .nav-inner{padding:13px 26px}
 .sc-art svg{position:relative;z-index:2;width:120px;height:120px;stroke:var(--cyan-l);fill:none;stroke-width:1.3;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 6px 20px rgba(31,166,196,.4))}
 .sc-artglow{position:absolute;width:60%;height:60%;border-radius:50%;filter:blur(70px);background:var(--cyan);opacity:.35;transition:.6s}
 .sc-index{position:absolute;top:24px;left:26px;font-family:'Outfit';font-weight:800;font-size:80px;color:rgba(255,255,255,.08)}
-.sc-stepimg{display:none}
 .sc-steps{padding:14vh 0}
+.sc-stepimg{display:none}
+.sc-stepimg img{width:100%;display:block}
 .sc-step{min-height:78vh;display:flex;flex-direction:column;justify-content:center;opacity:.32;transition:.4s}
 .sc-step.active{opacity:1}
 .sc-step .st-n{font-family:'Outfit';color:var(--cyan-l);font-size:13px;letter-spacing:3px;margin-bottom:14px}
@@ -1071,21 +1072,21 @@ header.nav.scrolled .logo-img{height:36px}
       <div class="sc-stage">
         <div class="sc-index" id="scIndex">01</div>
         <div class="sc-artglow"></div>
-        <div class="sc-art on" data-i=""" role="img" aria-label="Home Automation"><img src="assets/sol-automation.jpg" alt="Home Automation" loading="lazy"></div>
-        <div class="sc-art" data-i=""" role="img" aria-label="Security Systems"><img src="assets/sol-security.jpg" alt="Security Systems" loading="lazy"></div>
-        <div class="sc-art" data-i=""" role="img" aria-label="Network Cabling & Structure"><img src="assets/sol-networks.jpg" alt="Network Cabling & Structure" loading="lazy"></div>
-        <div class="sc-art" data-i=""" role="img" aria-label="Light Current Systems"><img src="assets/sol-lightcurrent.jpg" alt="Light Current Systems" loading="lazy"></div>
-        <div class="sc-art" data-i=""" role="img" aria-label="Solar Energy"><img src="assets/sol-solar.jpg" alt="Solar Energy" loading="lazy"></div>
-        <div class="sc-art" data-i=""" role="img" aria-label="EV Charger"><img src="assets/sol-ev.jpg" alt="EV Charger" loading="lazy"></div>
+        <div class="sc-art on" data-i="0" role="img" aria-label="Home Automation"><img src="assets/sol-automation.jpg" alt="Home Automation"></div>
+        <div class="sc-art" data-i="1" role="img" aria-label="Security Systems"><img src="assets/sol-security.jpg" alt="Security Systems"></div>
+        <div class="sc-art" data-i="2" role="img" aria-label="Network Cabling & Structure"><img src="assets/sol-networks.jpg" alt="Network Cabling & Structure"></div>
+        <div class="sc-art" data-i="3" role="img" aria-label="Light Current Systems"><img src="assets/sol-lightcurrent.jpg" alt="Light Current Systems"></div>
+        <div class="sc-art" data-i="4" role="img" aria-label="Solar Energy"><img src="assets/sol-solar.jpg" alt="Solar Energy"></div>
+        <div class="sc-art" data-i="5" role="img" aria-label="EV Charger"><img src="assets/sol-ev.jpg" alt="EV Charger"></div>
       </div>
     </div>
     <div class="sc-steps">
-      <div class="sc-step active" data-i="0"><div class="sc-stepimg"><img src="assets/sol-automation.jpg" alt="Home Automation" loading="lazy"></div><div class="st-n">/ 01 — AUTOMATION</div><h3>Home Automation</h3><p>Lighting, climate, curtains, security and multimedia — your whole home controlled from a single tap, anywhere in the world.</p><div class="tags"><span>Lighting</span><span>Climate</span><span>Curtains</span><span>Scenes</span></div><a class="sc-link" href="page.html?id=home-automation">Explore service <span>&rarr;</span></a></div>
-      <div class="sc-step" data-i="1"><div class="sc-stepimg"><img src="assets/sol-security.jpg" alt="Security Systems" loading="lazy"></div><div class="st-n">/ 02 — SECURITY</div><h3>Security Systems</h3><p>CCTV, access control, fire alarm and intrusion detection — complete protection for your home or business, always watching.</p><div class="tags"><span>CCTV</span><span>Access Control</span><span>Fire Alarm</span><span>Intrusion</span></div><a class="sc-link" href="page.html?id=security">Explore service <span>&rarr;</span></a></div>
-      <div class="sc-step" data-i="2"><div class="sc-stepimg"><img src="assets/sol-networks.jpg" alt="Network Cabling & Structure" loading="lazy"></div><div class="st-n">/ 03 — NETWORKS</div><h3>Network Cabling &amp; Structure</h3><p>Structured cabling and network infrastructure engineered for speed, full coverage and rock-solid reliability.</p><div class="tags"><span>Structured Cabling</span><span>Networking</span><span>Wi-Fi</span><span>Data</span></div><a class="sc-link" href="page.html?id=networks">Explore service <span>&rarr;</span></a></div>
-      <div class="sc-step" data-i="3"><div class="sc-stepimg"><img src="assets/sol-lightcurrent.jpg" alt="Light Current Systems" loading="lazy"></div><div class="st-n">/ 04 — LIGHT CURRENT</div><h3>Light Current Systems</h3><p>Audio/video, MATV and telephone systems — the integrated low-current backbone of a modern building.</p><div class="tags"><span>Audio / Video</span><span>MATV</span><span>Telephone</span><span>Sound</span></div><a class="sc-link" href="page.html?id=light-current">Explore service <span>&rarr;</span></a></div>
-      <div class="sc-step" data-i="4"><div class="sc-stepimg"><img src="assets/sol-solar.jpg" alt="Solar Energy" loading="lazy"></div><div class="st-n">/ 05 — SOLAR</div><h3>Solar Energy</h3><p>On-grid, off-grid and thermal solar systems that cut your electricity bill and carbon footprint — for homes and businesses.</p><div class="tags"><span>On-grid</span><span>Off-grid</span><span>Thermal</span><span>Net-metering</span></div><a class="sc-link" href="page.html?id=solar">Explore service <span>&rarr;</span></a></div>
-      <div class="sc-step" data-i="5"><div class="sc-stepimg"><img src="assets/sol-ev.jpg" alt="EV Charger" loading="lazy"></div><div class="st-n">/ 06 — EV CHARGING</div><h3>EV Charger</h3><p>Locally-manufactured, smart-managed charging for electric cars, neighborhood EVs and plug-in hybrids.</p><div class="tags"><span>Home</span><span>Business</span><span>Fleet</span><span>Egypt-made</span></div><a class="sc-link" href="page.html?id=ev-charging">Explore service <span>&rarr;</span></a></div>
+      <div class="sc-step active" data-i="0"><div class="sc-stepimg"><img src="assets/sol-automation.jpg" alt="Home Automation"></div><div class="st-n">/ 01 — AUTOMATION</div><h3>Home Automation</h3><p>Lighting, climate, curtains, security and multimedia — your whole home controlled from a single tap, anywhere in the world.</p><div class="tags"><span>Lighting</span><span>Climate</span><span>Curtains</span><span>Scenes</span></div><a class="sc-link" href="page.html?id=home-automation">Explore service <span>&rarr;</span></a></div>
+      <div class="sc-step" data-i="1"><div class="sc-stepimg"><img src="assets/sol-security.jpg" alt="Security Systems"></div><div class="st-n">/ 02 — SECURITY</div><h3>Security Systems</h3><p>CCTV, access control, fire alarm and intrusion detection — complete protection for your home or business, always watching.</p><div class="tags"><span>CCTV</span><span>Access Control</span><span>Fire Alarm</span><span>Intrusion</span></div><a class="sc-link" href="page.html?id=security">Explore service <span>&rarr;</span></a></div>
+      <div class="sc-step" data-i="2"><div class="sc-stepimg"><img src="assets/sol-networks.jpg" alt="Network Cabling & Structure"></div><div class="st-n">/ 03 — NETWORKS</div><h3>Network Cabling &amp; Structure</h3><p>Structured cabling and network infrastructure engineered for speed, full coverage and rock-solid reliability.</p><div class="tags"><span>Structured Cabling</span><span>Networking</span><span>Wi-Fi</span><span>Data</span></div><a class="sc-link" href="page.html?id=networks">Explore service <span>&rarr;</span></a></div>
+      <div class="sc-step" data-i="3"><div class="sc-stepimg"><img src="assets/sol-lightcurrent.jpg" alt="Light Current Systems"></div><div class="st-n">/ 04 — LIGHT CURRENT</div><h3>Light Current Systems</h3><p>Audio/video, MATV and telephone systems — the integrated low-current backbone of a modern building.</p><div class="tags"><span>Audio / Video</span><span>MATV</span><span>Telephone</span><span>Sound</span></div><a class="sc-link" href="page.html?id=light-current">Explore service <span>&rarr;</span></a></div>
+      <div class="sc-step" data-i="4"><div class="sc-stepimg"><img src="assets/sol-solar.jpg" alt="Solar Energy"></div><div class="st-n">/ 05 — SOLAR</div><h3>Solar Energy</h3><p>On-grid, off-grid and thermal solar systems that cut your electricity bill and carbon footprint — for homes and businesses.</p><div class="tags"><span>On-grid</span><span>Off-grid</span><span>Thermal</span><span>Net-metering</span></div><a class="sc-link" href="page.html?id=solar">Explore service <span>&rarr;</span></a></div>
+      <div class="sc-step" data-i="5"><div class="sc-stepimg"><img src="assets/sol-ev.jpg" alt="EV Charger"></div><div class="st-n">/ 06 — EV CHARGING</div><h3>EV Charger</h3><p>Locally-manufactured, smart-managed charging for electric cars, neighborhood EVs and plug-in hybrids.</p><div class="tags"><span>Home</span><span>Business</span><span>Fleet</span><span>Egypt-made</span></div><a class="sc-link" href="page.html?id=ev-charging">Explore service <span>&rarr;</span></a></div>
     </div>
   </div>
 </section>
@@ -1250,13 +1251,25 @@ var sb=document.querySelector('.stats'); if(sb)cio.observe(sb);
 var steps=[].slice.call(document.querySelectorAll('.sc-step'));
 var arts=[].slice.call(document.querySelectorAll('.sc-art'));
 var scIndex=document.getElementById('scIndex');
-var sio=new IntersectionObserver(function(es){es.forEach(function(e){ if(e.isIntersecting){
-  var i=+e.target.dataset.i;
-  steps.forEach(function(s){ s.classList.toggle('active',+s.dataset.i===i); });
-  arts.forEach(function(a){ a.classList.toggle('on',+a.dataset.i===i); });
-  scIndex.textContent='0'+(i+1);
-} });},{threshold:.6});
-steps.forEach(function(s){ sio.observe(s); });
+function scShow(idx){
+  steps.forEach(function(s){ s.classList.toggle('active',+s.dataset.i===idx); });
+  arts.forEach(function(a){ a.classList.toggle('on',+a.dataset.i===idx); });
+  if(scIndex) scIndex.textContent='0'+(idx+1);
+}
+function scUpdate(){
+  if(!steps.length) return;
+  var mid=innerHeight/2, best=0, bestD=Infinity;
+  steps.forEach(function(s){
+    var r=s.getBoundingClientRect();
+    if(r.bottom<=0 || r.top>=innerHeight) return;
+    var d=Math.abs((r.top+r.height/2)-mid);
+    if(d<bestD){ bestD=d; best=+s.dataset.i; }
+  });
+  scShow(best);
+}
+addEventListener('scroll',scUpdate,{passive:true});
+addEventListener('resize',scUpdate);
+scShow(0); scUpdate();
 
 /* filter */
 document.querySelectorAll('.filters button').forEach(function(b){ b.onclick=function(){
