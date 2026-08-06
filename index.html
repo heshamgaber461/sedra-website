@@ -1401,7 +1401,7 @@ document.querySelectorAll('.filters button').forEach(function(b){ b.onclick=func
 /* quote -> whatsapp */
 /* ===== Quote form -> Google Sheet =====
    ضع رابط Google Apps Script (Web App) مكان __SHEET_URL__ بالأسفل */
-var QUOTE_ENDPOINT="__SHEET_URL__";
+var QUOTE_ENDPOINT="https://script.google.com/macros/s/AKfycbwBdEUfexU5kEB9ipVbvFi-f1M7OeoKqYeNZRds1P2FFmWQm29bEwp6KicAJm3g3opeBg/exec";
 function sendQuote(ev){ ev.preventDefault();
   var g=function(id){return (document.getElementById(id).value||'').trim();};
   var name=g('q_name'),phone=g('q_phone');
