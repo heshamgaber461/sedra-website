@@ -1103,14 +1103,6 @@ img,svg,video{ max-width:100% }
       <button class="iscene" data-scene="goodbye">👋 Goodbye</button>
     </div>
 
-    <div class="irooms" id="rooms">
-      <span class="irooms-t">Rooms:</span>
-      <button class="iroom" data-room="living">Living</button>
-      <button class="iroom" data-room="kitchen">Kitchen</button>
-      <button class="iroom" data-room="facade">Facade</button>
-      <button class="iroom" data-room="garden">Garden</button>
-    </div>
-
     <div class="irail" id="rail">
       <div class="ichip" data-dev="lights"><svg viewBox="0 0 24 24"><path d="M9 18h6M10 22h4M12 2a7 7 0 00-4 12c.6.5 1 1.3 1 2h6c0-.7.4-1.5 1-2a7 7 0 00-4-12z"/></svg>Lights</div>
       <div class="ichip" data-dev="climate"><svg viewBox="0 0 24 24"><path d="M14 14V5a2 2 0 10-4 0v9a4 4 0 104 0z"/></svg>Climate</div>
@@ -1379,17 +1371,33 @@ var burger=document.getElementById('burger'),links=document.getElementById('navL
 burger.onclick=function(){ links.classList.toggle('open'); };
 links.querySelectorAll('a').forEach(function(a){ a.onclick=function(){ links.classList.remove('open'); }; });
 
-/* reveal */
-try{
-  var io=new IntersectionObserver(function(es){es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });},{threshold:.14});
-  document.querySelectorAll('.rv,.fade').forEach(function(el){ io.observe(el); });
-}catch(err){ document.querySelectorAll('.rv,.fade').forEach(function(el){ el.classList.add('in'); }); }
-/* safety net — never leave content invisible if the observer or any script fails */
-setTimeout(function(){ if(!document.querySelector('.fade.in,.rv.in')){ document.querySelectorAll('.rv,.fade').forEach(function(el){ el.classList.add('in'); }); } },2200);
-addEventListener('load',function(){ document.querySelectorAll('.rv,.fade').forEach(function(el){ var r=el.getBoundingClientRect(); if(r.top<innerHeight){ el.classList.add('in'); } }); });
+/* reveal on scroll — robust across desktop & mobile */
+function revealPass(){
+  var vh=innerHeight||document.documentElement.clientHeight;
+  document.querySelectorAll('.rv,.fade').forEach(function(el){
+    if(el.classList.contains('in')) return;
+    if(el.getBoundingClientRect().top < vh*0.92){ el.classList.add('in'); }
+  });
+}
+addEventListener('scroll',revealPass,{passive:true});
+addEventListener('resize',revealPass);
+addEventListener('load',revealPass);
+/* short bootstrap so the first screens reveal even before the first scroll */
+var _rb=0; (function boot(){ revealPass(); if(_rb++<60) requestAnimationFrame(boot); })();
+/* safety net — never leave content invisible if anything fails */
+setTimeout(function(){ if(document.querySelectorAll('.fade.in,.rv.in').length<3){ document.querySelectorAll('.rv,.fade').forEach(function(el){ el.classList.add('in'); }); } },2600);
+
+/* in-page links (incl. "Try Your Smart Home") scroll smoothly & reliably */
+document.querySelectorAll('a[href^="#"]').forEach(function(a){
+  a.addEventListener('click',function(ev){
+    var id=a.getAttribute('href'); if(!id||id.length<2) return;
+    var t=document.querySelector(id); if(!t) return;
+    ev.preventDefault(); t.scrollIntoView({behavior:'smooth',block:'start'});
+  });
+});
 /* stagger fade groups */
 document.querySelectorAll('.about-cards,.lu-grid,.pj-grid,.tgrid,.pl,.st-row').forEach(function(grp){
-  grp.querySelectorAll('.fade').forEach(function(el,i){ el.style.transitionDelay=(i*80)+'ms'; });
+  grp.querySelectorAll('.fade').forEach(function(el,i){ el.style.transitionDelay=(Math.min(i,5)*70)+'ms'; });
 });
 
 /* count up */
@@ -1668,7 +1676,8 @@ function setTOD(t){
   var night=Math.max(0,Math.min(1,(t-58)/42));
   var warm=Math.max(0,1-Math.abs(t-70)/20);
   var sun=Math.cos((t-40)/56*Math.PI); todSun=Math.max(0,sun);
-  if(dayOv) dayOv.style.opacity=day.toFixed(3);
+  /* snap day image fully on/off — partial blend of the two room photos caused ghosting/glitch */
+  if(dayOv) dayOv.style.opacity=(day>=0.45?1:0);
   if(nightOv) nightOv.style.opacity=(0.1+night*0.5).toFixed(3);
   if(warmOv) warmOv.style.opacity=(warm*0.6).toFixed(3);
   if(skyOv) skyOv.style.opacity=(day*0.32).toFixed(3);
@@ -1696,7 +1705,7 @@ function updateEnergy(){
 
 /* ---------- scenes ---------- */
 const SCENE_META={
-  morning:{label:'Morning',ev:true,tod:34},
+  morning:{label:'Morning',ev:true,tod:38},
   reading:{label:'Reading',ev:true,tod:76},
   party:{label:'Party',ev:true,tod:94},
   cinema:{label:'Cinema',ev:false,tod:100},
@@ -1726,9 +1735,6 @@ document.querySelectorAll('.iscene').forEach(b=>b.addEventListener('click',()=>{
   document.getElementById('phScene').textContent=meta.label;
   tag.classList.add('show');
 }));
-
-/* ---------- room quick-lights ---------- */
-document.querySelectorAll('.iroom').forEach(function(b){b.addEventListener('click',function(){var r=b.dataset.room;S.lights[r]=!S.lights[r];clearScene();applyLights();});});
 
 /* ---------- phone app: tiles are live controls ---------- */
 (function(){
