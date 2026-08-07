@@ -936,15 +936,35 @@ img,svg,video{ max-width:100% }
   .pj-grid{grid-template-columns:repeat(3,1fr)}
 }
 
-/* ===== performance ===== */
-/* don't render heavy sections (and their animations) until scrolled near */
-#iot,#projects,.stats,.ctaband{content-visibility:auto;contain-intrinsic-size:1px 1400px}
-/* phones: drop heavy blur — the single biggest scroll cost on mobile */
+/* ===== performance (phones) ===== */
+/* drop heavy blur — the single biggest scroll cost on mobile */
 @media(max-width:820px){
   .nav-inner,.ichip,.iscene,.iroom,.ipanel,.iphone,.ienergy,.iintercom,
   .ibadge,.ibadge2,.iscene-tag,.icams .wrap,.iev .evbadge{
     backdrop-filter:none!important;-webkit-backdrop-filter:none!important
   }
+}
+
+/* ===== mobile visual polish ===== */
+@media(max-width:820px){
+  /* make sure scroll-reveal actually animates on phones (no reduced-motion cut) */
+  .fade{transition:opacity .7s ease,transform .7s cubic-bezier(.16,1,.3,1)}
+  .rv>*{transition:transform .8s cubic-bezier(.16,1,.3,1),opacity .8s ease}
+  /* gentle stagger for grids so cards flow in one after another */
+  .pj:nth-child(2){transition-delay:.06s}.pj:nth-child(3){transition-delay:.12s}
+  .pj:nth-child(4){transition-delay:.06s}.pj:nth-child(5){transition-delay:.12s}
+
+  /* simulator: keep the villa clearly visible (not a dark cropped slice) */
+  .iot{min-height:92vh}
+  .iot-bg,.iot-bg-day,.iot-night,.iot-warm,.iot-sky{background-position:center 42%!important}
+  .iot-bg{transform:scale(1.02)!important}
+  .iot-vig{background:radial-gradient(140% 100% at 50% 40%,transparent 55%,rgba(2,8,16,.5) 100%)}
+}
+
+/* touch devices: give cards a tap-press feedback in place of hover */
+@media(hover:none){
+  .pj:active .thumb{transform:scale(1.05)}
+  .sc-stepimg:active img{transform:scale(1.03)}
 }
 </style>
 </head>
@@ -1516,7 +1536,8 @@ if(hero){ hero.addEventListener('mousemove',function(e){
     imgs.forEach(function(el,i){
       var op=0; if(i===cur)op=1; else if(i===cur+1)op=f; el.style.opacity=op;
       var kb=KB[i]||[.12,0,0], t=clamp(p-i+0.3,0,1);
-      el.style.transform='scale('+(1.06+kb[0]*t)+') translate('+(kb[1]*t)+'%,'+(kb[2]*t)+'%)';
+      var mob=innerWidth<=820, base=mob?1.0:1.06, amp=mob?0.4:1;
+      el.style.transform='scale('+(base+kb[0]*t*amp)+') translate('+(kb[1]*t*amp)+'%,'+(kb[2]*t*amp)+'%)';
     });
     caps.forEach(function(c,i){c.classList.toggle('show',(i===cur)&&(f<0.82)&&i!==0);});
     caps[0].classList.toggle('show',cur===0&&f<0.82);
@@ -1739,8 +1760,8 @@ function sync(){
   updateEnergy();
 }
 
-/* init */
-setTOD(100);
+/* init — start brighter on phones so the villa is clearly visible */
+setTOD(innerWidth<=820 ? 50 : 100);
 applyLights();applyClim();applyCur();applySec();applyEv();
 iot.classList.add('show-ev');
 evTimer=setInterval(evTick,9000);
