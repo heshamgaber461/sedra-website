@@ -956,8 +956,10 @@ img,svg,video{ max-width:100% }
 
   /* simulator: keep the villa clearly visible (not a dark cropped slice) */
   .iot{min-height:92vh}
-  .iot-bg,.iot-bg-day,.iot-night,.iot-warm,.iot-sky{background-position:center 42%!important}
+  .iot-bg,.iot-bg-day,.iot-night,.iot-warm,.iot-sky{background-position:center 50%!important}
   .iot-bg{transform:scale(1.02)!important}
+  /* mobile daytime villa image for Try Your Home */
+  .iot-bg-day{background-image:url(assets/iot-room-day-m.jpg)!important}
   .iot-vig{background:radial-gradient(140% 100% at 50% 40%,transparent 55%,rgba(2,8,16,.5) 100%)}
 }
 
@@ -1531,7 +1533,9 @@ if(hero){ hero.addEventListener('mousemove',function(e){
 (function(){
   var R=document.getElementById('sx');
   var BASE="assets/";
-  var FILES=["beat6-final.jpg","beat1-solar.jpg","beat2-security.jpg","beat3-living.jpg","beat4-panel.jpg","beat5-ev.jpg","beat0-hero.jpg"];
+  var FILES_DESK=["hero-smart.jpg","beat1-solar.jpg","beat2-security.jpg","beat3-living.jpg","beat4-panel.jpg","beat5-ev.jpg","beat0-hero.jpg"];
+  var FILES_MOB=["hero-smart.jpg","hero-m-solar.jpg","hero-m-villa.jpg","hero-m-panel.jpg","hero-m-panel.jpg","hero-m-ev.jpg","hero-m-living.jpg"];
+  var FILES=(innerWidth<=820)?FILES_MOB:FILES_DESK;
   var imgs=[].slice.call(R.querySelectorAll('.bimg'));
   imgs.forEach(function(el,i){el.style.backgroundImage='url("'+BASE+FILES[i]+'")';el.style.zIndex=i;});
   var KB=[[.14,0,-2],[.12,-3,3],[.12,3,-2],[.10,0,2],[.12,-2,0],[.12,2,1],[.14,0,-3]];
