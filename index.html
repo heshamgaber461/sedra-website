@@ -1122,7 +1122,7 @@ html[dir=rtl] .fbot{direction:ltr}
     <a href="#home" class="logo"><img src="assets/logo-white.png" alt="Sedra Electric — Reach the nature energy" class="logo-img"></a>
     <nav class="nav-links" id="navLinks">
       <a href="#about">About</a><a href="#solutions">Solutions</a><a href="#services">Services</a>
-      <a href="#projects">Projects</a><a href="page.html?id=academy">Academy</a>
+      <a href="#projects">Projects</a><a href="blog.html">Blog</a><a href="page.html?id=academy">Academy</a>
       <a href="https://sedraelectric.pages.dev" target="_blank" rel="noopener" class="nav-portal">Portal ↗</a>
       
       <a href="#contact" class="btn btn-primary nav-cta">Get a Quote</a>
@@ -1944,7 +1944,7 @@ if(innerWidth>820){ setTimeout(()=>{ ringIntercom(); },6000); }
 /* ===== Locale-aware Arabic (Emirati / Saudi) — English default, geo-gated ===== */
 (function(){
   var BASE = {
-    "About":"عن الشركة","Solutions":"الحلول","Services":"خدماتنا","Projects":"مشاريعنا","Academy":"الأكاديمية","Portal ↗":"البوابة ↗","Get a Quote":"اطلب عرض سعر",
+    "About":"عن الشركة","Solutions":"الحلول","Services":"خدماتنا","Projects":"مشاريعنا","Blog":"المدوّنة","Academy":"الأكاديمية","Portal ↗":"البوابة ↗","Get a Quote":"اطلب عرض سعر",
     "SEDRA · SMART HOME":"سيدرا · المنزل الذكي","SOLAR ENERGY SYSTEMS":"أنظمة الطاقة الشمسية","SURVEILLANCE & ACCESS CONTROL":"المراقبة والتحكم في الدخول","LIGHTING · CLIMATE · WINDOWS":"إضاءة · تكييف · ستائر","ONE APP · EVERY SYSTEM":"تطبيق واحد · كل الأنظمة","EV CHARGING":"شحن السيارات الكهربائية","CHOOSE SEDRA ELECTRIC":"اختر سيدرا إلكتريك",
     "⚡ Try Your Smart Home":"⚡ جرّب منزلك الذكي","SCROLL TO EXPLORE ↓":"مرّر لأسفل للاستكشاف ↓",
     "⚡ LIVE SMART-HOME DEMO —":"⚡ عرض مباشر للمنزل الذكي —","control the villa":"تحكّم في الفيلا","Now try it yourself":"جرّبها بنفسك الآن",
