@@ -1011,7 +1011,7 @@ html[dir=rtl] .fbot{direction:ltr}
       
       <a href="#contact" class="btn btn-primary nav-cta">Get a Quote</a>
     </nav>
-    <button type="button" id="langToggle" class="lang-toggle" data-noi18n aria-label="Switch language">العربية</button>
+    <button type="button" id="langToggle" class="lang-toggle" data-noi18n aria-label="Switch language" style="display:none">العربية</button>
     <button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
   </div>
 </header>
@@ -1825,64 +1825,99 @@ if(innerWidth>820){ setTimeout(()=>{ ringIntercom(); },6000); }
 })();
 </script>
 <script>
-/* ===== EN / AR bilingual (Egyptian Arabic) — default English ===== */
+/* ===== Locale-aware Arabic (Emirati / Saudi) — English default, geo-gated ===== */
 (function(){
-  var T = {
+  var BASE = {
     "About":"عن الشركة","Solutions":"الحلول","Services":"خدماتنا","Projects":"مشاريعنا","Academy":"الأكاديمية","Portal ↗":"البوابة ↗","Get a Quote":"اطلب عرض سعر",
-    "SEDRA · SMART HOME":"سيدرا · البيت الذكي","SOLAR ENERGY SYSTEMS":"أنظمة الطاقة الشمسية","SURVEILLANCE & ACCESS CONTROL":"مراقبة وتحكّم في الدخول","LIGHTING · CLIMATE · WINDOWS":"إضاءة · تكييف · ستائر","ONE APP · EVERY SYSTEM":"تطبيق واحد · كل الأنظمة","EV CHARGING":"شحن السيارات الكهربائية","CHOOSE SEDRA ELECTRIC":"اختار سيدرا إلكتريك",
-    "⚡ Try Your Smart Home":"⚡ جرّب بيتك الذكي","SCROLL TO EXPLORE ↓":"انزل تشوف ↓",
-    "⚡ LIVE SMART-HOME DEMO —":"⚡ ديمو مباشر للبيت الذكي —","control the villa":"تحكّم في الفيلا","Now try it yourself":"جرّبها بنفسك دلوقتي",
-    "Tap any device below and watch the villa respond — lights, climate, curtains, EV, sound, cameras and more.":"دوس على أي جهاز تحت وشوف الفيلا بتستجيب — إضاءة، تكييف، ستائر، شحن، صوت، كاميرات وأكتر.",
-    "☀️ Morning":"☀️ الصبح","👋 Goodbye":"👋 مع السلامة",
+    "SEDRA · SMART HOME":"سيدرا · المنزل الذكي","SOLAR ENERGY SYSTEMS":"أنظمة الطاقة الشمسية","SURVEILLANCE & ACCESS CONTROL":"المراقبة والتحكم في الدخول","LIGHTING · CLIMATE · WINDOWS":"إضاءة · تكييف · ستائر","ONE APP · EVERY SYSTEM":"تطبيق واحد · كل الأنظمة","EV CHARGING":"شحن السيارات الكهربائية","CHOOSE SEDRA ELECTRIC":"اختر سيدرا إلكتريك",
+    "⚡ Try Your Smart Home":"⚡ جرّب منزلك الذكي","SCROLL TO EXPLORE ↓":"مرّر لأسفل للاستكشاف ↓",
+    "⚡ LIVE SMART-HOME DEMO —":"⚡ عرض مباشر للمنزل الذكي —","control the villa":"تحكّم في الفيلا","Now try it yourself":"جرّبها بنفسك الآن",
+    "Tap any device below and watch the villa respond — lights, climate, curtains, EV, sound, cameras and more.":"اضغط على أي جهاز بالأسفل وشاهد الفيلا تستجيب — إضاءة، تكييف، ستائر، شحن، صوت، كاميرات وأكثر.",
+    "☀️ Morning":"☀️ الصباح","👋 Goodbye":"👋 مع السلامة",
     "Lights":"الإضاءة","Climate":"التكييف","Curtains":"الستائر","EV":"الشحن","Security":"الأمان","Cameras":"الكاميرات","Intercom":"الإنتركم",
-    "All Lights":"كل الإضاءة","Living Room":"الصالة","Kitchen":"المطبخ","Facade":"الواجهة","Garden":"الجنينة",
-    "THERMOSTAT":"الترموستات","Comfortable":"مريح","EV CHARGER":"شاحن العربية","Stop":"إيقاف","Charging · ~41 min to full":"بيشحن · ~41 دقيقة للكامل",
-    "Open":"مفتوح","Half":"نص","Closed":"مقفول","Arm System":"تفعيل الإنذار","Arming enables perimeter scanning & alerts.":"التفعيل بيشغّل مسح المحيط والتنبيهات.",
-    "📹 Live Cameras · 4 online":"📹 كاميرات مباشرة · 4 شغّالة","Close ✕":"إغلاق ✕","CAM 01 · Front":"كام 01 · الأمام","CAM 02 · Garage":"كام 02 · الجراج","CAM 03 · Gate":"كام 03 · البوابة","CAM 04 · Perimeter":"كام 04 · المحيط",
-    "Front Door":"باب البيت","📦 Delivery — someone's at your door…":"📦 توصيلة — فيه حد على الباب…","Unlock":"افتح","Ignore":"تجاهل",
-    "My Villa":"الفيلا بتاعتي","Custom":"مخصّص","Tap a device":"دوس على جهاز","LIGHTS":"الإضاءة","CLIMATE":"التكييف","CURTAINS":"الستائر","SECURITY":"الأمان","Off":"مقفول","👆 Tap any tile to control":"👆 دوس على أي مربع للتحكم",
-    "LIVE ENERGY":"الطاقة المباشرة","Home usage":"استهلاك البيت","Solar now":"الشمسي دلوقتي","From grid":"من الشبكة","Solar covers 0%":"الشمسي بيغطي 0%",
-    "System Armed":"النظام مفعّل","EV · Charging":"الشحن · شغّال","Morning":"الصبح",
-    "Founded in 2014, Sedra Electric is an engineering house for light-current systems, smart automation and sustainable energy — serving residential, commercial, hospitality, industrial and healthcare projects across Egypt, the UAE and Saudi Arabia. From first consultation to lifetime support, we deliver every system end to end.":"اتأسست سنة 2014، وسيدرا إلكتريك بيت هندسي لأنظمة التيار الخفيف والأتمتة الذكية والطاقة المستدامة — بنخدم مشاريع سكنية وتجارية وضيافة وصناعية وصحية في مصر والإمارات والسعودية. من أول استشارة لحد الدعم مدى الحياة، بنسلّم كل نظام من الألف للياء.",
-    "Turnkey":"تسليم مفتاح","One accountable team for consultation, design, installation, programming and maintenance — no hand-off gaps.":"فريق واحد مسؤول عن الاستشارة والتصميم والتركيب والبرمجة والصيانة — من غير أي فجوات في التسليم.",
-    "Engineered":"هندسة دقيقة","Rigorous quality management and certified components — attention to every detail for performance that lasts.":"إدارة جودة صارمة ومكونات معتمدة — اهتمام بأدق تفصيلة عشان أداء يفضل شغّال بأمان.",
+    "All Lights":"كل الإضاءة","Living Room":"غرفة المعيشة","Kitchen":"المطبخ","Facade":"الواجهة","Garden":"الحديقة",
+    "THERMOSTAT":"منظّم الحرارة","Comfortable":"مريح","EV CHARGER":"شاحن السيارة","Stop":"إيقاف","Charging · ~41 min to full":"جارٍ الشحن · ~41 دقيقة للاكتمال",
+    "Open":"مفتوح","Half":"نصف","Closed":"مغلق","Arm System":"تفعيل الإنذار","Arming enables perimeter scanning & alerts.":"التفعيل يشغّل مسح المحيط والتنبيهات.",
+    "📹 Live Cameras · 4 online":"📹 كاميرات مباشرة · 4 متصلة","Close ✕":"إغلاق ✕","CAM 01 · Front":"كام 01 · الأمام","CAM 02 · Garage":"كام 02 · الكراج","CAM 03 · Gate":"كام 03 · البوابة","CAM 04 · Perimeter":"كام 04 · المحيط",
+    "Front Door":"الباب الأمامي","📦 Delivery — someone's at your door…":"📦 توصيل — أحدهم عند بابك…","Unlock":"فتح","Ignore":"تجاهل",
+    "My Villa":"الفيلا","Custom":"مخصّص","Tap a device":"اضغط على جهاز","LIGHTS":"الإضاءة","CLIMATE":"التكييف","CURTAINS":"الستائر","SECURITY":"الأمان","Off":"مغلق","👆 Tap any tile to control":"👆 اضغط على أي مربع للتحكم",
+    "LIVE ENERGY":"الطاقة المباشرة","Home usage":"استهلاك المنزل","Solar now":"الشمسي الآن","From grid":"من الشبكة","Solar covers 0%":"الشمسي يغطي 0%",
+    "System Armed":"النظام مفعّل","EV · Charging":"الشحن · جارٍ","Morning":"الصباح",
+    "Founded in 2014, Sedra Electric is an engineering house for light-current systems, smart automation and sustainable energy — serving residential, commercial, hospitality, industrial and healthcare projects across Egypt, the UAE and Saudi Arabia. From first consultation to lifetime support, we deliver every system end to end.":"تأسست عام 2014، وسيدرا إلكتريك بيت هندسي لأنظمة التيار الخفيف والأتمتة الذكية والطاقة المستدامة — نخدم مشاريع سكنية وتجارية وضيافة وصناعية وصحية في مصر والإمارات والسعودية. من أول استشارة حتى الدعم مدى الحياة، نسلّم كل نظام من الألف إلى الياء.",
+    "Turnkey":"تسليم مفتاح","One accountable team for consultation, design, installation, programming and maintenance — no hand-off gaps.":"فريق واحد مسؤول عن الاستشارة والتصميم والتركيب والبرمجة والصيانة — دون أي فجوات في التسليم.",
+    "Engineered":"هندسة دقيقة","Rigorous quality management and certified components — attention to every detail for performance that lasts.":"إدارة جودة صارمة ومكوّنات معتمدة — اهتمام بأدق التفاصيل من أجل أداء يدوم بأمان.",
     "Supported":"دعم مستمر","Responsive maintenance and support from our own offices in Egypt, the UAE and Saudi Arabia.":"صيانة ودعم سريع من مكاتبنا في مصر والإمارات والسعودية.",
-    "/ 01 — AUTOMATION":"/ 01 — أتمتة","Home Automation":"أتمتة المنزل","Lighting, climate, curtains, security and multimedia — your whole home controlled from a single tap, anywhere in the world.":"إضاءة وتكييف وستائر وأمان وملتيميديا — بيتك كله بتحكم فيه بلمسة واحدة، من أي مكان في الدنيا.","Lighting":"إضاءة","Scenes":"مشاهد",
-    "/ 02 — SECURITY":"/ 02 — أمان","Security Systems":"أنظمة الأمان","CCTV, access control, fire alarm and intrusion detection — complete protection for your home or business, always watching.":"كاميرات وتحكّم في الدخول وإنذار حريق وكشف تسلل — حماية كاملة لبيتك أو شغلك، عينها عليك على طول.","CCTV":"كاميرات","Access Control":"تحكّم بالدخول","Fire Alarm":"إنذار حريق","Intrusion":"كشف تسلل",
-    "/ 03 — NETWORKS":"/ 03 — شبكات","Network Cabling & Structure":"تمديد وبنية الشبكات","Structured cabling and network infrastructure engineered for speed, full coverage and rock-solid reliability.":"تمديدات منظمة وبنية شبكات متصممة للسرعة والتغطية الكاملة والثبات التام.","Structured Cabling":"تمديدات منظمة","Networking":"شبكات","Wi-Fi":"واي فاي","Data":"داتا",
-    "/ 04 — LIGHT CURRENT":"/ 04 — تيار خفيف","Light Current Systems":"أنظمة التيار الخفيف","Audio/video, MATV and telephone systems — the integrated low-current backbone of a modern building.":"صوت وصورة و MATV وأنظمة تليفون — العمود الفقري للتيار الخفيف في أي مبنى حديث.","Audio / Video":"صوت / صورة","Telephone":"تليفون","Sound":"صوتيات",
-    "/ 05 — SOLAR":"/ 05 — طاقة شمسية","Solar Energy":"الطاقة الشمسية","On-grid, off-grid and thermal solar systems that cut your electricity bill and carbon footprint — for homes and businesses.":"أنظمة شمسية متصلة بالشبكة ومستقلة وحرارية بتقلّل فاتورة الكهربا والانبعاثات — للبيوت والشركات.","On-grid":"متصل بالشبكة","Off-grid":"مستقل","Thermal":"حراري","Net-metering":"صافي القياس",
-    "/ 06 — EV CHARGING":"/ 06 — شحن كهربائي","EV Charger":"شاحن السيارات","Smart-managed charging for electric cars, neighborhood EVs and plug-in hybrids.":"شحن ذكي ومُدار للسيارات الكهربائية وعربيات الأحياء والهجين القابل للشحن.","Home":"منزلي","Business":"تجاري","Fleet":"أساطيل","Load Management":"إدارة الأحمال",
-    "Explore service":"اعرف أكتر",
-    "Five phases, one accountable team — from the first consultation to lifetime support.":"خمس مراحل، وفريق واحد مسؤول — من أول استشارة لحد الدعم مدى الحياة.",
-    "Consultation":"استشارة","Onsite or in-office, we scope your project, requirements and budget into a clear plan.":"في الموقع أو في المكتب، بنحدد مشروعك ومتطلباتك وميزانيتك في خطة واضحة.",
-    "Design & Engineering":"تصميم وهندسة","Wiring, hardware, interfaces and power — planned with your architects for reliability.":"التمديدات والأجهزة والواجهات والتغذية — بنخططها مع المهندسين المعماريين عشان الاعتمادية.",
-    "Installation":"تركيب","Trained technicians deploy every system with precision and flawless execution.":"فنيين مدرّبين بيركبوا كل نظام بدقة وتنفيذ نضيف.",
-    "Programming":"برمجة","We integrate every subsystem to speak one language — audio, video and lighting as one.":"بندمج كل نظام فرعي عشان يتكلموا لغة واحدة — صوت وصورة وإضاءة كأنهم حاجة واحدة.",
-    "Maintenance & Support":"صيانة ودعم","World-class ongoing support to keep systems optimized and resolve issues fast.":"دعم مستمر بمستوى عالمي عشان الأنظمة تفضل مظبوطة وأي مشكلة تتحل بسرعة.",
-    "Our work":"شغلنا","Selected Projects":"مشاريع مختارة","All":"الكل","Residential":"سكني","Commercial":"تجاري","Hospitality":"ضيافة","Government":"حكومي",
-    "PROJECTS DELIVERED":"مشروع اتسلّم","YEARS EXPERIENCE":"سنة خبرة","% SATISFACTION":"% رضا العملاء","COUNTRIES":"دول",
-    "Tell us about your project — our engineers design a tailored solution built around your needs.":"احكيلنا عن مشروعك — ومهندسينا بيصمموا حل مفصّل على مقاس احتياجك.","Request a Consultation":"اطلب استشارة",
-    "Get in touch":"تواصل معانا","Start a project":"ابدأ مشروعك","Talk to us":"كلّمنا",
-    "Three offices across the region — reach the nearest one, or send the form. We usually reply within one business day.":"3 مكاتب في المنطقة — كلّم أقربهم ليك، أو ابعت الفورم. عادةً بنرد في خلال يوم عمل واحد.",
-    "🇪🇬 Cairo":"🇪🇬 القاهرة","🇦🇪 Dubai":"🇦🇪 دبي","🇸🇦 Riyadh":"🇸🇦 الرياض","Email":"الإيميل","Working hours":"مواعيد العمل",
-    "Sunday – Thursday: 9:00 AM – 5:00 PM · Friday & Saturday: Closed":"الأحد – الخميس: 9 ص – 5 م · الجمعة والسبت: إجازة","Follow us":"تابعنا",
-    "Request a Quote":"اطلب عرض سعر","A few details and we'll prepare a tailored proposal.":"شوية تفاصيل وهنجهّزلك عرض مفصّل.",
-    "FULL NAME":"الاسم بالكامل","PHONE":"الموبايل","EMAIL":"الإيميل","COUNTRY":"الدولة","SERVICE NEEDED":"الخدمة المطلوبة","PROJECT DETAILS":"تفاصيل المشروع",
+    "/ 01 — AUTOMATION":"/ 01 — أتمتة","Home Automation":"أتمتة المنزل","Lighting, climate, curtains, security and multimedia — your whole home controlled from a single tap, anywhere in the world.":"إضاءة وتكييف وستائر وأمان ووسائط متعددة — منزلك كله بتحكم فيه بلمسة واحدة، من أي مكان في العالم.","Lighting":"إضاءة","Scenes":"مشاهد",
+    "/ 02 — SECURITY":"/ 02 — أمان","Security Systems":"أنظمة الأمان","CCTV, access control, fire alarm and intrusion detection — complete protection for your home or business, always watching.":"كاميرات وتحكّم في الدخول وإنذار حريق وكشف تسلل — حماية كاملة لمنزلك أو عملك، تحت المراقبة دائماً.","CCTV":"كاميرات","Access Control":"تحكّم بالدخول","Fire Alarm":"إنذار حريق","Intrusion":"كشف تسلل",
+    "/ 03 — NETWORKS":"/ 03 — شبكات","Network Cabling & Structure":"تمديد وبنية الشبكات","Structured cabling and network infrastructure engineered for speed, full coverage and rock-solid reliability.":"تمديدات منظّمة وبنية شبكات مصمّمة للسرعة والتغطية الكاملة والثبات التام.","Structured Cabling":"تمديدات منظّمة","Networking":"شبكات","Wi-Fi":"واي فاي","Data":"بيانات",
+    "/ 04 — LIGHT CURRENT":"/ 04 — تيار خفيف","Light Current Systems":"أنظمة التيار الخفيف","Audio/video, MATV and telephone systems — the integrated low-current backbone of a modern building.":"أنظمة صوت وصورة و MATV وهاتف — العمود الفقري للتيار الخفيف في أي مبنى حديث.","Audio / Video":"صوت / صورة","Telephone":"هاتف","Sound":"صوتيات",
+    "/ 05 — SOLAR":"/ 05 — طاقة شمسية","Solar Energy":"الطاقة الشمسية","On-grid, off-grid and thermal solar systems that cut your electricity bill and carbon footprint — for homes and businesses.":"أنظمة شمسية متصلة بالشبكة ومستقلة وحرارية تخفّض فاتورة الكهرباء والانبعاثات — للمنازل والشركات.","On-grid":"متصل بالشبكة","Off-grid":"مستقل","Thermal":"حراري","Net-metering":"صافي القياس",
+    "/ 06 — EV CHARGING":"/ 06 — شحن كهربائي","EV Charger":"شاحن السيارات","Smart-managed charging for electric cars, neighborhood EVs and plug-in hybrids.":"شحن ذكي ومُدار للسيارات الكهربائية وعربات الأحياء والهجين القابل للشحن.","Home":"منزلي","Business":"تجاري","Fleet":"أساطيل","Load Management":"إدارة الأحمال",
+    "Explore service":"اعرف المزيد",
+    "Five phases, one accountable team — from the first consultation to lifetime support.":"خمس مراحل، وفريق واحد مسؤول — من أول استشارة حتى الدعم مدى الحياة.",
+    "Consultation":"استشارة","Onsite or in-office, we scope your project, requirements and budget into a clear plan.":"في الموقع أو في المكتب، نحدّد مشروعك ومتطلباتك وميزانيتك في خطة واضحة.",
+    "Design & Engineering":"تصميم وهندسة","Wiring, hardware, interfaces and power — planned with your architects for reliability.":"التمديدات والأجهزة والواجهات والتغذية — نخطّطها مع مهندسيك المعماريين من أجل الاعتمادية.",
+    "Installation":"تركيب","Trained technicians deploy every system with precision and flawless execution.":"فنيون مدرّبون يركّبون كل نظام بدقة وتنفيذ متقن.",
+    "Programming":"برمجة","We integrate every subsystem to speak one language — audio, video and lighting as one.":"ندمج كل نظام فرعي ليتحدث بلغة واحدة — صوت وصورة وإضاءة ككل واحد.",
+    "Maintenance & Support":"صيانة ودعم","World-class ongoing support to keep systems optimized and resolve issues fast.":"دعم مستمر بمستوى عالمي لإبقاء الأنظمة بأفضل حال وحل أي مشكلة بسرعة.",
+    "Our work":"أعمالنا","Selected Projects":"مشاريع مختارة","All":"الكل","Residential":"سكني","Commercial":"تجاري","Hospitality":"ضيافة","Government":"حكومي",
+    "PROJECTS DELIVERED":"مشروع مُسلّم","YEARS EXPERIENCE":"سنة خبرة","% SATISFACTION":"% رضا العملاء","COUNTRIES":"دول",
+    "Tell us about your project — our engineers design a tailored solution built around your needs.":"أخبِرنا عن مشروعك — ومهندسونا يصمّمون حلاً مفصّلاً حول احتياجك.","Request a Consultation":"اطلب استشارة",
+    "Get in touch":"تواصل معنا","Start a project":"ابدأ مشروعك","Talk to us":"كلّمنا",
+    "Three offices across the region — reach the nearest one, or send the form. We usually reply within one business day.":"لدينا 3 مكاتب في المنطقة — تواصل مع أقربها إليك، أو أرسل النموذج. عادةً نرد خلال يوم عمل واحد.",
+    "🇪🇬 Cairo":"🇪🇬 القاهرة","🇦🇪 Dubai":"🇦🇪 دبي","🇸🇦 Riyadh":"🇸🇦 الرياض","Email":"البريد الإلكتروني","Working hours":"ساعات العمل",
+    "Sunday – Thursday: 9:00 AM – 5:00 PM · Friday & Saturday: Closed":"الأحد – الخميس: 9 صباحاً – 5 مساءً · الجمعة والسبت: مغلق","Follow us":"تابعنا",
+    "Request a Quote":"اطلب عرض سعر","A few details and we'll prepare a tailored proposal.":"بعض التفاصيل ونجهّز لك عرضاً مفصّلاً.",
+    "FULL NAME":"الاسم الكامل","PHONE":"الهاتف","EMAIL":"البريد الإلكتروني","COUNTRY":"الدولة","SERVICE NEEDED":"الخدمة المطلوبة","PROJECT DETAILS":"تفاصيل المشروع",
     "Egypt":"مصر","UAE":"الإمارات","KSA":"السعودية",
-    "Smart Home Automation":"أتمتة المنزل الذكي","Security & Surveillance":"الأمن والمراقبة","Networks & IT":"الشبكات وتكنولوجيا المعلومات","Building Management (BMS)":"إدارة المباني (BMS)","EV Charging Stations":"محطات شحن السيارات","MEP Engineering":"هندسة MEP","Low-Current / ELV":"التيار الخفيف / ELV","Home Cinema & Audio":"سينما منزلية وصوتيات","Other / Multiple":"أخرى / متعددة",
-    "Send Request":"ابعت الطلب","We'll receive your request and get back to you shortly. Prefer email? info@sedra-electric.com":"هنستلم طلبك ونرد عليك قريب. تفضّل الإيميل؟ info@sedra-electric.com",
-    "Integrated smart-building, security and energy solutions — engineered end to end across Egypt, the UAE and KSA.":"حلول متكاملة للمباني الذكية والأمان والطاقة — بننفّذها من الألف للياء في مصر والإمارات والسعودية.",
+    "Smart Home Automation":"أتمتة المنزل الذكي","Security & Surveillance":"الأمن والمراقبة","Networks & IT":"الشبكات وتقنية المعلومات","Building Management (BMS)":"إدارة المباني (BMS)","EV Charging Stations":"محطات شحن السيارات","MEP Engineering":"هندسة MEP","Low-Current / ELV":"التيار الخفيف / ELV","Home Cinema & Audio":"سينما منزلية وصوتيات","Other / Multiple":"أخرى / متعددة",
+    "Send Request":"إرسال الطلب","We'll receive your request and get back to you shortly. Prefer email? info@sedra-electric.com":"سنستلم طلبك ونرد عليك قريباً. تفضّل البريد؟ info@sedra-electric.com",
+    "Integrated smart-building, security and energy solutions — engineered end to end across Egypt, the UAE and KSA.":"حلول متكاملة للمباني الذكية والأمان والطاقة — ننفّذها من الألف إلى الياء في مصر والإمارات والسعودية.",
     "Company":"الشركة","Access":"الوصول","Contact":"تواصل","Company Portal ↗":"بوابة الشركة ↗","Join our team ↗":"انضم لفريقنا ↗","Networks":"الشبكات","Light Current":"التيار الخفيف",
     "🇪🇬 Cairo, Egypt":"🇪🇬 القاهرة، مصر","🇦🇪 Dubai, UAE":"🇦🇪 دبي، الإمارات","🇸🇦 Riyadh, KSA":"🇸🇦 الرياض، السعودية",
-    "SEDRA ELECTRIC. ALL RIGHTS RESERVED.":"سيدرا إلكتريك. كل الحقوق محفوظة.","SMART · SECURE · SUSTAINABLE":"ذكي · آمن · مستدام"
+    "SEDRA ELECTRIC. ALL RIGHTS RESERVED.":"سيدرا إلكتريك. جميع الحقوق محفوظة.","SMART · SECURE · SUSTAINABLE":"ذكي · آمن · مستدام"
   };
-  var PLACE = { "q_name":"اسمك", "q_msg":"المشروع، المكان، والتوقيت…" };
+  /* Emirati flavour: formal / plural address */
+  var OV_AE = {
+    "Now try it yourself":"جرّبوها بأنفسكم الحين",
+    "Tap any device below and watch the villa respond — lights, climate, curtains, EV, sound, cameras and more.":"اضغطوا على أي جهاز بالأسفل وشوفوا الفيلا تستجيب — إضاءة، تكييف، ستائر، شحن، صوت، كاميرات وأكثر.",
+    "⚡ Try Your Smart Home":"⚡ جرّبوا بيتكم الذكي","Explore service":"اعرفوا أكثر","Request a Consultation":"اطلبوا استشارة",
+    "Get in touch":"تواصلوا معنا","Talk to us":"كلّمونا","Get a Quote":"اطلبوا عرض سعر","Request a Quote":"اطلبوا عرض سعر","Send Request":"أرسلوا الطلب",
+    "Tell us about your project — our engineers design a tailored solution built around your needs.":"خبّرونا عن مشروعكم — ومهندسونا يصمّمون حلاً مفصّلاً على مقاسكم.",
+    "Three offices across the region — reach the nearest one, or send the form. We usually reply within one business day.":"عندنا 3 مكاتب في المنطقة — تواصلوا مع أقربها لكم، أو أرسلوا النموذج. عادةً نرد خلال يوم عمل واحد.",
+    "A few details and we'll prepare a tailored proposal.":"بعض التفاصيل ونجهّز لكم عرضاً مفصّلاً.",
+    "We'll receive your request and get back to you shortly. Prefer email? info@sedra-electric.com":"بنستلم طلبكم ونرد عليكم قريب. تفضّلون البريد؟ info@sedra-electric.com",
+    "Tap a device":"اضغطوا على جهاز","👆 Tap any tile to control":"👆 اضغطوا على أي مربع للتحكم"
+  };
+  /* Saudi flavour: direct / singular, light Najdi touch */
+  var OV_SA = {
+    "Now try it yourself":"جرّبها بنفسك الحين",
+    "Tap any device below and watch the villa respond — lights, climate, curtains, EV, sound, cameras and more.":"اضغط على أي جهاز تحت وشوف الفيلا تستجيب — إضاءة، تكييف، ستائر، شحن، صوت، كاميرات وأكثر.",
+    "Tell us about your project — our engineers design a tailored solution built around your needs.":"كلّمنا عن مشروعك — ومهندسونا يصمّمون لك حلاً مفصّلاً على مقاسك.",
+    "We'll receive your request and get back to you shortly. Prefer email? info@sedra-electric.com":"بنستلم طلبك ونرد عليك قريب. تفضّل البريد؟ info@sedra-electric.com"
+  };
+  function merge(a,b){ var o={},k; for(k in a)o[k]=a[k]; for(k in b)o[k]=b[k]; return o; }
+  var DICT = { ae: merge(BASE,OV_AE), sa: merge(BASE,OV_SA) };
+  var HBASE = {
+    'reach the<br>nature energy':'طاقة نظيفة<br>من الطبيعة',
+    'use cleaner,<br>cheaper energy':'طاقة أنظف<br>وأوفر',
+    'smart security,<br>always watching':'أمان ذكي<br>يراقب دائماً',
+    'advanced home<br>automation':'أتمتة منزل<br>متطوّرة',
+    'control everything,<br>one place':'تحكّم بكل شيء<br>من مكان واحد',
+    'charge where<br>you live':'اشحن سيارتك<br>وأنت في بيتك',
+    'choose a<br>preeminent life':'اختر حياة<br>في القمة',
+    'one partner.<br>every <em>system.</em>':'شريك واحد.<br>لكل <em>نظام.</em>',
+    'how we <span class="out">work</span>':'كيف <span class="out">نعمل</span>',
+    'let\'s build it <span class="grad">smarter.</span>':'لنبنِها <span class="grad">بذكاء.</span>'
+  };
+  var PLACE = { "q_name":"اسمك", "q_msg":"المشروع، الموقع، والجدول الزمني…" };
 
   function norm(s){ return s.replace(/\s+/g,' ').trim().replace(/[’‘]/g,"'"); }
-  var NT={}; for(var k in T){ NT[norm(k)] = T[k]; }
-  var origText = new Map(), origHTML = new Map(), origPlace = {};
+  function normH(s){ return s.toLowerCase().replace(/\s+/g,' ').trim(); }
+  var NTC={};
+  function getNT(L){ if(NTC[L]) return NTC[L]; var m={},d=DICT[L],k; for(k in d)m[norm(k)]=d[k]; NTC[L]=m; return m; }
 
+  var origText=new Map(), origHTML=new Map(), origPlace={};
   function skip(node){
     for(var el=node.parentNode; el && el!==document.body; el=el.parentNode){
       if(el.nodeType!==1) continue;
@@ -1892,48 +1927,55 @@ if(innerWidth>820){ setTimeout(()=>{ ringIntercom(); },6000); }
     }
     return false;
   }
-  function walkText(toAr){
-    var w=document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null), n;
+  function walkText(L,on){
+    var NT=getNT(L), w=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT,null), n;
     while((n=w.nextNode())){
-      var raw=n.nodeValue; if(!raw||!raw.trim()) continue; if(skip(n)) continue;
-      if(toAr){
-        var ar=NT[norm(raw)];
-        if(ar!==undefined){
-          if(!origText.has(n)) origText.set(n, raw);
-          n.nodeValue = raw.match(/^\s*/)[0]+ar+raw.match(/\s*$/)[0];
-        }
-      } else if(origText.has(n)){ n.nodeValue = origText.get(n); }
+      var raw=n.nodeValue; if(!raw||!raw.trim()||skip(n)) continue;
+      if(on){ var ar=NT[norm(raw)]; if(ar!==undefined){ if(!origText.has(n))origText.set(n,raw); n.nodeValue=raw.match(/^\s*/)[0]+ar+raw.match(/\s*$/)[0]; } }
+      else if(origText.has(n)){ n.nodeValue=origText.get(n); }
     }
-    if(!toAr) origText.clear();
+    if(!on) origText.clear();
   }
-  function swapHTML(toAr){
+  function swapHTML(on){
     document.querySelectorAll('[data-ar]').forEach(function(el){
-      if(toAr){ if(!origHTML.has(el)) origHTML.set(el, el.innerHTML); el.innerHTML = el.getAttribute('data-ar'); }
-      else if(origHTML.has(el)){ el.innerHTML = origHTML.get(el); }
+      if(on){ if(!origHTML.has(el))origHTML.set(el,el.innerHTML); var ar=HBASE[normH(el.innerHTML)]; if(ar) el.innerHTML=ar; }
+      else if(origHTML.has(el)){ el.innerHTML=origHTML.get(el); }
     });
-    if(!toAr) origHTML.clear();
+    if(!on) origHTML.clear();
   }
-  function swapPlace(toAr){
-    for(var id in PLACE){ var el=document.getElementById(id); if(!el) continue;
-      if(toAr){ if(origPlace[id]===undefined) origPlace[id]=el.getAttribute('placeholder')||''; el.setAttribute('placeholder', PLACE[id]); }
-      else if(origPlace[id]!==undefined){ el.setAttribute('placeholder', origPlace[id]); }
+  function swapPlace(on){
+    for(var id in PLACE){ var el=document.getElementById(id); if(!el)continue;
+      if(on){ if(origPlace[id]===undefined)origPlace[id]=el.getAttribute('placeholder')||''; el.setAttribute('placeholder',PLACE[id]); }
+      else if(origPlace[id]!==undefined){ el.setAttribute('placeholder',origPlace[id]); }
     }
   }
-  var btn=document.getElementById('langToggle');
-  function setLang(lang){
-    var ar=(lang==='ar');
-    swapHTML(ar); walkText(ar); swapPlace(ar);
-    document.documentElement.setAttribute('dir', ar?'rtl':'ltr');
-    document.documentElement.setAttribute('lang', ar?'ar':'en');
-    document.body.classList.toggle('ar', ar);
-    if(btn) btn.textContent = ar ? 'English' : 'العربية';
-    try{ localStorage.setItem('sedra_lang', lang); }catch(e){}
+  var ACTIVE_L=null, btn=document.getElementById('langToggle');
+  function setLang(on){
+    if(on && !ACTIVE_L) return;
+    swapHTML(on); if(ACTIVE_L) walkText(ACTIVE_L,on); swapPlace(on);
+    document.documentElement.setAttribute('dir', on?'rtl':'ltr');
+    document.documentElement.setAttribute('lang', on?'ar':'en');
+    document.body.classList.toggle('ar', on);
+    if(btn) btn.textContent = on ? 'English' : 'العربية';
+    try{ localStorage.setItem('sedra_lang', on?'ar':'en'); }catch(e){}
   }
-  if(btn) btn.addEventListener('click', function(){
-    setLang(document.body.classList.contains('ar') ? 'en' : 'ar');
+  if(btn) btn.addEventListener('click', function(){ setLang(!document.body.classList.contains('ar')); });
+
+  function countryToLocale(cc){ if(cc==='AE') return 'ae'; if(cc==='SA') return 'sa'; return null; }
+  function detect(){
+    try{ var q=new URLSearchParams(location.search).get('loc'); if(q) return Promise.resolve(q.toUpperCase()); }catch(e){}
+    return fetch('/cdn-cgi/trace',{cache:'no-store'}).then(function(r){return r.text();}).then(function(t){
+      var m=t.match(/loc=([A-Z]{2})/); return m?m[1]:null;
+    }).catch(function(){ return null; });
+  }
+  detect().then(function(cc){
+    var L=countryToLocale(cc);
+    if(!L){ return; }               /* English only — toggle stays hidden */
+    ACTIVE_L=L;
+    if(btn){ btn.style.display=''; }
+    var saved='en'; try{ saved=localStorage.getItem('sedra_lang')||'en'; }catch(e){}
+    if(saved==='ar') setLang(true);
   });
-  var saved='en'; try{ saved=localStorage.getItem('sedra_lang')||'en'; }catch(e){}
-  if(saved==='ar') setLang('ar');
 })();
 </script>
 </body>
