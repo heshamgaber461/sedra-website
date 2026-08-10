@@ -510,7 +510,7 @@
     <div class="fcol"><h4>Company</h4><a href="#about">About</a><a href="#solutions">Solutions</a><a href="#services">Services</a><a href="#projects">Projects</a><a href="blog.html">Blog</a><a href="#contact">Contact</a></div>
     <div class="fcol"><h4>Access</h4><a href="https://sedraelectric.pages.dev" target="_blank" rel="noopener">Company Portal ↗</a><a href="https://sedraelectric.pages.dev/apply.html" target="_blank" rel="noopener">Join our team ↗</a></div>
     <div class="fcol"><h4>Solutions</h4><a href="page.html?id=home-automation">Home Automation</a><a href="page.html?id=security">Security Systems</a><a href="page.html?id=networks">Networks</a><a href="page.html?id=light-current">Light Current</a><a href="page.html?id=solar">Solar Energy</a><a href="page.html?id=ev-charging">EV Charger</a></div>
-    <div class="fcol"><h4>Get in touch</h4><a href="mailto:info@sedra-electric.com">info@sedra-electric.com</a><a href="#contact">Request a Quote</a><a href="#">🇪🇬 Cairo, Egypt</a><a href="#">🇦🇪 Dubai, UAE</a><a href="#">🇸🇦 Riyadh, KSA</a></div>
+    <div class="fcol"><h4>Get in touch</h4><a href="mailto:info@sedra-electric.com">info@sedra-electric.com</a><a href="#contact">Request a Quote</a><a href="smart-home-cairo.html">🇪🇬 Cairo, Egypt</a><a href="#">🇦🇪 Dubai, UAE</a><a href="#">🇸🇦 Riyadh, KSA</a></div>
   </div>
   <div class="wrap fbot"><span>© <span id="yr"></span> SEDRA ELECTRIC. ALL RIGHTS RESERVED.</span><span>SMART · SECURE · SUSTAINABLE</span></div>
 </footer>
