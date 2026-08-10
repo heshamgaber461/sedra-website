@@ -3,8 +3,122 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sedra Electric — Smart Systems · Security · Energy</title>
-<meta name="description" content="Sedra Electric engineers integrated smart-building, security, network, energy and EV-charging solutions across Egypt, UAE and KSA.">
+<title>Sedra Electric — Smart Home &amp; KNX Automation, Security, Networks, Solar &amp; EV Charging | Egypt · UAE · KSA</title>
+<meta name="description" content="Sedra Electric designs and installs smart home &amp; KNX building automation, CCTV &amp; security, structured networks, solar energy and EV charging — turnkey engineering across Egypt, the UAE and Saudi Arabia.">
+<meta name="keywords" content="smart home, home automation, KNX, building automation, BMS, CCTV, security systems, access control, structured cabling, networks, low current, ELV, solar energy, EV charger, home cinema, Egypt, Cairo, UAE, Dubai, Saudi Arabia, Riyadh">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="author" content="Sedra Electric">
+<meta name="theme-color" content="#05131f">
+<link rel="canonical" href="https://sedra-website.pages.dev/">
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Sedra Electric">
+<meta property="og:title" content="Sedra Electric — Smart Home, KNX Automation, Security, Solar &amp; EV Charging">
+<meta property="og:description" content="Turnkey smart-building, security, networks, solar and EV-charging engineering across Egypt, the UAE and Saudi Arabia.">
+<meta property="og:url" content="https://sedra-website.pages.dev/">
+<meta property="og:image" content="https://sedra-website.pages.dev/assets/hero-smart.jpg">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="ar_AE">
+<meta property="og:locale:alternate" content="ar_SA">
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Sedra Electric — Smart Home, KNX Automation, Security, Solar &amp; EV Charging">
+<meta name="twitter:description" content="Turnkey smart-building, security, networks, solar and EV-charging engineering across Egypt, the UAE and Saudi Arabia.">
+<meta name="twitter:image" content="https://sedra-website.pages.dev/assets/hero-smart.jpg">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://sedra-website.pages.dev/#org",
+      "name": "Sedra Electric",
+      "url": "https://sedra-website.pages.dev/",
+      "logo": "https://sedra-website.pages.dev/assets/logo-white.png",
+      "foundingDate": "2014",
+      "email": "info@sedra-electric.com",
+      "description": "Engineering house for smart-building automation, security, networks, low-current systems, solar energy and EV charging across Egypt, the UAE and Saudi Arabia.",
+      "areaServed": ["EG", "AE", "SA"],
+      "sameAs": [
+        "https://www.instagram.com/sedra_electric.eg/",
+        "https://www.facebook.com/profile.php?id=61591642604996",
+        "https://www.linkedin.com/company/18157184/"
+      ]
+    },
+    {
+      "@type": "ElectricalContractor",
+      "@id": "https://sedra-website.pages.dev/#cairo",
+      "name": "Sedra Electric — Cairo",
+      "parentOrganization": {"@id": "https://sedra-website.pages.dev/#org"},
+      "url": "https://sedra-website.pages.dev/",
+      "image": "https://sedra-website.pages.dev/assets/hero-smart.jpg",
+      "telephone": "+20 2 2678 3581",
+      "email": "info@sedra-electric.com",
+      "priceRange": "$$",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Villa 297, Teseen St, Fifth Settlement",
+        "addressLocality": "New Cairo",
+        "addressRegion": "Cairo",
+        "addressCountry": "EG"
+      },
+      "openingHoursSpecification": [{
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday"],
+        "opens": "09:00", "closes": "17:00"
+      }],
+      "sameAs": [
+        "https://www.instagram.com/sedra_electric.eg/",
+        "https://www.facebook.com/profile.php?id=61591642604996",
+        "https://www.linkedin.com/company/18157184/"
+      ]
+    },
+    {
+      "@type": "ElectricalContractor",
+      "@id": "https://sedra-website.pages.dev/#dubai",
+      "name": "Sedra Electric — Dubai",
+      "parentOrganization": {"@id": "https://sedra-website.pages.dev/#org"},
+      "url": "https://sedra-website.pages.dev/",
+      "telephone": "+971 52 981 8538",
+      "email": "info@sedra-electric.com",
+      "priceRange": "$$",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "E11, Office 217, Al Ittihad Rd, Dubai Int'l Airport",
+        "addressLocality": "Dubai",
+        "addressCountry": "AE"
+      },
+      "openingHoursSpecification": [{
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday"],
+        "opens": "09:00", "closes": "17:00"
+      }]
+    },
+    {
+      "@type": "ElectricalContractor",
+      "@id": "https://sedra-website.pages.dev/#riyadh",
+      "name": "Sedra Electric — Riyadh",
+      "parentOrganization": {"@id": "https://sedra-website.pages.dev/#org"},
+      "url": "https://sedra-website.pages.dev/",
+      "telephone": "+966 54 249 9681",
+      "email": "info@sedra-electric.com",
+      "priceRange": "$$",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Building 44, Ibn Katheer St, King Abdul Aziz",
+        "addressLocality": "Riyadh",
+        "postalCode": "13334",
+        "addressCountry": "SA"
+      },
+      "openingHoursSpecification": [{
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday"],
+        "opens": "09:00", "closes": "17:00"
+      }]
+    }
+  ]
+}
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Manrope:wght@400;500;600;700&family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -996,9 +1110,11 @@ html[dir=rtl] input,html[dir=rtl] textarea{text-align:right}
 html[dir=rtl] #q_phone,html[dir=rtl] #q_email{direction:ltr}
 html[dir=rtl] .cline>div>span{unicode-bidi:plaintext;text-align:right}
 html[dir=rtl] .fbot{direction:ltr}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 </style>
 </head>
 <body>
+<h1 class="sr-only">Sedra Electric — Smart Home &amp; KNX Building Automation, Security &amp; CCTV, Structured Networks, Solar Energy and EV Charging in Egypt, the UAE and Saudi Arabia</h1>
 
 <!-- NAV -->
 <header class="nav" id="nav">
