@@ -7,7 +7,7 @@
 <meta name="description" content="Sedra Electric engineers integrated smart-building, security, network, energy and EV-charging solutions across Egypt, UAE and KSA.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Manrope:wght@400;500;600;700&family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root{
   --navy:#143F63; --navy-d:#0d2c47; --navy-dd:#081c2e; --ink0:#05131f;
@@ -978,6 +978,24 @@ img,svg,video{ max-width:100% }
   .pj:active .thumb{transform:scale(1.05)}
   .sc-stepimg:active img{transform:scale(1.03)}
 }
+
+/* ===== Arabic / RTL ===== */
+.lang-toggle{font-family:'Outfit',sans-serif;font-weight:700;font-size:13px;letter-spacing:.5px;color:#fff;background:rgba(255,255,255,.1);border:1.5px solid rgba(255,255,255,.34);border-radius:50px;padding:8px 15px;cursor:pointer;transition:.22s;white-space:nowrap;margin-inline-start:4px}
+.lang-toggle:hover{background:rgba(255,255,255,.2)}
+.nav.scrolled .lang-toggle{color:var(--navy);border-color:rgba(10,26,47,.25);background:rgba(10,26,47,.06)}
+body.ar,body.ar h1,body.ar h2,body.ar h3,body.ar h4,body.ar .disp,body.ar .btn,body.ar .eyebrow,body.ar .ey,body.ar .st-n,body.ar .nav-links a,body.ar .nav-portal,body.ar .filters button,body.ar .pj .tag,body.ar .sc-step .tags span,body.ar .acard .num,body.ar .fnum,body.ar input,body.ar select,body.ar textarea,body.ar label,body.ar button,body.ar .en-l,body.ar .en-h,body.ar .cl{font-family:'Cairo',sans-serif}
+body.ar h1,body.ar h2,body.ar h3,body.ar h4{letter-spacing:normal}
+body.ar .ey,body.ar .eyebrow,body.ar .st-n,body.ar .l,body.ar .en-h,body.ar .cl,body.ar label{letter-spacing:normal;text-transform:none}
+body.ar h2 .out{-webkit-text-stroke:2px var(--navy)}
+/* RTL reading flow for text sections; keep the interactive villa demo + hero story LTR so their absolute layouts stay intact */
+html[dir=rtl] body{direction:rtl}
+html[dir=rtl] #iot,html[dir=rtl] #sx{direction:ltr}
+html[dir=rtl] .about-lead,html[dir=rtl] .sc-step p,html[dir=rtl] .sc-step h3,html[dir=rtl] .acard p,html[dir=rtl] .acard h3,html[dir=rtl] .fstep p,html[dir=rtl] .fstep h3,html[dir=rtl] .cinfo p,html[dir=rtl] .cinfo h3,html[dir=rtl] .form p,html[dir=rtl] .form h3,html[dir=rtl] .pj .ov{text-align:right}
+html[dir=rtl] .field{text-align:right}
+html[dir=rtl] input,html[dir=rtl] textarea{text-align:right}
+html[dir=rtl] #q_phone,html[dir=rtl] #q_email{direction:ltr}
+html[dir=rtl] .cline>div>span{unicode-bidi:plaintext;text-align:right}
+html[dir=rtl] .fbot{direction:ltr}
 </style>
 </head>
 <body>
@@ -993,6 +1011,7 @@ img,svg,video{ max-width:100% }
       
       <a href="#contact" class="btn btn-primary nav-cta">Get a Quote</a>
     </nav>
+    <button type="button" id="langToggle" class="lang-toggle" data-noi18n aria-label="Switch language">العربية</button>
     <button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
   </div>
 </header>
@@ -1005,13 +1024,13 @@ img,svg,video{ max-width:100% }
       <div class="bimg" data-i="0"></div><div class="bimg" data-i="1"></div><div class="bimg" data-i="2"></div>
       <div class="bimg" data-i="3"></div><div class="bimg" data-i="4"></div><div class="bimg" data-i="5"></div><div class="bimg" data-i="6"></div>
       <div class="veil"></div>
-      <div class="cap" data-cap="0"><div class="ey">SEDRA &middot; SMART HOME</div><h2>Reach the<br>Nature Energy</h2></div>
-      <div class="cap" data-cap="1"><div class="ey">SOLAR ENERGY SYSTEMS</div><h2>Use Cleaner,<br>Cheaper Energy</h2></div>
-      <div class="cap" data-cap="2"><div class="ey">SURVEILLANCE &amp; ACCESS CONTROL</div><h2>Smart Security,<br>Always Watching</h2></div>
-      <div class="cap" data-cap="3"><div class="ey">LIGHTING &middot; CLIMATE &middot; WINDOWS</div><h2>Advanced Home<br>Automation</h2></div>
-      <div class="cap" data-cap="4"><div class="ey">ONE APP &middot; EVERY SYSTEM</div><h2>Control Everything,<br>One Place</h2></div>
-      <div class="cap" data-cap="5"><div class="ey">EV CHARGING</div><h2>Charge Where<br>You Live</h2></div>
-      <div class="cap" data-cap="6"><div class="ey">CHOOSE SEDRA ELECTRIC</div><h2>Choose a<br>Preeminent Life</h2><div class="cta"><a class="xbtn xbtn-primary" href="#iot">&#9889; Try Your Smart Home</a></div></div>
+      <div class="cap" data-cap="0"><div class="ey">SEDRA &middot; SMART HOME</div><h2 data-ar="وصّل لطاقة<br>الطبيعة">Reach the<br>Nature Energy</h2></div>
+      <div class="cap" data-cap="1"><div class="ey">SOLAR ENERGY SYSTEMS</div><h2 data-ar="طاقة أنضف<br>وأرخص">Use Cleaner,<br>Cheaper Energy</h2></div>
+      <div class="cap" data-cap="2"><div class="ey">SURVEILLANCE &amp; ACCESS CONTROL</div><h2 data-ar="أمان ذكي<br>عينه عليك دايمًا">Smart Security,<br>Always Watching</h2></div>
+      <div class="cap" data-cap="3"><div class="ey">LIGHTING &middot; CLIMATE &middot; WINDOWS</div><h2 data-ar="أتمتة منزل<br>متطورة">Advanced Home<br>Automation</h2></div>
+      <div class="cap" data-cap="4"><div class="ey">ONE APP &middot; EVERY SYSTEM</div><h2 data-ar="تحكّم في كل حاجة<br>من مكان واحد">Control Everything,<br>One Place</h2></div>
+      <div class="cap" data-cap="5"><div class="ey">EV CHARGING</div><h2 data-ar="اشحن عربيتك<br>وانت في بيتك">Charge Where<br>You Live</h2></div>
+      <div class="cap" data-cap="6"><div class="ey">CHOOSE SEDRA ELECTRIC</div><h2 data-ar="اختار حياة<br>في القمة">Choose a<br>Preeminent Life</h2><div class="cta"><a class="xbtn xbtn-primary" href="#iot">&#9889; Try Your Smart Home</a></div></div>
       <div class="scrollcue" id="cue">SCROLL TO EXPLORE &darr;</div>
     </div>
     <div style="height:100vh"></div><div style="height:100vh"></div><div style="height:100vh"></div>
@@ -1198,7 +1217,7 @@ img,svg,video{ max-width:100% }
 <section class="about pad" id="about">
   <div class="wrap">
     <div class="about-head">
-      <h2 class="rv"><span>One partner.<br>Every <em>system.</em></span></h2>
+      <h2 class="rv"><span data-ar="شريك واحد.<br>لكل <em>نظام.</em>">One partner.<br>Every <em>system.</em></span></h2>
       <p class="about-lead fade">Founded in 2014, Sedra Electric is an engineering house for light-current systems, smart automation and sustainable energy — serving residential, commercial, hospitality, industrial and healthcare projects across Egypt, the UAE and Saudi Arabia. From first consultation to lifetime support, we deliver every system end to end.</p>
     </div>
     <div class="about-cards">
@@ -1239,7 +1258,7 @@ img,svg,video{ max-width:100% }
 <section class="lineup pad" id="services">
   <div class="wrap">
     <div class="lu-top">
-      <h2 class="rv"><span>How we <span class="out">work</span></span></h2>
+      <h2 class="rv"><span data-ar="إزاي <span class=&quot;out&quot;>بنشتغل</span>">How we <span class="out">work</span></span></h2>
       <p class="about-lead fade" style="margin-bottom:8px">Five phases, one accountable team — from the first consultation to lifetime support.</p>
     </div>
     <div class="flow">
@@ -1299,7 +1318,7 @@ img,svg,video{ max-width:100% }
 <section class="ctaband">
   <span class="blob a"></span>
   <div class="wrap">
-    <h2 class="rv"><span>Let's build it <span class="grad">smarter.</span></span></h2>
+    <h2 class="rv"><span data-ar="نبنيها <span class=&quot;grad&quot;>أذكى.</span>">Let's build it <span class="grad">smarter.</span></span></h2>
     <p class="fade">Tell us about your project — our engineers design a tailored solution built around your needs.</p>
     <a href="#contact" class="btn btn-primary fade">Request a Consultation
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
@@ -1803,6 +1822,118 @@ iot.classList.add('show-ev');
 evTimer=setInterval(evTick,9000);
 /* auto-ring the intercom only on desktop — on phones it pops over everything and looks off; tap Intercom instead */
 if(innerWidth>820){ setTimeout(()=>{ ringIntercom(); },6000); }
+})();
+</script>
+<script>
+/* ===== EN / AR bilingual (Egyptian Arabic) — default English ===== */
+(function(){
+  var T = {
+    "About":"عن الشركة","Solutions":"الحلول","Services":"خدماتنا","Projects":"مشاريعنا","Academy":"الأكاديمية","Portal ↗":"البوابة ↗","Get a Quote":"اطلب عرض سعر",
+    "SEDRA · SMART HOME":"سيدرا · البيت الذكي","SOLAR ENERGY SYSTEMS":"أنظمة الطاقة الشمسية","SURVEILLANCE & ACCESS CONTROL":"مراقبة وتحكّم في الدخول","LIGHTING · CLIMATE · WINDOWS":"إضاءة · تكييف · ستائر","ONE APP · EVERY SYSTEM":"تطبيق واحد · كل الأنظمة","EV CHARGING":"شحن السيارات الكهربائية","CHOOSE SEDRA ELECTRIC":"اختار سيدرا إلكتريك",
+    "⚡ Try Your Smart Home":"⚡ جرّب بيتك الذكي","SCROLL TO EXPLORE ↓":"انزل تشوف ↓",
+    "⚡ LIVE SMART-HOME DEMO —":"⚡ ديمو مباشر للبيت الذكي —","control the villa":"تحكّم في الفيلا","Now try it yourself":"جرّبها بنفسك دلوقتي",
+    "Tap any device below and watch the villa respond — lights, climate, curtains, EV, sound, cameras and more.":"دوس على أي جهاز تحت وشوف الفيلا بتستجيب — إضاءة، تكييف، ستائر، شحن، صوت، كاميرات وأكتر.",
+    "☀️ Morning":"☀️ الصبح","👋 Goodbye":"👋 مع السلامة",
+    "Lights":"الإضاءة","Climate":"التكييف","Curtains":"الستائر","EV":"الشحن","Security":"الأمان","Cameras":"الكاميرات","Intercom":"الإنتركم",
+    "All Lights":"كل الإضاءة","Living Room":"الصالة","Kitchen":"المطبخ","Facade":"الواجهة","Garden":"الجنينة",
+    "THERMOSTAT":"الترموستات","Comfortable":"مريح","EV CHARGER":"شاحن العربية","Stop":"إيقاف","Charging · ~41 min to full":"بيشحن · ~41 دقيقة للكامل",
+    "Open":"مفتوح","Half":"نص","Closed":"مقفول","Arm System":"تفعيل الإنذار","Arming enables perimeter scanning & alerts.":"التفعيل بيشغّل مسح المحيط والتنبيهات.",
+    "📹 Live Cameras · 4 online":"📹 كاميرات مباشرة · 4 شغّالة","Close ✕":"إغلاق ✕","CAM 01 · Front":"كام 01 · الأمام","CAM 02 · Garage":"كام 02 · الجراج","CAM 03 · Gate":"كام 03 · البوابة","CAM 04 · Perimeter":"كام 04 · المحيط",
+    "Front Door":"باب البيت","📦 Delivery — someone's at your door…":"📦 توصيلة — فيه حد على الباب…","Unlock":"افتح","Ignore":"تجاهل",
+    "My Villa":"الفيلا بتاعتي","Custom":"مخصّص","Tap a device":"دوس على جهاز","LIGHTS":"الإضاءة","CLIMATE":"التكييف","CURTAINS":"الستائر","SECURITY":"الأمان","Off":"مقفول","👆 Tap any tile to control":"👆 دوس على أي مربع للتحكم",
+    "LIVE ENERGY":"الطاقة المباشرة","Home usage":"استهلاك البيت","Solar now":"الشمسي دلوقتي","From grid":"من الشبكة","Solar covers 0%":"الشمسي بيغطي 0%",
+    "System Armed":"النظام مفعّل","EV · Charging":"الشحن · شغّال","Morning":"الصبح",
+    "Founded in 2014, Sedra Electric is an engineering house for light-current systems, smart automation and sustainable energy — serving residential, commercial, hospitality, industrial and healthcare projects across Egypt, the UAE and Saudi Arabia. From first consultation to lifetime support, we deliver every system end to end.":"اتأسست سنة 2014، وسيدرا إلكتريك بيت هندسي لأنظمة التيار الخفيف والأتمتة الذكية والطاقة المستدامة — بنخدم مشاريع سكنية وتجارية وضيافة وصناعية وصحية في مصر والإمارات والسعودية. من أول استشارة لحد الدعم مدى الحياة، بنسلّم كل نظام من الألف للياء.",
+    "Turnkey":"تسليم مفتاح","One accountable team for consultation, design, installation, programming and maintenance — no hand-off gaps.":"فريق واحد مسؤول عن الاستشارة والتصميم والتركيب والبرمجة والصيانة — من غير أي فجوات في التسليم.",
+    "Engineered":"هندسة دقيقة","Rigorous quality management and certified components — attention to every detail for performance that lasts.":"إدارة جودة صارمة ومكونات معتمدة — اهتمام بأدق تفصيلة عشان أداء يفضل شغّال بأمان.",
+    "Supported":"دعم مستمر","Responsive maintenance and support from our own offices in Egypt, the UAE and Saudi Arabia.":"صيانة ودعم سريع من مكاتبنا في مصر والإمارات والسعودية.",
+    "/ 01 — AUTOMATION":"/ 01 — أتمتة","Home Automation":"أتمتة المنزل","Lighting, climate, curtains, security and multimedia — your whole home controlled from a single tap, anywhere in the world.":"إضاءة وتكييف وستائر وأمان وملتيميديا — بيتك كله بتحكم فيه بلمسة واحدة، من أي مكان في الدنيا.","Lighting":"إضاءة","Scenes":"مشاهد",
+    "/ 02 — SECURITY":"/ 02 — أمان","Security Systems":"أنظمة الأمان","CCTV, access control, fire alarm and intrusion detection — complete protection for your home or business, always watching.":"كاميرات وتحكّم في الدخول وإنذار حريق وكشف تسلل — حماية كاملة لبيتك أو شغلك، عينها عليك على طول.","CCTV":"كاميرات","Access Control":"تحكّم بالدخول","Fire Alarm":"إنذار حريق","Intrusion":"كشف تسلل",
+    "/ 03 — NETWORKS":"/ 03 — شبكات","Network Cabling & Structure":"تمديد وبنية الشبكات","Structured cabling and network infrastructure engineered for speed, full coverage and rock-solid reliability.":"تمديدات منظمة وبنية شبكات متصممة للسرعة والتغطية الكاملة والثبات التام.","Structured Cabling":"تمديدات منظمة","Networking":"شبكات","Wi-Fi":"واي فاي","Data":"داتا",
+    "/ 04 — LIGHT CURRENT":"/ 04 — تيار خفيف","Light Current Systems":"أنظمة التيار الخفيف","Audio/video, MATV and telephone systems — the integrated low-current backbone of a modern building.":"صوت وصورة و MATV وأنظمة تليفون — العمود الفقري للتيار الخفيف في أي مبنى حديث.","Audio / Video":"صوت / صورة","Telephone":"تليفون","Sound":"صوتيات",
+    "/ 05 — SOLAR":"/ 05 — طاقة شمسية","Solar Energy":"الطاقة الشمسية","On-grid, off-grid and thermal solar systems that cut your electricity bill and carbon footprint — for homes and businesses.":"أنظمة شمسية متصلة بالشبكة ومستقلة وحرارية بتقلّل فاتورة الكهربا والانبعاثات — للبيوت والشركات.","On-grid":"متصل بالشبكة","Off-grid":"مستقل","Thermal":"حراري","Net-metering":"صافي القياس",
+    "/ 06 — EV CHARGING":"/ 06 — شحن كهربائي","EV Charger":"شاحن السيارات","Smart-managed charging for electric cars, neighborhood EVs and plug-in hybrids.":"شحن ذكي ومُدار للسيارات الكهربائية وعربيات الأحياء والهجين القابل للشحن.","Home":"منزلي","Business":"تجاري","Fleet":"أساطيل","Load Management":"إدارة الأحمال",
+    "Explore service":"اعرف أكتر",
+    "Five phases, one accountable team — from the first consultation to lifetime support.":"خمس مراحل، وفريق واحد مسؤول — من أول استشارة لحد الدعم مدى الحياة.",
+    "Consultation":"استشارة","Onsite or in-office, we scope your project, requirements and budget into a clear plan.":"في الموقع أو في المكتب، بنحدد مشروعك ومتطلباتك وميزانيتك في خطة واضحة.",
+    "Design & Engineering":"تصميم وهندسة","Wiring, hardware, interfaces and power — planned with your architects for reliability.":"التمديدات والأجهزة والواجهات والتغذية — بنخططها مع المهندسين المعماريين عشان الاعتمادية.",
+    "Installation":"تركيب","Trained technicians deploy every system with precision and flawless execution.":"فنيين مدرّبين بيركبوا كل نظام بدقة وتنفيذ نضيف.",
+    "Programming":"برمجة","We integrate every subsystem to speak one language — audio, video and lighting as one.":"بندمج كل نظام فرعي عشان يتكلموا لغة واحدة — صوت وصورة وإضاءة كأنهم حاجة واحدة.",
+    "Maintenance & Support":"صيانة ودعم","World-class ongoing support to keep systems optimized and resolve issues fast.":"دعم مستمر بمستوى عالمي عشان الأنظمة تفضل مظبوطة وأي مشكلة تتحل بسرعة.",
+    "Our work":"شغلنا","Selected Projects":"مشاريع مختارة","All":"الكل","Residential":"سكني","Commercial":"تجاري","Hospitality":"ضيافة","Government":"حكومي",
+    "PROJECTS DELIVERED":"مشروع اتسلّم","YEARS EXPERIENCE":"سنة خبرة","% SATISFACTION":"% رضا العملاء","COUNTRIES":"دول",
+    "Tell us about your project — our engineers design a tailored solution built around your needs.":"احكيلنا عن مشروعك — ومهندسينا بيصمموا حل مفصّل على مقاس احتياجك.","Request a Consultation":"اطلب استشارة",
+    "Get in touch":"تواصل معانا","Start a project":"ابدأ مشروعك","Talk to us":"كلّمنا",
+    "Three offices across the region — reach the nearest one, or send the form. We usually reply within one business day.":"3 مكاتب في المنطقة — كلّم أقربهم ليك، أو ابعت الفورم. عادةً بنرد في خلال يوم عمل واحد.",
+    "🇪🇬 Cairo":"🇪🇬 القاهرة","🇦🇪 Dubai":"🇦🇪 دبي","🇸🇦 Riyadh":"🇸🇦 الرياض","Email":"الإيميل","Working hours":"مواعيد العمل",
+    "Sunday – Thursday: 9:00 AM – 5:00 PM · Friday & Saturday: Closed":"الأحد – الخميس: 9 ص – 5 م · الجمعة والسبت: إجازة","Follow us":"تابعنا",
+    "Request a Quote":"اطلب عرض سعر","A few details and we'll prepare a tailored proposal.":"شوية تفاصيل وهنجهّزلك عرض مفصّل.",
+    "FULL NAME":"الاسم بالكامل","PHONE":"الموبايل","EMAIL":"الإيميل","COUNTRY":"الدولة","SERVICE NEEDED":"الخدمة المطلوبة","PROJECT DETAILS":"تفاصيل المشروع",
+    "Egypt":"مصر","UAE":"الإمارات","KSA":"السعودية",
+    "Smart Home Automation":"أتمتة المنزل الذكي","Security & Surveillance":"الأمن والمراقبة","Networks & IT":"الشبكات وتكنولوجيا المعلومات","Building Management (BMS)":"إدارة المباني (BMS)","EV Charging Stations":"محطات شحن السيارات","MEP Engineering":"هندسة MEP","Low-Current / ELV":"التيار الخفيف / ELV","Home Cinema & Audio":"سينما منزلية وصوتيات","Other / Multiple":"أخرى / متعددة",
+    "Send Request":"ابعت الطلب","We'll receive your request and get back to you shortly. Prefer email? info@sedra-electric.com":"هنستلم طلبك ونرد عليك قريب. تفضّل الإيميل؟ info@sedra-electric.com",
+    "Integrated smart-building, security and energy solutions — engineered end to end across Egypt, the UAE and KSA.":"حلول متكاملة للمباني الذكية والأمان والطاقة — بننفّذها من الألف للياء في مصر والإمارات والسعودية.",
+    "Company":"الشركة","Access":"الوصول","Contact":"تواصل","Company Portal ↗":"بوابة الشركة ↗","Join our team ↗":"انضم لفريقنا ↗","Networks":"الشبكات","Light Current":"التيار الخفيف",
+    "🇪🇬 Cairo, Egypt":"🇪🇬 القاهرة، مصر","🇦🇪 Dubai, UAE":"🇦🇪 دبي، الإمارات","🇸🇦 Riyadh, KSA":"🇸🇦 الرياض، السعودية",
+    "SEDRA ELECTRIC. ALL RIGHTS RESERVED.":"سيدرا إلكتريك. كل الحقوق محفوظة.","SMART · SECURE · SUSTAINABLE":"ذكي · آمن · مستدام"
+  };
+  var PLACE = { "q_name":"اسمك", "q_msg":"المشروع، المكان، والتوقيت…" };
+
+  function norm(s){ return s.replace(/\s+/g,' ').trim().replace(/[’‘]/g,"'"); }
+  var NT={}; for(var k in T){ NT[norm(k)] = T[k]; }
+  var origText = new Map(), origHTML = new Map(), origPlace = {};
+
+  function skip(node){
+    for(var el=node.parentNode; el && el!==document.body; el=el.parentNode){
+      if(el.nodeType!==1) continue;
+      var tn=el.tagName;
+      if(tn==='SCRIPT'||tn==='STYLE'||tn==='NOSCRIPT') return true;
+      if(el.hasAttribute('data-noi18n')||el.hasAttribute('data-ar')) return true;
+    }
+    return false;
+  }
+  function walkText(toAr){
+    var w=document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null), n;
+    while((n=w.nextNode())){
+      var raw=n.nodeValue; if(!raw||!raw.trim()) continue; if(skip(n)) continue;
+      if(toAr){
+        var ar=NT[norm(raw)];
+        if(ar!==undefined){
+          if(!origText.has(n)) origText.set(n, raw);
+          n.nodeValue = raw.match(/^\s*/)[0]+ar+raw.match(/\s*$/)[0];
+        }
+      } else if(origText.has(n)){ n.nodeValue = origText.get(n); }
+    }
+    if(!toAr) origText.clear();
+  }
+  function swapHTML(toAr){
+    document.querySelectorAll('[data-ar]').forEach(function(el){
+      if(toAr){ if(!origHTML.has(el)) origHTML.set(el, el.innerHTML); el.innerHTML = el.getAttribute('data-ar'); }
+      else if(origHTML.has(el)){ el.innerHTML = origHTML.get(el); }
+    });
+    if(!toAr) origHTML.clear();
+  }
+  function swapPlace(toAr){
+    for(var id in PLACE){ var el=document.getElementById(id); if(!el) continue;
+      if(toAr){ if(origPlace[id]===undefined) origPlace[id]=el.getAttribute('placeholder')||''; el.setAttribute('placeholder', PLACE[id]); }
+      else if(origPlace[id]!==undefined){ el.setAttribute('placeholder', origPlace[id]); }
+    }
+  }
+  var btn=document.getElementById('langToggle');
+  function setLang(lang){
+    var ar=(lang==='ar');
+    swapHTML(ar); walkText(ar); swapPlace(ar);
+    document.documentElement.setAttribute('dir', ar?'rtl':'ltr');
+    document.documentElement.setAttribute('lang', ar?'ar':'en');
+    document.body.classList.toggle('ar', ar);
+    if(btn) btn.textContent = ar ? 'English' : 'العربية';
+    try{ localStorage.setItem('sedra_lang', lang); }catch(e){}
+  }
+  if(btn) btn.addEventListener('click', function(){
+    setLang(document.body.classList.contains('ar') ? 'en' : 'ar');
+  });
+  var saved='en'; try{ saved=localStorage.getItem('sedra_lang')||'en'; }catch(e){}
+  if(saved==='ar') setLang('ar');
 })();
 </script>
 </body>
