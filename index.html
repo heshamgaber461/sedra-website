@@ -1122,7 +1122,7 @@ html[dir=rtl] .fbot{direction:ltr}
     <a href="#home" class="logo"><img src="assets/logo-white.png" alt="Sedra Electric — Reach the nature energy" class="logo-img"></a>
     <nav class="nav-links" id="navLinks">
       <a href="#about">About</a><a href="#solutions">Solutions</a><a href="#services">Services</a>
-      <a href="#projects">Projects</a><a href="blog.html">Blog</a><a href="page.html?id=academy">Academy</a>
+      <a href="#projects">Projects</a><a href="page.html?id=academy">Academy</a>
       <a href="https://sedraelectric.pages.dev" target="_blank" rel="noopener" class="nav-portal">Portal ↗</a>
       
       <a href="#contact" class="btn btn-primary nav-cta">Get a Quote</a>
@@ -1496,7 +1496,7 @@ html[dir=rtl] .fbot{direction:ltr}
         <a href="https://www.linkedin.com/company/18157184/" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M20.5 2h-17A1.5 1.5 0 002 3.5v17A1.5 1.5 0 003.5 22h17a1.5 1.5 0 001.5-1.5v-17A1.5 1.5 0 0020.5 2zM8 19H5V9h3v10zM6.5 7.7a1.8 1.8 0 110-3.5 1.8 1.8 0 010 3.5zM19 19h-3v-5.3c0-1.3-.5-2.1-1.6-2.1-.9 0-1.4.6-1.6 1.2-.1.2-.1.5-.1.8V19h-3s.04-9.1 0-10h3v1.4c.4-.6 1.1-1.5 2.7-1.5 2 0 3.5 1.3 3.5 4.1V19z"/></svg></a>
       </div>
     </div>
-    <div class="fcol"><h4>Company</h4><a href="#about">About</a><a href="#solutions">Solutions</a><a href="#services">Services</a><a href="#projects">Projects</a><a href="#contact">Contact</a></div>
+    <div class="fcol"><h4>Company</h4><a href="#about">About</a><a href="#solutions">Solutions</a><a href="#services">Services</a><a href="#projects">Projects</a><a href="blog.html">Blog</a><a href="#contact">Contact</a></div>
     <div class="fcol"><h4>Access</h4><a href="https://sedraelectric.pages.dev" target="_blank" rel="noopener">Company Portal ↗</a><a href="https://sedraelectric.pages.dev/apply.html" target="_blank" rel="noopener">Join our team ↗</a></div>
     <div class="fcol"><h4>Solutions</h4><a href="page.html?id=home-automation">Home Automation</a><a href="page.html?id=security">Security Systems</a><a href="page.html?id=networks">Networks</a><a href="page.html?id=light-current">Light Current</a><a href="page.html?id=solar">Solar Energy</a><a href="page.html?id=ev-charging">EV Charger</a></div>
     <div class="fcol"><h4>Get in touch</h4><a href="mailto:info@sedra-electric.com">info@sedra-electric.com</a><a href="#contact">Request a Quote</a><a href="#">🇪🇬 Cairo, Egypt</a><a href="#">🇦🇪 Dubai, UAE</a><a href="#">🇸🇦 Riyadh, KSA</a></div>
