@@ -986,3 +986,71 @@ html[dir=rtl] #q_phone,html[dir=rtl] #q_email{direction:ltr}
 html[dir=rtl] .cline>div>span{unicode-bidi:plaintext;text-align:right}
 html[dir=rtl] .fbot{direction:ltr}
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+
+
+/* ===== Try Your Home — clean interactive demo ===== */
+.thome{background:linear-gradient(180deg,#081826,#050f18);padding:70px 0;color:#eaf2f8}
+.thome .th-wrap{max-width:1180px;margin:0 auto;padding:0 22px}
+.th-head{text-align:center;max-width:700px;margin:0 auto 34px}
+.th-badge{display:inline-block;font-family:'Outfit';font-weight:700;font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:#38d0ec;background:rgba(56,208,236,.12);border:1px solid rgba(56,208,236,.3);padding:6px 14px;border-radius:50px}
+.th-head h2{font-family:'Outfit';font-weight:800;font-size:clamp(28px,5vw,44px);color:#fff;margin:14px 0 10px}
+.th-head p{color:#a9bece;font-size:16.5px;line-height:1.7}
+
+.th-grid{display:grid;grid-template-columns:1.35fr 1fr;gap:26px;align-items:stretch}
+
+/* stage */
+.th-stage{position:relative;border-radius:20px;overflow:hidden;min-height:440px;box-shadow:0 30px 70px rgba(0,0,0,.45);isolation:isolate}
+.th-img{position:absolute;inset:0;background-size:cover;background-position:center;transition:opacity .9s ease}
+.th-night{background-image:url(assets/iot-room.jpg)}
+.th-day{background-image:url(assets/iot-room-day.jpg);opacity:0}
+.th-stage.is-day .th-day{opacity:1}
+.th-glow{position:absolute;inset:0;background:radial-gradient(62% 46% at 50% 60%,rgba(255,193,112,.55),rgba(255,160,80,0) 70%);opacity:0;transition:opacity .6s;mix-blend-mode:screen;pointer-events:none}
+.th-stage.lights-on .th-glow{opacity:1}
+.th-veil{position:absolute;inset:0;background:linear-gradient(180deg,rgba(3,10,18,.5),rgba(3,10,18,.8));opacity:0;transition:opacity .6s;pointer-events:none}
+.th-stage.cur-closed .th-veil{opacity:1}
+.th-tint{position:absolute;inset:0;opacity:0;transition:opacity .5s,background .5s;pointer-events:none;mix-blend-mode:screen}
+.th-scan{position:absolute;left:0;right:0;height:32%;top:-40%;background:linear-gradient(180deg,rgba(56,208,236,0),rgba(56,208,236,.28),rgba(56,208,236,0));opacity:0;pointer-events:none}
+.th-stage.armed .th-scan{opacity:1;animation:thscan 3s linear infinite}
+@keyframes thscan{0%{top:-40%}100%{top:112%}}
+.th-badges{position:absolute;left:14px;top:14px;display:flex;gap:8px;flex-wrap:wrap;z-index:3}
+.th-chipbadge{font-family:'Outfit';font-weight:700;font-size:12px;padding:6px 12px;border-radius:50px;background:rgba(6,16,26,.72);color:#dfeaf3;border:1px solid rgba(255,255,255,.14)}
+.th-armed{color:#54e39a;display:none}
+.th-stage.armed .th-armed{display:inline-block}
+.th-evb b{color:#38d0ec}
+.th-clock{position:absolute;right:14px;top:14px;z-index:3;font-family:'Outfit';font-weight:700;font-size:12.5px;padding:6px 12px;border-radius:50px;background:rgba(6,16,26,.72);color:#eaf2f8;border:1px solid rgba(255,255,255,.14)}
+
+/* controls */
+.th-ctrl{display:flex;flex-direction:column;gap:14px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.09);border-radius:20px;padding:20px}
+.th-scenes{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.th-scene{font-family:'Outfit';font-weight:700;font-size:15px;padding:14px;border-radius:14px;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.04);color:#cfe0ee;cursor:pointer;transition:.2s}
+.th-scene:hover{border-color:rgba(56,208,236,.5)}
+.th-scene.is-on{background:linear-gradient(135deg,#1FA6C4,#38d0ec);color:#042630;border-color:transparent}
+.th-devs{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.th-dev{display:flex;flex-direction:column;align-items:flex-start;gap:2px;padding:14px;border-radius:14px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.03);color:#eaf2f8;cursor:pointer;transition:.2s;text-align:left}
+.th-dev:hover{border-color:rgba(56,208,236,.45)}
+.th-dev .i{font-size:20px;line-height:1}
+.th-dev .l{font-family:'Outfit';font-weight:700;font-size:14.5px}
+.th-dev .s{font-size:12.5px;color:#8fa6b8}
+.th-dev.is-on{background:linear-gradient(135deg,rgba(31,166,196,.28),rgba(56,208,236,.14));border-color:rgba(56,208,236,.6)}
+.th-dev.is-on .s{color:#38d0ec}
+.th-clim{display:flex;align-items:center;gap:12px;padding:12px 16px;border-radius:14px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.03);flex-wrap:wrap}
+.th-clim .cl{font-family:'Outfit';font-weight:700;font-size:14.5px}
+.th-clim b{font-family:'Outfit';font-weight:800;font-size:20px;min-width:52px;text-align:center;color:#fff}
+.th-clim .hint{font-size:12.5px;color:#8fa6b8;margin-left:auto}
+.th-rbtn{width:42px;height:42px;border-radius:50%;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.06);color:#fff;font-size:20px;line-height:1;cursor:pointer;transition:.2s;flex:none}
+.th-rbtn:hover{background:rgba(56,208,236,.2);border-color:rgba(56,208,236,.5)}
+.th-note{font-size:13px;color:#8598a8;line-height:1.6}
+
+html[dir=rtl] .th-dev{text-align:right;align-items:flex-end}
+html[dir=rtl] .th-clim .hint{margin-left:0;margin-right:auto}
+html[dir=rtl] .th-clock{right:auto;left:14px}
+html[dir=rtl] .th-badges{left:auto;right:14px}
+
+@media(max-width:860px){
+  .th-grid{grid-template-columns:1fr}
+  .th-stage{min-height:300px}
+}
+@media(max-width:430px){
+  .th-clim .hint{margin-left:0;width:100%}
+  html[dir=rtl] .th-clim .hint{margin-right:0}
+}
