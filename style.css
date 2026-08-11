@@ -566,12 +566,13 @@ header.nav.scrolled .logo-img{height:36px}
 .iot.bright .iot-bg{filter:brightness(1.14) saturate(1.06)}
 .iot.movie .iot-bg{filter:brightness(.14) saturate(.6)}
 /* light zones */
-.iz{position:absolute;border-radius:50%;filter:blur(34px);opacity:0;transition:opacity .8s;mix-blend-mode:screen;pointer-events:none}
+.iz{position:absolute;filter:blur(20px);opacity:0;transition:opacity .7s ease;mix-blend-mode:screen;pointer-events:none}
 .iz.on{opacity:1}
-.z-living{left:34%;top:40%;width:34%;height:34%;background:radial-gradient(circle,rgba(255,200,130,.85),transparent 68%)}
-.z-kitchen{left:60%;top:34%;width:24%;height:26%;background:radial-gradient(circle,rgba(255,210,150,.8),transparent 66%)}
-.z-facade{left:6%;top:20%;width:18%;height:60%;background:radial-gradient(circle,rgba(255,190,120,.7),transparent 60%)}
-.z-garden{left:0%;top:66%;width:40%;height:30%;background:radial-gradient(circle,rgba(255,214,150,.6),transparent 62%)}
+/* zones aligned to the real fixtures in the villa photo (warm bloom + hot core) */
+.z-living{left:30%;top:0;width:48%;height:56%;background:radial-gradient(closest-side at 50% 22%,rgba(255,199,128,.66),rgba(255,181,110,.17) 52%,transparent 72%)}
+.z-kitchen{left:59%;top:4%;width:38%;height:47%;background:radial-gradient(closest-side at 42% 34%,rgba(255,191,120,.72),rgba(255,171,102,.18) 50%,transparent 72%)}
+.z-facade{left:5%;top:13%;width:27%;height:36%;background:radial-gradient(closest-side at 55% 45%,rgba(255,207,148,.56),transparent 66%)}
+.z-garden{left:0;top:50%;width:35%;height:28%;background:radial-gradient(closest-side at 42% 52%,rgba(255,213,148,.56),transparent 62%)}
 /* climate tint */
 .iot-tint{position:absolute;inset:0;opacity:0;transition:opacity 1s,background 1s;mix-blend-mode:soft-light;pointer-events:none}
 /* ===== CINEMA scene (Movie) ===== */
@@ -686,6 +687,13 @@ header.nav.scrolled .logo-img{height:36px}
 .seg{display:flex;gap:8px}
 .seg button{flex:1;padding:12px;border-radius:12px;border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.06);color:#fff;font-family:'Outfit';font-weight:600;font-size:13px;cursor:pointer;transition:.2s}
 .seg button.on{background:linear-gradient(135deg,var(--cyan),var(--cyan-l));color:#042630;border-color:transparent}
+/* curtains slider — control the exact opening degree */
+.curwrap{display:flex;flex-direction:column;gap:14px}
+.curval{font-family:'Outfit';font-size:13px;color:rgba(255,255,255,.72);font-weight:600}
+.curval b{color:var(--cyan-l);font-weight:800}
+.curslider{-webkit-appearance:none;appearance:none;width:100%;height:9px;border-radius:6px;background:linear-gradient(90deg,rgba(56,208,236,.85),rgba(56,208,236,.22));outline:none;cursor:pointer;margin:2px 0}
+.curslider::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:24px;height:24px;border-radius:50%;background:linear-gradient(135deg,var(--cyan),var(--cyan-l));border:3px solid #fff;box-shadow:0 3px 10px rgba(0,0,0,.45);cursor:pointer}
+.curslider::-moz-range-thumb{width:22px;height:22px;border-radius:50%;background:var(--cyan);border:3px solid #fff;box-shadow:0 3px 10px rgba(0,0,0,.45);cursor:pointer}
 /* sound */
 .snd .eq{display:flex;gap:4px;align-items:flex-end;height:44px;justify-content:center;margin-bottom:12px}
 .snd .eq i{width:6px;background:linear-gradient(var(--cyan-l),var(--cyan));border-radius:3px;height:20%}
@@ -782,7 +790,16 @@ header.nav.scrolled .logo-img{height:36px}
   .ichip{font-size:11.5px;padding:8px 11px;gap:6px;border-radius:11px}
   .ichip svg{width:15px;height:15px}
   .iot-head{padding:0 16px}
-  .ipanel{bottom:110px;width:min(440px,94vw)}
+  /* control panel: solid, centered, no bleed-through of the chips behind it */
+  .ipanel{bottom:auto;top:50%;transform:translate(-50%,-50%) translateY(6px);width:min(440px,94vw);max-height:78vh;overflow-y:auto;background:#0a1a2b;border-color:rgba(56,208,236,.28);box-shadow:0 26px 70px rgba(0,0,0,.7)}
+  .ipanel.show{transform:translate(-50%,-50%)}
+  /* while a panel is open, fade the chip rail so the panel reads as a clean modal */
+  .iot.panel-open .iot-ui{opacity:.12;pointer-events:none;transition:opacity .3s}
+  /* keep the energy card clear of the fixed nav */
+  .ienergy{top:74px}
+  /* curtain slider a touch larger for touch */
+  .curslider{height:11px}
+  .curslider::-webkit-slider-thumb{width:28px;height:28px}
   /* headings: a touch more breathing room so nothing reads as clipped */
   h1,h2,h3,h4,.disp{line-height:1.06}
   .pad{padding:64px 0}
@@ -877,7 +894,7 @@ header.nav.scrolled .logo-img{height:36px}
 .iroom.on::before{background:#ffce78;box-shadow:0 0 9px #ffce78}
 
 @media(max-width:640px){
-  .ienergy{width:150px;right:12px;top:12px;padding:9px 10px}
+  .ienergy{width:150px;right:12px;top:70px;padding:9px 10px}
   .en-txt b{font-size:12.5px}.en-ic{width:22px;height:22px;flex:0 0 22px;font-size:12px}
 }
 .feed .lbl{text-shadow:0 1px 4px rgba(0,0,0,.9)}.feed .noise{opacity:.05}
@@ -900,7 +917,7 @@ img,svg,video{ max-width:100% }
   .iroom{font-size:11.5px;padding:6px 12px}
   .irail{gap:6px}
   .ichip{padding:9px 12px;font-size:12.5px}
-  .ienergy{width:132px;right:10px;top:10px;padding:8px 9px;border-radius:13px}
+  .ienergy{width:132px;right:10px;top:66px;padding:8px 9px;border-radius:13px}
   .ienergy .en-h{font-size:9.5px;margin-bottom:7px}
   .en-rows{gap:6px}
   .en-bar{margin-top:8px}
@@ -986,71 +1003,3 @@ html[dir=rtl] #q_phone,html[dir=rtl] #q_email{direction:ltr}
 html[dir=rtl] .cline>div>span{unicode-bidi:plaintext;text-align:right}
 html[dir=rtl] .fbot{direction:ltr}
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
-
-
-/* ===== Try Your Home — clean interactive demo ===== */
-.thome{background:linear-gradient(180deg,#081826,#050f18);padding:70px 0;color:#eaf2f8}
-.thome .th-wrap{max-width:1180px;margin:0 auto;padding:0 22px}
-.th-head{text-align:center;max-width:700px;margin:0 auto 34px}
-.th-badge{display:inline-block;font-family:'Outfit';font-weight:700;font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:#38d0ec;background:rgba(56,208,236,.12);border:1px solid rgba(56,208,236,.3);padding:6px 14px;border-radius:50px}
-.th-head h2{font-family:'Outfit';font-weight:800;font-size:clamp(28px,5vw,44px);color:#fff;margin:14px 0 10px}
-.th-head p{color:#a9bece;font-size:16.5px;line-height:1.7}
-
-.th-grid{display:grid;grid-template-columns:1.35fr 1fr;gap:26px;align-items:stretch}
-
-/* stage */
-.th-stage{position:relative;border-radius:20px;overflow:hidden;min-height:440px;box-shadow:0 30px 70px rgba(0,0,0,.45);isolation:isolate}
-.th-img{position:absolute;inset:0;background-size:cover;background-position:center;transition:opacity .9s ease}
-.th-night{background-image:url(assets/iot-room.jpg)}
-.th-day{background-image:url(assets/iot-room-day.jpg);opacity:0}
-.th-stage.is-day .th-day{opacity:1}
-.th-glow{position:absolute;inset:0;background:radial-gradient(62% 46% at 50% 60%,rgba(255,193,112,.55),rgba(255,160,80,0) 70%);opacity:0;transition:opacity .6s;mix-blend-mode:screen;pointer-events:none}
-.th-stage.lights-on .th-glow{opacity:1}
-.th-veil{position:absolute;inset:0;background:linear-gradient(180deg,rgba(3,10,18,.5),rgba(3,10,18,.8));opacity:0;transition:opacity .6s;pointer-events:none}
-.th-stage.cur-closed .th-veil{opacity:1}
-.th-tint{position:absolute;inset:0;opacity:0;transition:opacity .5s,background .5s;pointer-events:none;mix-blend-mode:screen}
-.th-scan{position:absolute;left:0;right:0;height:32%;top:-40%;background:linear-gradient(180deg,rgba(56,208,236,0),rgba(56,208,236,.28),rgba(56,208,236,0));opacity:0;pointer-events:none}
-.th-stage.armed .th-scan{opacity:1;animation:thscan 3s linear infinite}
-@keyframes thscan{0%{top:-40%}100%{top:112%}}
-.th-badges{position:absolute;left:14px;top:14px;display:flex;gap:8px;flex-wrap:wrap;z-index:3}
-.th-chipbadge{font-family:'Outfit';font-weight:700;font-size:12px;padding:6px 12px;border-radius:50px;background:rgba(6,16,26,.72);color:#dfeaf3;border:1px solid rgba(255,255,255,.14)}
-.th-armed{color:#54e39a;display:none}
-.th-stage.armed .th-armed{display:inline-block}
-.th-evb b{color:#38d0ec}
-.th-clock{position:absolute;right:14px;top:14px;z-index:3;font-family:'Outfit';font-weight:700;font-size:12.5px;padding:6px 12px;border-radius:50px;background:rgba(6,16,26,.72);color:#eaf2f8;border:1px solid rgba(255,255,255,.14)}
-
-/* controls */
-.th-ctrl{display:flex;flex-direction:column;gap:14px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.09);border-radius:20px;padding:20px}
-.th-scenes{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.th-scene{font-family:'Outfit';font-weight:700;font-size:15px;padding:14px;border-radius:14px;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.04);color:#cfe0ee;cursor:pointer;transition:.2s}
-.th-scene:hover{border-color:rgba(56,208,236,.5)}
-.th-scene.is-on{background:linear-gradient(135deg,#1FA6C4,#38d0ec);color:#042630;border-color:transparent}
-.th-devs{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.th-dev{display:flex;flex-direction:column;align-items:flex-start;gap:2px;padding:14px;border-radius:14px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.03);color:#eaf2f8;cursor:pointer;transition:.2s;text-align:left}
-.th-dev:hover{border-color:rgba(56,208,236,.45)}
-.th-dev .i{font-size:20px;line-height:1}
-.th-dev .l{font-family:'Outfit';font-weight:700;font-size:14.5px}
-.th-dev .s{font-size:12.5px;color:#8fa6b8}
-.th-dev.is-on{background:linear-gradient(135deg,rgba(31,166,196,.28),rgba(56,208,236,.14));border-color:rgba(56,208,236,.6)}
-.th-dev.is-on .s{color:#38d0ec}
-.th-clim{display:flex;align-items:center;gap:12px;padding:12px 16px;border-radius:14px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.03);flex-wrap:wrap}
-.th-clim .cl{font-family:'Outfit';font-weight:700;font-size:14.5px}
-.th-clim b{font-family:'Outfit';font-weight:800;font-size:20px;min-width:52px;text-align:center;color:#fff}
-.th-clim .hint{font-size:12.5px;color:#8fa6b8;margin-left:auto}
-.th-rbtn{width:42px;height:42px;border-radius:50%;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.06);color:#fff;font-size:20px;line-height:1;cursor:pointer;transition:.2s;flex:none}
-.th-rbtn:hover{background:rgba(56,208,236,.2);border-color:rgba(56,208,236,.5)}
-.th-note{font-size:13px;color:#8598a8;line-height:1.6}
-
-html[dir=rtl] .th-dev{text-align:right;align-items:flex-end}
-html[dir=rtl] .th-clim .hint{margin-left:0;margin-right:auto}
-html[dir=rtl] .th-clock{right:auto;left:14px}
-html[dir=rtl] .th-badges{left:auto;right:14px}
-
-@media(max-width:860px){
-  .th-grid{grid-template-columns:1fr}
-  .th-stage{min-height:300px}
-}
-@media(max-width:430px){
-  .th-clim .hint{margin-left:0;width:100%}
-  html[dir=rtl] .th-clim .hint{margin-right:0}
-}

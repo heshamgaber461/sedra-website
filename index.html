@@ -163,59 +163,185 @@
     <div style="height:100vh"></div><div style="height:100vh"></div><div style="height:100vh"></div>
     <div style="height:100vh"></div><div style="height:100vh"></div><div style="height:100vh"></div><div style="height:100vh"></div>
   </div>
-</section>
+<section class="iot live" id="iot">
+  <div class="iot-scene">
+    <div class="iot-bg" id="bgOv"></div>
+    <div class="iot-bg-day" id="dayOv"></div>
+    <div class="iot-sky" id="skyOv"></div>
+    <div class="iot-warm" id="warmOv"></div>
+    <div class="iot-night" id="nightOv"></div>
+    <div class="iz z-living"></div><div class="iz z-kitchen"></div><div class="iz z-facade"></div><div class="iz z-garden"></div>
+    <div class="iot-tint" id="tint"></div>
+    <div class="iot-party"></div>
+    <div class="idrape l" id="drapeL"></div><div class="idrape r" id="drapeR"></div>
+    <!-- cinema scene -->
+    <div class="iot-cinema" id="cinema" aria-hidden="true">
+      <svg viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="cwall" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0c141d"/><stop offset="1" stop-color="#04070b"/></linearGradient>
+          <linearGradient id="csky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#12325c"/><stop offset="40%" stop-color="#7a4b8c"/><stop offset="60%" stop-color="#e08b3e"/><stop offset="80%" stop-color="#e2532e"/><stop offset="100%" stop-color="#3a1526"/></linearGradient>
+          <radialGradient id="csun" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#fff3d6"/><stop offset="42%" stop-color="#ffd27a"/><stop offset="100%" stop-color="rgba(255,180,90,0)"/></radialGradient>
+          <radialGradient id="cspill" cx="50%" cy="36%" r="62%"><stop offset="0" stop-color="rgba(226,150,90,.55)"/><stop offset="55%" stop-color="rgba(120,90,150,.18)"/><stop offset="100%" stop-color="rgba(0,0,0,0)"/></radialGradient>
+          <radialGradient id="cvig" cx="50%" cy="40%" r="78%"><stop offset="52%" stop-color="rgba(0,0,0,0)"/><stop offset="100%" stop-color="rgba(0,0,0,.9)"/></radialGradient>
+        </defs>
+        <rect width="1600" height="900" fill="url(#cwall)"/>
+        <rect width="1600" height="900" fill="url(#cspill)"/>
+        <!-- ceiling downlights -->
+        <g fill="#ffcf8a" opacity=".45"><circle cx="300" cy="66" r="5"/><circle cx="640" cy="50" r="5"/><circle cx="960" cy="50" r="5"/><circle cx="1300" cy="66" r="5"/></g>
+        <!-- acoustic side panels -->
+        <g stroke="rgba(255,255,255,.045)" stroke-width="2">
+          <line x1="70" y1="120" x2="70" y2="640"/><line x1="150" y1="120" x2="150" y2="660"/><line x1="230" y1="130" x2="230" y2="680"/>
+          <line x1="1530" y1="120" x2="1530" y2="640"/><line x1="1450" y1="120" x2="1450" y2="660"/><line x1="1370" y1="130" x2="1370" y2="680"/>
+        </g>
+        <!-- projector beam -->
+        <path d="M800 620 L470 250 L1130 250 Z" fill="rgba(255,240,210,.035)"/>
+        <!-- SCREEN -->
+        <g class="cine-screen">
+          <rect x="366" y="150" width="868" height="430" rx="8" fill="#000"/>
+          <clipPath id="cclip"><rect x="378" y="176" width="844" height="378" rx="3"/></clipPath>
+          <g clip-path="url(#cclip)">
+            <rect x="378" y="176" width="844" height="378" fill="url(#csky)"/>
+            <circle cx="800" cy="432" r="150" fill="url(#csun)"/>
+            <circle cx="800" cy="432" r="44" fill="#fff6e0"/>
+            <path d="M378 470 L520 360 L640 442 L770 340 L900 452 L1040 360 L1160 452 L1222 410 L1222 554 L378 554 Z" fill="#3a2233" opacity=".85"/>
+            <path d="M378 522 L560 432 L720 502 L900 420 L1080 506 L1222 446 L1222 554 L378 554 Z" fill="#190e1b"/>
+            <rect x="378" y="500" width="844" height="54" fill="#c96a34" opacity=".22"/>
+          </g>
+          <!-- letterbox inside screen -->
+          <rect x="378" y="176" width="844" height="30" fill="#000" opacity=".88"/>
+          <rect x="378" y="524" width="844" height="30" fill="#000" opacity=".88"/>
+          <rect x="378" y="176" width="844" height="378" fill="url(#cspill)" opacity=".14"/>
+        </g>
+        <!-- foreground sofa + heads -->
+        <path d="M0 900 L0 762 Q0 720 60 716 L560 690 Q684 684 684 762 L684 900 Z" fill="#020407"/>
+        <path d="M916 900 L916 762 Q916 684 1040 690 L1540 716 Q1600 720 1600 762 L1600 900 Z" fill="#020407"/>
+        <ellipse cx="356" cy="700" rx="52" ry="58" fill="#010305"/>
+        <ellipse cx="1244" cy="700" rx="52" ry="58" fill="#010305"/>
+        <rect width="1600" height="900" fill="url(#cvig)"/>
+      </svg>
+    </div>
+    <div class="iot-vig"></div>
+    <div class="iot-bars t"></div><div class="iot-bars b"></div>
+    <div class="iscan"></div><div class="isecmark"></div>
+    <div class="ithermo"><div class="ring" id="thRing"></div><div><div class="tv" id="thVal">23°</div><div class="tl">CLIMATE</div></div></div>
+    <div class="iev">
+      <div class="evcard"><img loading="lazy" decoding="async" src="assets/beat5-ev.jpg" alt="EV charging"><div class="fday" style="background-image:url(assets/beat5-ev-day.jpg)"></div><div class="evbadge">EV · <b id="evPct">41%</b> · <span id="evEtaC">~41 min</span></div></div>
+    </div>
+    <div class="icam-dot" style="left:42%;top:64%" data-cam="0"><svg viewBox="0 0 24 24"><path d="M3 7h13v10H3zM16 10l5-3v10l-5-3"/></svg></div>
+    <div class="icam-dot" style="left:74%;top:52%" data-cam="1"><svg viewBox="0 0 24 24"><path d="M3 7h13v10H3zM16 10l5-3v10l-5-3"/></svg></div>
+    <div class="ihud">
+      <div class="ibadge b-armed"><span class="d"></span>System Armed</div>
+      <div class="ibadge b-ev"><span class="d"></span>EV · Charging</div>
+    </div>
+    <div class="iscene-tag" id="sceneTag"><span class="sd"></span><span id="sceneTagT">Morning</span></div>
 
-<!-- ===== TRY YOUR HOME — clean interactive demo ===== -->
-<section id="iot" class="thome">
-  <div class="th-wrap">
-    <div class="th-head">
-      <span class="th-badge">⚡ Live smart-home demo</span>
-      <h2 data-ar="جرّب بيتك الذكي">Try your smart home</h2>
-      <p data-ar="اضغط على أي وضع أو جهاز وشوف الغرفة بتتفاعل — إضاءة، تكييف، ستائر، أمان وشحن السيارة، كله من مكان واحد.">Tap a scene or a device and watch the room respond — lights, climate, curtains, security and EV, all controlled from one place.</p>
+    <!-- live energy dashboard -->
+    <div class="ienergy" id="energy">
+      <div class="en-h"><span class="en-dot"></span>LIVE ENERGY</div>
+      <div class="en-rows">
+        <div class="en-row"><span class="en-ic use">⌂</span><div class="en-txt"><span class="en-l">Home usage</span><b id="enUse">0.4 kW</b></div></div>
+        <div class="en-row"><span class="en-ic sun">☀</span><div class="en-txt"><span class="en-l">Solar now</span><b id="enSolar">0.0 kW</b></div></div>
+        <div class="en-row"><span class="en-ic grid" id="enGridIc">⚡</span><div class="en-txt"><span class="en-l" id="enGridL">From grid</span><b id="enGrid">0.4 kW</b></div></div>
+      </div>
+      <div class="en-bar"><i id="enBar"></i></div>
+      <div class="en-save" id="enSave">Solar covers 0%</div>
     </div>
 
-    <div class="th-grid">
-      <!-- STAGE -->
-      <div class="th-stage" id="thStage">
-        <div class="th-img th-night"></div>
-        <div class="th-img th-day"></div>
-        <div class="th-glow"></div>
-        <div class="th-tint" id="thTint"></div>
-        <div class="th-veil"></div>
-        <div class="th-scan"></div>
-        <div class="th-badges">
-          <span class="th-chipbadge th-armed">● Armed</span>
-          <span class="th-chipbadge th-evb">EV · <b id="thEvBadge">41%</b></span>
-        </div>
-        <span class="th-clock" id="thClock">🌙 Night</span>
+  </div>
+
+  <div class="iot-head" id="head">
+    <span class="ibadge2">⚡ LIVE SMART-HOME DEMO — <b>control the villa</b></span>
+    <h2>Now try it yourself</h2>
+    <p>Tap any device below and watch the villa respond — lights, climate, curtains, EV, sound, cameras and more.</p>
+  </div>
+
+  <div class="iot-ui" id="ui">
+    <div class="iscenes" id="scenes">
+      <button class="iscene" data-scene="morning">☀️ Morning</button>
+      <button class="iscene" data-scene="goodbye">👋 Goodbye</button>
+    </div>
+
+    <div class="irail" id="rail">
+      <div class="ichip" data-dev="lights"><svg viewBox="0 0 24 24"><path d="M9 18h6M10 22h4M12 2a7 7 0 00-4 12c.6.5 1 1.3 1 2h6c0-.7.4-1.5 1-2a7 7 0 00-4-12z"/></svg>Lights</div>
+      <div class="ichip" data-dev="climate"><svg viewBox="0 0 24 24"><path d="M14 14V5a2 2 0 10-4 0v9a4 4 0 104 0z"/></svg>Climate</div>
+      <div class="ichip" data-dev="curtains"><svg viewBox="0 0 24 24"><path d="M4 3h16M5 3v18M19 3v18M9 3v18M15 3v18"/></svg>Curtains</div>
+      <div class="ichip" data-dev="ev"><svg viewBox="0 0 24 24"><path d="M7 3h7l-1 7h4l-8 11 2-8H6l1-10z"/></svg>EV</div>
+      <div class="ichip" data-dev="security"><svg viewBox="0 0 24 24"><path d="M12 2 4 6v6c0 5 3.5 8 8 10 4.5-2 8-5 8-10V6l-8-4z"/></svg>Security</div>
+      <div class="ichip" data-dev="cameras"><svg viewBox="0 0 24 24"><path d="M3 7h13v10H3zM16 10l5-3v10l-5-3"/></svg>Cameras</div>
+      <div class="ichip" data-dev="intercom"><svg viewBox="0 0 24 24"><path d="M12 2a7 7 0 00-7 7v4l-2 3h18l-2-3V9a7 7 0 00-7-7zM9 21a3 3 0 006 0"/></svg>Intercom</div>
+    </div>
+  </div>
+
+  <!-- panels -->
+  <div class="ipanel" id="panel">
+    <h4><span id="panelTitle">Lights</span><span class="x" id="panelX">✕</span></h4>
+    <div class="ptab" data-p="lights">
+      <div class="zrow"><b>All Lights</b><div class="tgl" data-zone="all"><i></i></div></div>
+      <div class="zrow"><b>Living Room</b><div class="tgl" data-zone="living"><i></i></div></div>
+      <div class="zrow"><b>Kitchen</b><div class="tgl" data-zone="kitchen"><i></i></div></div>
+      <div class="zrow"><b>Facade</b><div class="tgl" data-zone="facade"><i></i></div></div>
+      <div class="zrow"><b>Garden</b><div class="tgl" data-zone="garden"><i></i></div></div>
+    </div>
+    <div class="ptab clima" data-p="climate">
+      <div class="st">THERMOSTAT</div><div class="big"><span id="climBig">23</span>°</div>
+      <div class="ctrls"><button class="rbtn" data-clim="-1">−</button><button class="rbtn" data-clim="1">+</button></div>
+      <div class="hint" id="climHint">Comfortable</div>
+    </div>
+    <div class="ptab" data-p="curtains">
+      <div class="curwrap">
+        <div class="curval">Curtains — <b id="curPct">Open</b></div>
+        <input type="range" min="0" max="100" step="1" value="100" id="curRange" class="curslider" aria-label="Curtain opening">
+        <div class="seg" id="curSeg"><button data-cur="100">Open</button><button data-cur="50">Half</button><button data-cur="0">Closed</button></div>
       </div>
+    </div>
+    <div class="ptab clima" data-p="ev">
+      <div class="st">EV CHARGER</div><div class="big"><span id="evBig">41</span>%</div>
+      <div class="ctrls"><button class="rbtn" id="evToggle" style="width:auto;border-radius:50px;padding:0 20px;font-size:14px">Stop</button></div>
+      <div class="hint" id="evHint">Charging · ~41 min to full</div>
+    </div>
+    <div class="ptab" data-p="security">
+      <div class="zrow"><b>Arm System</b><div class="tgl" data-sec="1"><i></i></div></div>
+      <div class="hint" style="font-size:11px;color:rgba(255,255,255,.5);margin-top:8px">Arming enables perimeter scanning & alerts.</div>
+    </div>
+  </div>
 
-      <!-- CONTROLS -->
-      <div class="th-ctrl">
-        <div class="th-scenes">
-          <button type="button" class="th-scene" data-tod="day">☀️ Morning</button>
-          <button type="button" class="th-scene is-on" data-tod="night">🌙 Night</button>
-        </div>
-
-        <div class="th-devs">
-          <button type="button" class="th-dev" data-dev="lights"><span class="i">💡</span><span class="l">Lights</span><span class="s" id="sLights">Off</span></button>
-          <button type="button" class="th-dev" data-dev="curtains"><span class="i">🪟</span><span class="l">Curtains</span><span class="s" id="sCur">Open</span></button>
-          <button type="button" class="th-dev" data-dev="security"><span class="i">🛡️</span><span class="l">Security</span><span class="s" id="sSec">Disarmed</span></button>
-          <button type="button" class="th-dev" data-dev="ev"><span class="i">🔌</span><span class="l">EV Charger</span><span class="s" id="sEv">41%</span></button>
-        </div>
-
-        <div class="th-clim">
-          <span class="cl">Climate</span>
-          <button type="button" class="th-rbtn" data-clim="-1" aria-label="Lower temperature">−</button>
-          <b id="climVal">23°</b>
-          <button type="button" class="th-rbtn" data-clim="1" aria-label="Raise temperature">+</button>
-          <span class="hint" id="climHint">Comfortable</span>
-        </div>
-
-        <div class="th-note">👆 Everything updates instantly — a live preview of the app we set up in your home.</div>
+  <!-- cameras modal -->
+  <div class="icams" id="cams">
+    <div class="wrap">
+      <div class="top"><b>📹 Live Cameras · 4 online</b><button class="cx" id="camClose">Close ✕</button></div>
+      <div class="camgrid">
+        <div class="feed" style="background:url(assets/beat0-hero.jpg) center/cover"><div class="fday" style="background-image:url(assets/beat0-hero-day.jpg)"></div><div class="noise"></div><div class="scanl"></div><span class="rec">REC</span><span class="lbl">CAM 01 · Front</span><span class="ts feedts"></span></div>
+        <div class="feed" style="background:url(assets/beat5-ev.jpg) center/cover"><div class="fday" style="background-image:url(assets/beat5-ev-day.jpg)"></div><div class="noise"></div><div class="scanl"></div><span class="rec">REC</span><span class="lbl">CAM 02 · Garage</span><span class="ts feedts"></span></div>
+        <div class="feed" style="background:url(assets/beat2-security.jpg) center/cover"><div class="fday" style="background-image:url(assets/beat2-security-day.jpg)"></div><div class="noise"></div><div class="scanl"></div><span class="rec">REC</span><span class="lbl">CAM 03 · Gate</span><span class="ts feedts"></span></div>
+        <div class="feed" style="background:url(assets/beat6-final.jpg) center/cover"><div class="fday" style="background-image:url(assets/beat6-final-day.jpg)"></div><div class="noise"></div><div class="scanl"></div><span class="rec">REC</span><span class="lbl">CAM 04 · Perimeter</span><span class="ts feedts"></span></div>
       </div>
     </div>
   </div>
+
+  <!-- intercom -->
+  <div class="iintercom" id="intercom">
+    <div class="vid" style="background:url(assets/intercom-delivery.jpg) center/cover"><div class="scanl"></div><span class="rec">● LIVE</span></div>
+    <div class="body"><b>Front Door</b><p>📦 Delivery — someone's at your door…</p>
+      <div class="acts"><button class="a-open" id="icOpen">Unlock</button><button class="a-ign" id="icIgnore">Ignore</button></div>
+    </div>
+  </div>
+
+  <!-- phone -->
+  <div class="iphone">
+    <div class="scr">
+      <div class="ph-h"><b>My Villa</b><span class="lv">● Live</span></div>
+      <div class="big" id="phScene">Custom</div><div class="sub" id="phSub">Tap a device</div>
+      <div class="grid">
+        <div class="cell" id="cLights"><div class="cl">LIGHTS</div><div class="cv" id="phLights">0 on</div></div>
+        <div class="cell" id="cClim"><div class="cl">CLIMATE</div><div class="cv" id="phClim">23°</div></div>
+        <div class="cell" id="cCur"><div class="cl">CURTAINS</div><div class="cv" id="phCur">Open</div></div>
+        <div class="cell" id="cEv"><div class="cl">EV</div><div class="cv" id="phEv">80%</div></div>
+        <div class="cell" id="cSec"><div class="cl">SECURITY</div><div class="cv" id="phSec">Off</div></div>
+      </div>
+      <div class="ph-hint">👆 Tap any tile to control</div>
+    </div>
+  </div>
+</section>
 </section>
 
 
@@ -611,86 +737,250 @@ if(hero){ hero.addEventListener('mousemove',function(e){
 </script>
 
 <script>
-/* ===== Sedra — Try Your Home (clean interactive demo) ===== */
+/* ===== Sedra interactive smart-home simulator ===== */
 (function(){
-  var stage=document.getElementById('thStage');
-  if(!stage) return;
-  var tint=document.getElementById('thTint');
-  var clock=document.getElementById('thClock');
-  var S={tod:'night',lights:false,cur:'open',sec:false,ev:{on:false,level:41},clim:23};
+const iot=document.getElementById('iot');
+const bgOv=document.getElementById('bgOv'),dayOv=document.getElementById('dayOv'),nightOv=document.getElementById('nightOv'),warmOv=document.getElementById('warmOv'),skyOv=document.getElementById('skyOv');
+const S={lights:{living:false,kitchen:false,facade:false,garden:false},clim:23,cur:100,ev:{on:true,level:41},sec:false,snd:{on:false,track:0},scene:null,tod:100};
+var todSun=0;
+const TRACKS=['Ambient Calm','Cinematic Mood','Upbeat Party'];
 
-  function q(sel){return document.querySelector(sel);}
-  function dev(name){return document.querySelector('.th-dev[data-dev="'+name+'"]');}
-
-  /* ---- day / night ---- */
-  function setTOD(t){
-    S.tod=t;
-    stage.classList.toggle('is-day',t==='day');
-    clock.textContent=(t==='day')?'☀️ Morning':'🌙 Night';
-    document.querySelectorAll('.th-scene').forEach(function(b){b.classList.toggle('is-on',b.dataset.tod===t);});
-  }
-  document.querySelectorAll('.th-scene').forEach(function(b){b.addEventListener('click',function(){setTOD(b.dataset.tod);});});
-
-  /* ---- lights ---- */
-  dev('lights').addEventListener('click',function(){
-    S.lights=!S.lights;
-    stage.classList.toggle('lights-on',S.lights);
-    this.classList.toggle('is-on',S.lights);
-    document.getElementById('sLights').textContent=S.lights?'On':'Off';
+/* ---------- lights ---------- */
+function applyLights(){
+  ['living','kitchen','facade','garden'].forEach(z=>{
+    document.querySelector('.iz.z-'+z).classList.toggle('on',S.lights[z]);
+    const t=document.querySelector('.tgl[data-zone="'+z+'"]'); if(t)t.classList.toggle('on',S.lights[z]);
   });
-
-  /* ---- curtains ---- */
-  dev('curtains').addEventListener('click',function(){
-    S.cur=(S.cur==='open')?'closed':'open';
-    stage.classList.toggle('cur-closed',S.cur==='closed');
-    this.classList.toggle('is-on',S.cur==='closed');
-    document.getElementById('sCur').textContent=(S.cur==='open')?'Open':'Closed';
-  });
-
-  /* ---- security ---- */
-  dev('security').addEventListener('click',function(){
-    S.sec=!S.sec;
-    stage.classList.toggle('armed',S.sec);
-    this.classList.toggle('is-on',S.sec);
-    document.getElementById('sSec').textContent=S.sec?'Armed':'Disarmed';
-  });
-
-  /* ---- EV charging ---- */
-  function evRender(){
-    document.getElementById('sEv').textContent=S.ev.level+'%';
-    document.getElementById('thEvBadge').textContent=S.ev.level+'%';
-  }
-  dev('ev').addEventListener('click',function(){
-    if(!S.ev.on && S.ev.level>=100) S.ev.level=41; /* restart the demo */
-    S.ev.on=!S.ev.on;
-    this.classList.toggle('is-on',S.ev.on);
-    evRender();
-  });
-  setInterval(function(){
-    if(S.ev.on && S.ev.level<100){
-      S.ev.level++; evRender();
-      if(S.ev.level>=100){ S.ev.on=false; dev('ev').classList.remove('is-on'); }
+  const all=Object.values(S.lights).every(v=>v);
+  const anyOn=Object.values(S.lights).some(v=>v);
+  document.querySelector('.tgl[data-zone="all"]').classList.toggle('on',all);
+  if(!S.scene){
+    var n=['living','kitchen','facade','garden'].filter(function(z){return S.lights[z];}).length;
+    iot.classList.toggle('dim', n===0);
+    var bg=document.getElementById('bgOv');
+    if(bg){
+      /* more lights on = brighter, warmer room; all off = cosy dark */
+      bg.style.filter = (n===0)
+        ? 'brightness(.36) saturate(.82)'
+        : 'brightness('+(1.30+n*0.11).toFixed(2)+') saturate('+(1.05+n*0.03).toFixed(2)+')';
     }
-  },600);
-
-  /* ---- climate ---- */
-  function climRender(){
-    document.getElementById('climVal').textContent=S.clim+'°';
-    var op=0,col='';
-    if(S.clim>=25){op=Math.min(.55,(S.clim-24)*0.12);col='radial-gradient(120% 100% at 50% 45%,rgba(255,120,40,.85),rgba(255,80,30,.35))';}
-    else if(S.clim<=20){op=Math.min(.55,(21-S.clim)*0.12);col='radial-gradient(120% 100% at 50% 45%,rgba(80,150,255,.85),rgba(40,110,220,.35))';}
-    tint.style.background=col; tint.style.opacity=op;
-    document.getElementById('climHint').textContent=(S.clim>=26)?'Warm':(S.clim<=19)?'Cool':'Comfortable';
   }
-  document.querySelectorAll('[data-clim]').forEach(function(b){
-    b.addEventListener('click',function(){
-      S.clim=Math.max(16,Math.min(30,S.clim+(+b.dataset.clim)));
-      climRender();
-    });
-  });
+  sync();
+}
+document.querySelectorAll('.tgl[data-zone]').forEach(t=>t.addEventListener('click',()=>{
+  const z=t.dataset.zone;
+  if(z==='all'){const v=!Object.values(S.lights).every(x=>x);Object.keys(S.lights).forEach(k=>S.lights[k]=v);}
+  else S.lights[z]=!S.lights[z];
+  clearScene(); applyLights();
+}));
 
-  /* ---- init ---- */
-  setTOD('night'); evRender(); climRender();
+/* ---------- climate ---------- */
+function applyClim(){
+  document.getElementById('climBig').textContent=S.clim;
+  document.getElementById('thVal').textContent=S.clim+'°';
+  const tint=document.getElementById('tint');
+  let op=0,col='';
+  if(S.clim>=25){op=Math.min(.6,(S.clim-24)*0.12);col='radial-gradient(120% 100% at 50% 45%,rgba(255,120,40,.9),rgba(255,80,30,.5))';}
+  else if(S.clim<=20){op=Math.min(.6,(21-S.clim)*0.12);col='radial-gradient(120% 100% at 50% 45%,rgba(80,150,255,.9),rgba(40,110,220,.5))';}
+  tint.style.background=col; tint.style.opacity=op;
+  const hint=document.getElementById('climHint');
+  hint.textContent=S.clim>=26?'Warm':S.clim<=19?'Cool':'Comfortable';
+  const ring=document.getElementById('thRing');
+  const c=S.clim>=25?'#ff7a3c':S.clim<=20?'#4aa0ff':'#38d0ec';
+  ring.style.borderColor=c; document.getElementById('thVal').style.color=c;
+  sync();
+}
+document.querySelectorAll('[data-clim]').forEach(b=>b.addEventListener('click',()=>{
+  S.clim=Math.max(16,Math.min(30,S.clim+ +b.dataset.clim)); applyClim();
+}));
+
+/* ---------- curtains ---------- */
+function applyCur(){
+  const open=S.cur/100;
+  document.getElementById('drapeL').style.transform='translateX('+(-101*open)+'%)';
+  document.getElementById('drapeR').style.transform='translateX('+(101*open)+'%)';
+  document.querySelectorAll('#curSeg button').forEach(b=>b.classList.toggle('on',+b.dataset.cur===S.cur));
+  var cr=document.getElementById('curRange'); if(cr && +cr.value!==S.cur) cr.value=S.cur;
+  var cp=document.getElementById('curPct'); if(cp) cp.textContent=(S.cur>=100?'Open':(S.cur<=0?'Closed':S.cur+'% open'));
+  sync();
+}
+document.querySelectorAll('#curSeg button').forEach(b=>b.addEventListener('click',()=>{S.cur=+b.dataset.cur;clearScene();applyCur();}));
+(function(){var cr=document.getElementById('curRange');if(cr)cr.addEventListener('input',function(){S.cur=+cr.value;clearScene();applyCur();});})();
+
+/* ---------- EV ---------- */
+let evTimer;
+function applyEv(){
+  var lvl=S.ev.level, eta=Math.max(1,Math.round((100-lvl)*0.7));
+  document.getElementById('evPct').textContent=lvl+'%';
+  document.getElementById('evBig').textContent=lvl;
+  var ec=document.getElementById('evEtaC'); if(ec) ec.textContent=lvl>=100?'Charged ✓':'~'+eta+' min';
+  document.getElementById('evToggle').textContent=S.ev.on?'Stop':'Start';
+  document.getElementById('evHint').textContent=S.ev.on?(lvl>=100?'Fully charged ✓':'Charging · ~'+eta+' min to full'):'Charging paused';
+  sync();
+}
+var evSub=0;
+function evTick(){
+  if(!S.ev.on||S.ev.level>=100) return;
+  /* realistic taper: charging slows as the battery fills */
+  evSub += (S.ev.level<80)?1:(S.ev.level<93?0.55:0.32);
+  if(evSub>=1){ evSub-=1; S.ev.level++; applyEv(); }
+}
+document.getElementById('evToggle').addEventListener('click',()=>{S.ev.on=!S.ev.on;applyEv();});
+
+/* ---------- security ---------- */
+function applySec(){ iot.classList.toggle('armed',S.sec); document.querySelector('.tgl[data-sec="1"]').classList.toggle('on',S.sec); sync(); }
+document.querySelector('.tgl[data-sec="1"]').addEventListener('click',()=>{S.sec=!S.sec;clearScene();applySec();});
+
+/* ---------- cameras ---------- */
+function openCams(){document.getElementById('cams').classList.add('show');}
+document.getElementById('camClose').addEventListener('click',()=>document.getElementById('cams').classList.remove('show'));
+document.querySelectorAll('.icam-dot').forEach(d=>d.addEventListener('click',openCams));
+setInterval(()=>{const now=new Date().toLocaleTimeString();document.querySelectorAll('.feedts').forEach(e=>e.textContent=now);},1000);
+
+/* ---------- intercom ---------- */
+function ringIntercom(){document.getElementById('intercom').classList.add('show');}
+document.getElementById('icOpen').addEventListener('click',()=>{document.getElementById('intercom').classList.remove('show');});
+document.getElementById('icIgnore').addEventListener('click',()=>{document.getElementById('intercom').classList.remove('show');});
+
+/* ---------- device rail + panels ---------- */
+const TITLES={lights:'Lights',climate:'Climate',curtains:'Curtains',ev:'EV Charger',security:'Security'};
+let activeDev=null;
+function openPanel(dev){
+  if(dev==='cameras'){openCams();return;}
+  if(dev==='intercom'){ringIntercom();return;}
+  activeDev=dev;
+  document.querySelectorAll('.ichip').forEach(c=>c.classList.toggle('active',c.dataset.dev===dev));
+  document.getElementById('panelTitle').textContent=TITLES[dev];
+  document.querySelectorAll('.ptab').forEach(p=>p.classList.toggle('on',p.dataset.p===dev));
+  iot.classList.toggle('show-climate',dev==='climate');
+  document.getElementById('panel').classList.add('show');
+  iot.classList.add('panel-open');
+}
+document.querySelectorAll('.ichip').forEach(c=>c.addEventListener('click',()=>openPanel(c.dataset.dev)));
+document.getElementById('panelX').addEventListener('click',()=>{
+  document.getElementById('panel').classList.remove('show');
+  document.querySelectorAll('.ichip').forEach(c=>c.classList.remove('active'));
+  iot.classList.remove('show-climate'); iot.classList.remove('panel-open'); activeDev=null;
+});
+
+/* ---------- time-of-day (daylight) ---------- */
+function setTOD(t){
+  t=Math.max(0,Math.min(100,t)); S.tod=t;
+  var day=Math.max(0,Math.min(1,1-Math.abs(t-38)/34));
+  var night=Math.max(0,Math.min(1,(t-58)/42));
+  var warm=Math.max(0,1-Math.abs(t-70)/20);
+  var sun=Math.cos((t-40)/56*Math.PI); todSun=Math.max(0,sun);
+  /* snap day image fully on/off — partial blend of the two room photos caused ghosting/glitch */
+  if(dayOv) dayOv.style.opacity=(day>=0.45?1:0);
+  if(nightOv) nightOv.style.opacity=(0.1+night*0.5).toFixed(3);
+  if(warmOv) warmOv.style.opacity=(warm*0.6).toFixed(3);
+  if(skyOv) skyOv.style.opacity=(day*0.32).toFixed(3);
+  if(bgOv) bgOv.style.filter='brightness('+(0.58+day*0.72+(1-night)*0.05).toFixed(2)+') saturate('+(0.85+day*0.22).toFixed(2)+')';
+  updateEnergy();
+}
+
+/* ---------- live energy dashboard ---------- */
+function updateEnergy(){
+  var lightsOn=Object.values(S.lights).filter(Boolean).length;
+  var climLoad=Math.abs(S.clim-24)*0.16;
+  var evLoad=(S.ev.on&&S.ev.level<100)?7.0:0;
+  var home=0.35+lightsOn*0.12+climLoad+evLoad;
+  var solar=todSun*7.2;
+  var fromGrid=Math.max(0,home-solar), exp=Math.max(0,solar-home);
+  var covered=home>0?Math.min(100,Math.round(Math.min(solar,home)/home*100)):0;
+  set('enUse',home.toFixed(1)+' kW'); set('enSolar',solar.toFixed(1)+' kW');
+  var gi=document.getElementById('enGridIc'), gl=document.getElementById('enGridL');
+  if(exp>0.05){ set('enGrid',exp.toFixed(1)+' kW'); if(gl)gl.textContent='Exporting'; if(gi){gi.classList.add('exp');gi.textContent='↑';} }
+  else { set('enGrid',fromGrid.toFixed(1)+' kW'); if(gl)gl.textContent='From grid'; if(gi){gi.classList.remove('exp');gi.textContent='⚡';} }
+  var bar=document.getElementById('enBar'); if(bar) bar.style.width=covered+'%';
+  var sv=document.getElementById('enSave'); if(sv) sv.textContent=exp>0.05?'☀ Exporting extra power':'Solar covers '+covered+'%';
+  function set(id,v){var e=document.getElementById(id);if(e)e.textContent=v;}
+}
+
+/* ---------- scenes ---------- */
+const SCENE_META={
+  morning:{label:'Morning',ev:true,tod:38},
+  reading:{label:'Reading',ev:true,tod:76},
+  party:{label:'Party',ev:true,tod:94},
+  cinema:{label:'Cinema',ev:false,tod:100},
+  away:{label:'Away',ev:false,tod:100},
+  goodbye:{label:'Goodbye',ev:false,tod:100}
+};
+const SCENES={
+  morning:()=>{setLights({living:false,kitchen:false,facade:false,garden:false});S.clim=23;S.cur=100;S.sec=false;iot.className='iot live bright';},
+  reading:()=>{setLights({living:true,kitchen:false,facade:false,garden:false});S.clim=24;S.cur=50;S.sec=false;iot.className='iot live';},
+  party:()=>{setLights({living:true,kitchen:true,facade:true,garden:true});S.clim=22;S.cur=100;S.sec=false;iot.className='iot live party';},
+  cinema:()=>{setLights({living:false,kitchen:false,facade:false,garden:false});S.clim=21;S.cur=0;S.sec=false;iot.className='iot live movie dim';},
+  away:()=>{setLights({living:false,kitchen:false,facade:true,garden:false});S.clim=20;S.cur=0;S.sec=true;iot.className='iot live dim armed';},
+  goodbye:()=>{setLights({living:false,kitchen:false,facade:false,garden:false});S.clim=20;S.cur=0;S.sec=true;iot.className='iot live dim armed';}
+};
+function setLights(o){Object.assign(S.lights,o);}
+function clearScene(){S.scene=null;document.querySelectorAll('.iscene').forEach(x=>x.classList.remove('on'));document.getElementById('sceneTag').classList.remove('show');}
+/* turn a scene OFF — return the home to its neutral idle state */
+function sceneOff(){
+  S.scene=null;
+  S.lights={living:false,kitchen:false,facade:false,garden:false};
+  S.clim=23; S.cur=100; S.sec=false;
+  iot.className='iot live show-ev';
+  setTOD(innerWidth<=820?50:100);
+  document.querySelectorAll('.iscene').forEach(x=>x.classList.remove('on'));
+  document.getElementById('sceneTag').classList.remove('show');
+  var ps=document.getElementById('phScene'); if(ps) ps.textContent='Off';
+  applyLights();applyClim();applyCur();applySec();applyEv();
+}
+document.querySelectorAll('.iscene').forEach(b=>b.addEventListener('click',()=>{
+  /* second click on the active scene switches it OFF */
+  if(S.scene===b.dataset.scene){ sceneOff(); return; }
+  S.scene=b.dataset.scene; SCENES[b.dataset.scene]();
+  const meta=SCENE_META[b.dataset.scene];
+  if(meta.ev) iot.classList.add('show-ev'); else iot.classList.remove('show-ev');
+  if(S.sec)iot.classList.add('armed');
+  document.querySelectorAll('.iscene').forEach(x=>x.classList.toggle('on',x===b));
+  if(typeof meta.tod==='number') setTOD(meta.tod);
+  applyLights();applyClim();applyCur();applySec();applyEv();
+  const tag=document.getElementById('sceneTag');
+  document.getElementById('sceneTagT').textContent=meta.label;
+  document.getElementById('phScene').textContent=meta.label;
+  tag.classList.add('show');
+}));
+
+/* ---------- phone app: tiles are live controls ---------- */
+(function(){
+  var acts={
+    cLights:function(){var any=Object.values(S.lights).some(function(v){return v;});var v=!any;Object.keys(S.lights).forEach(function(k){S.lights[k]=v;});clearScene();applyLights();},
+    cClim:function(){S.clim=(S.clim<=20)?24:(S.clim>=24?20:24);clearScene();applyClim();},
+    cCur:function(){S.cur=(S.cur>=100)?0:100;clearScene();applyCur();},
+    cEv:function(){S.ev.on=!S.ev.on;applyEv();},
+    cSec:function(){S.sec=!S.sec;clearScene();applySec();}
+  };
+  Object.keys(acts).forEach(function(id){var el=document.getElementById(id);if(el)el.addEventListener('click',acts[id]);});
+})();
+
+/* ---------- phone sync ---------- */
+function sync(){
+  const n=Object.values(S.lights).filter(v=>v).length;
+  document.getElementById('phLights').textContent=n+' on';
+  document.getElementById('cLights').classList.toggle('on',n>0);
+  document.getElementById('phClim').textContent=S.clim+'°';
+  document.getElementById('phCur').textContent=S.cur>=100?'Open':S.cur<=0?'Closed':'Half';
+  document.getElementById('cCur').classList.toggle('on',S.cur<100);
+  document.getElementById('phEv').textContent=S.ev.level+'%';
+  document.getElementById('cEv').classList.toggle('on',S.ev.on);
+  document.getElementById('phSec').textContent=S.sec?'Armed':'Off';
+  document.getElementById('cSec').classList.toggle('on',S.sec);
+  if(!S.scene){document.getElementById('phScene').textContent='Custom';document.getElementById('phSub').textContent=(n+(S.sec?1:0)+(S.ev.on?1:0))+' active';}
+  else{document.getElementById('phSub').textContent='Scene active';}
+  document.querySelectorAll('.iroom').forEach(function(b){b.classList.toggle('on',!!S.lights[b.dataset.room]);});
+  updateEnergy();
+}
+
+/* init — start brighter on phones so the villa is clearly visible */
+setTOD(innerWidth<=820 ? 50 : 100);
+applyLights();applyClim();applyCur();applySec();applyEv();
+iot.classList.add('show-ev');
+evTimer=setInterval(evTick,9000);
+/* auto-ring the intercom only on desktop — on phones it pops over everything and looks off; tap Intercom instead */
+if(innerWidth>820){ setTimeout(()=>{ ringIntercom(); },6000); }
 })();
 </script>
 <script>
