@@ -1,6 +1,8 @@
 /* Sedra Electric — AI chat (Cloudflare Pages Function, free Workers AI)
    Route: POST /api/chat   Body: { messages:[{role,content}], lang }
-   Requires a Workers-AI binding named "AI" on the Pages project. */
+   Requires a Workers-AI binding named "AI" on the Pages project.
+   Model is auto-selected from a list of current models (self-heals if one is deprecated).
+   You can also force a model by setting an env variable MODEL in the Pages project. */
 
 const SYSTEM = `You are "Sedra Assistant" (مساعد سيدرا), the friendly virtual assistant on the website of **Sedra Electric**.
 
@@ -27,6 +29,16 @@ HOW TO BEHAVE:
 - Do not make up facts you do not know; instead offer to connect them with the Sedra team.
 - Stay on topics related to Sedra and its services; briefly redirect if asked something unrelated.`;
 
+/* current Workers AI instruct models, tried in order — first working one is used */
+const MODELS = [
+  '@cf/meta/llama-3.3-70b-instruct-fp8-fast',
+  '@cf/meta/llama-4-scout-17b-16e-instruct',
+  '@cf/meta/llama-3.1-8b-instruct-fast',
+  '@cf/qwen/qwen2.5-7b-instruct',
+  '@cf/mistralai/mistral-small-3.1-24b-instruct',
+  '@cf/meta/llama-3.1-8b-instruct'
+];
+
 function cors(){return{'Access-Control-Allow-Origin':'*','Access-Control-Allow-Methods':'POST, OPTIONS','Access-Control-Allow-Headers':'Content-Type'};}
 function json(o,s=200){return new Response(JSON.stringify(o),{status:s,headers:{'Content-Type':'application/json; charset=utf-8',...cors()}});}
 
@@ -41,9 +53,16 @@ export async function onRequestPost(context){
         .filter(m=>m && (m.role==='user'||m.role==='assistant') && typeof m.content==='string')
         .slice(-12) : [];
     const messages = [{role:'system', content: SYSTEM}, ...history];
-    const out = await env.AI.run('@cf/meta/llama-3.1-8b-instruct', { messages, max_tokens: 512, temperature: 0.4 });
-    const reply = (out && (out.response || (out.result && out.result.response))) || "";
-    return json({ reply: reply.trim() || "…" });
+    const list = (env.MODEL ? [env.MODEL] : []).concat(MODELS);
+    let out=null, lastErr="";
+    for(const model of list){
+      try{
+        const r = await env.AI.run(model, { messages, max_tokens: 512, temperature: 0.4 });
+        const reply = r && (r.response || (r.result && r.result.response));
+        if(reply){ return json({ reply: String(reply).trim() }); }
+      }catch(e){ lastErr = String(e && e.message || e); }
+    }
+    return json({ reply:"", error: lastErr || "no model responded" }, 500);
   }catch(e){
     return json({ reply:"", error: String(e && e.message || e) }, 500);
   }
