@@ -1137,5 +1137,178 @@ if(innerWidth>820){ setTimeout(()=>{ ringIntercom(); },6000); }
   });
 })();
 </script>
+
+<!-- ===== Sedra AI Chatbot widget ===== -->
+<style>
+#sbot,#sbot *{box-sizing:border-box}
+#sbot{position:fixed;left:22px;bottom:22px;z-index:9999;font-family:'Outfit',system-ui,Arial,sans-serif}
+#sbot .sb-btn{width:60px;height:60px;border-radius:50%;border:none;cursor:pointer;background:linear-gradient(135deg,#12b6d8,#3fe0f0);box-shadow:0 12px 30px rgba(10,40,60,.35);display:flex;align-items:center;justify-content:center;transition:transform .2s}
+#sbot .sb-btn:hover{transform:translateY(-3px) scale(1.04)}
+#sbot .sb-btn svg{width:28px;height:28px;fill:#04121c}
+#sbot .sb-badge{position:absolute;top:-4px;right:-4px;background:#ff5a4d;color:#fff;font-size:11px;font-weight:800;border-radius:50px;padding:2px 7px;box-shadow:0 2px 8px rgba(0,0,0,.3)}
+#sbot .sb-panel{position:absolute;left:0;bottom:74px;width:min(370px,92vw);height:min(560px,74vh);background:#0a1826;border:1px solid rgba(63,224,240,.28);border-radius:20px;box-shadow:0 30px 80px rgba(0,0,0,.55);display:none;flex-direction:column;overflow:hidden}
+#sbot.open .sb-panel{display:flex;animation:sbpop .25s ease}
+@keyframes sbpop{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+#sbot .sb-head{background:linear-gradient(135deg,#0f2f4a,#123b5c);padding:14px 16px;display:flex;align-items:center;gap:11px;border-bottom:1px solid rgba(255,255,255,.08)}
+#sbot .sb-ava{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#12b6d8,#3fe0f0);display:flex;align-items:center;justify-content:center;flex:0 0 38px}
+#sbot .sb-ava svg{width:20px;height:20px;fill:#04121c}
+#sbot .sb-tt{color:#fff;font-weight:800;font-size:15px;line-height:1.1}
+#sbot .sb-st{color:#9fe6f2;font-size:11.5px;margin-top:2px;display:flex;align-items:center;gap:5px}
+#sbot .sb-st i{width:7px;height:7px;border-radius:50%;background:#37e39b;display:inline-block}
+#sbot .sb-x{margin-inline-start:auto;background:none;border:none;color:#bcd;cursor:pointer;font-size:20px;line-height:1}
+#sbot .sb-body{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:10px;background:#0a1826}
+#sbot .sb-msg{max-width:82%;padding:10px 13px;border-radius:14px;font-size:14px;line-height:1.5;white-space:pre-wrap;word-wrap:break-word}
+#sbot .sb-bot{align-self:flex-start;background:#14293c;color:#eaf6fb;border-bottom-left-radius:4px}
+#sbot .sb-user{align-self:flex-end;background:linear-gradient(135deg,#12b6d8,#3fe0f0);color:#04121c;font-weight:600;border-bottom-right-radius:4px}
+#sbot .sb-typing{align-self:flex-start;background:#14293c;border-radius:14px;padding:12px 14px;display:flex;gap:4px}
+#sbot .sb-typing span{width:7px;height:7px;border-radius:50%;background:#6fd6ea;animation:sbty 1s infinite}
+#sbot .sb-typing span:nth-child(2){animation-delay:.15s}#sbot .sb-typing span:nth-child(3){animation-delay:.3s}
+@keyframes sbty{0%,60%,100%{opacity:.3;transform:translateY(0)}30%{opacity:1;transform:translateY(-4px)}}
+#sbot .sb-chips{display:flex;gap:7px;flex-wrap:wrap;padding:0 14px 6px}
+#sbot .sb-chip{background:rgba(63,224,240,.12);border:1px solid rgba(63,224,240,.35);color:#bff0fa;font-size:12.5px;font-weight:600;padding:7px 11px;border-radius:50px;cursor:pointer;transition:.2s}
+#sbot .sb-chip:hover{background:rgba(63,224,240,.22)}
+#sbot .sb-foot{display:flex;gap:8px;padding:12px;border-top:1px solid rgba(255,255,255,.08);background:#0c1c2c}
+#sbot .sb-in{flex:1;background:#12283b;border:1px solid rgba(255,255,255,.14);border-radius:12px;color:#fff;padding:11px 13px;font-size:14px;outline:none;font-family:inherit}
+#sbot .sb-in::placeholder{color:#7fa0b5}
+#sbot .sb-send{background:linear-gradient(135deg,#12b6d8,#3fe0f0);border:none;border-radius:12px;width:46px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+#sbot .sb-send svg{width:20px;height:20px;fill:#04121c}
+#sbot .sb-form{position:absolute;inset:0;background:#0a1826;display:none;flex-direction:column;padding:16px;gap:10px;overflow-y:auto}
+#sbot.form .sb-form{display:flex}
+#sbot .sb-form h3{color:#fff;font-size:16px;margin:2px 0 2px}
+#sbot .sb-form p{color:#9fb8c8;font-size:12.5px;margin:0 0 6px}
+#sbot .sb-form label{color:#bcd;font-size:12px;font-weight:600;margin-bottom:-4px}
+#sbot .sb-form input,#sbot .sb-form select{background:#12283b;border:1px solid rgba(255,255,255,.14);border-radius:10px;color:#fff;padding:11px 12px;font-size:14px;font-family:inherit;outline:none}
+#sbot .sb-form .sb-row{display:flex;flex-direction:column;gap:6px}
+#sbot .sb-submit{background:linear-gradient(135deg,#12b6d8,#3fe0f0);color:#04121c;font-weight:800;border:none;border-radius:12px;padding:13px;cursor:pointer;font-size:15px;margin-top:4px}
+#sbot .sb-cancel{background:none;border:none;color:#8fb0c2;cursor:pointer;font-size:13px}
+#sbot [dir="rtl"]{direction:rtl}
+</style>
+
+<div id="sbot" aria-live="polite">
+  <button class="sb-btn" id="sbLaunch" aria-label="Chat with Sedra">
+    <svg viewBox="0 0 24 24"><path d="M12 3C6.5 3 2 6.8 2 11.5c0 2.4 1.2 4.6 3.1 6.1L4 22l4.7-1.6c1 .3 2.1.4 3.3.4 5.5 0 10-3.8 10-8.5S17.5 3 12 3z"/></svg>
+    <span class="sb-badge" id="sbBadge">1</span>
+  </button>
+
+  <div class="sb-panel" role="dialog" aria-label="Sedra Assistant">
+    <div class="sb-head">
+      <span class="sb-ava"><svg viewBox="0 0 24 24"><path d="M12 3C6.5 3 2 6.8 2 11.5c0 2.4 1.2 4.6 3.1 6.1L4 22l4.7-1.6c1 .3 2.1.4 3.3.4 5.5 0 10-3.8 10-8.5S17.5 3 12 3z"/></svg></span>
+      <div><div class="sb-tt" id="sbTitle">Sedra Assistant</div><div class="sb-st"><i></i><span id="sbStatus">Online — replies in seconds</span></div></div>
+      <button class="sb-x" id="sbClose" aria-label="Close">&times;</button>
+    </div>
+
+    <div class="sb-body" id="sbBody"></div>
+    <div class="sb-chips" id="sbChips"></div>
+    <div class="sb-foot">
+      <input class="sb-in" id="sbInput" autocomplete="off">
+      <button class="sb-send" id="sbSend" aria-label="Send"><svg viewBox="0 0 24 24"><path d="M2 21l21-9L2 3v7l15 2-15 2z"/></svg></button>
+    </div>
+
+    <div class="sb-form" id="sbForm">
+      <h3 id="sbFormT">Request a free quote</h3>
+      <p id="sbFormP">Leave your details and our team will contact you shortly.</p>
+      <div class="sb-row"><label id="sbLName">Name</label><input id="sbfName" autocomplete="name"></div>
+      <div class="sb-row"><label id="sbLPhone">Phone / WhatsApp</label><input id="sbfPhone" inputmode="tel" autocomplete="tel"></div>
+      <div class="sb-row"><label id="sbLCity">City</label><input id="sbfCity"></div>
+      <div class="sb-row"><label id="sbLSvc">Service</label>
+        <select id="sbfSvc"></select>
+      </div>
+      <button class="sb-submit" id="sbfSubmit">Send</button>
+      <button class="sb-cancel" id="sbfCancel">Back to chat</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var root=document.getElementById('sbot'); if(!root) return;
+  var isAr=function(){return document.body.classList.contains('ar');};
+  var T={
+    en:{title:"Sedra Assistant",status:"Online — replies in seconds",ph:"Type your message…",
+        greet:"Hi 👋 I'm Sedra's assistant. Ask me anything about smart home, security, solar or EV charging — or request a free quote.",
+        quote:"⚡ Request a quote",chips:["Smart home","Solar energy","Request a quote"],
+        formT:"Request a free quote",formP:"Leave your details and our team will contact you shortly.",
+        name:"Name",phone:"Phone / WhatsApp",city:"City",svc:"Service",send:"Send",back:"Back to chat",
+        services:["Smart Home / KNX","Security & CCTV","Networks & Low current","Solar energy","EV charging","Home cinema","Other"],
+        thanks:"Thank you! ✅ We've got your details and the Sedra team will contact you very soon.",
+        errPhone:"Please enter a valid phone number.",err:"Sorry, something went wrong. Please try again or WhatsApp us: +201125441197."},
+    ar:{title:"مساعد سيدرا",status:"متصل — بيرد في ثواني",ph:"اكتب رسالتك…",
+        greet:"أهلاً 👋 أنا مساعد سيدرا. اسألني أي حاجة عن السمارت هوم، الأمن، الطاقة الشمسية أو شحن السيارات — أو اطلب عرض سعر مجاني.",
+        quote:"⚡ اطلب عرض سعر",chips:["سمارت هوم","طاقة شمسية","اطلب عرض سعر"],
+        formT:"اطلب عرض سعر مجاني",formP:"سيب بياناتك وفريق سيدرا هيتواصل معاك في أقرب وقت.",
+        name:"الاسم",phone:"التليفون / واتساب",city:"المدينة",svc:"الخدمة",send:"إرسال",back:"رجوع للمحادثة",
+        services:["سمارت هوم / KNX","أمن وكاميرات","شبكات وتيار خفيف","طاقة شمسية","شحن سيارات","هوم سينما","أخرى"],
+        thanks:"شكراً! ✅ استلمنا بياناتك وفريق سيدرا هيتواصل معاك قريب جداً.",
+        errPhone:"من فضلك اكتب رقم تليفون صحيح.",err:"حصل خطأ بسيط. جرّب تاني أو كلّمنا واتساب: +201125441197."}
+  };
+  function L(){return T[isAr()?'ar':'en'];}
+  var messages=[], busy=false, greeted=false;
+  var el=function(id){return document.getElementById(id);};
+  var body=el('sbBody');
+
+  function applyLang(){
+    var t=L(); root.querySelector('.sb-panel').setAttribute('dir', isAr()?'rtl':'ltr');
+    el('sbTitle').textContent=t.title; el('sbStatus').textContent=t.status; el('sbInput').placeholder=t.ph;
+    el('sbFormT').textContent=t.formT; el('sbFormP').textContent=t.formP;
+    el('sbLName').textContent=t.name; el('sbLPhone').textContent=t.phone; el('sbLCity').textContent=t.city; el('sbLSvc').textContent=t.svc;
+    el('sbfSubmit').textContent=t.send; el('sbfCancel').textContent=t.back;
+    var svc=el('sbfSvc'); svc.innerHTML=''; t.services.forEach(function(s){var o=document.createElement('option');o.textContent=s;svc.appendChild(o);});
+    renderChips();
+  }
+  function renderChips(){
+    var t=L(), c=el('sbChips'); c.innerHTML='';
+    t.chips.forEach(function(txt){var b=document.createElement('button');b.className='sb-chip';b.textContent=txt;
+      b.onclick=function(){ if(txt===t.chips[2]) openForm(); else send(txt); }; c.appendChild(b);});
+  }
+  function add(role,text){
+    var d=document.createElement('div'); d.className='sb-msg '+(role==='user'?'sb-user':'sb-bot'); d.textContent=text;
+    body.appendChild(d); body.scrollTop=body.scrollHeight; return d;
+  }
+  function typing(on){
+    var ex=el('sbTy'); if(on){ if(ex)return; var d=document.createElement('div'); d.className='sb-typing'; d.id='sbTy';
+      d.innerHTML='<span></span><span></span><span></span>'; body.appendChild(d); body.scrollTop=body.scrollHeight; }
+    else if(ex) ex.remove();
+  }
+  async function send(text){
+    text=(text||el('sbInput').value).trim(); if(!text||busy) return;
+    el('sbInput').value=''; add('user',text); messages.push({role:'user',content:text});
+    busy=true; typing(true);
+    try{
+      var r=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({messages:messages, lang:isAr()?'ar':'en'})});
+      var j=await r.json(); typing(false);
+      var reply=(j&&j.reply)? j.reply : L().err;
+      add('bot',reply); messages.push({role:'assistant',content:reply});
+    }catch(e){ typing(false); add('bot', L().err); }
+    busy=false;
+  }
+  function openForm(){ root.classList.add('form'); }
+  function closeForm(){ root.classList.remove('form'); }
+  async function submitLead(){
+    var t=L(), phone=el('sbfPhone').value.trim();
+    if(phone.replace(/\D/g,'').length<7){ el('sbfPhone').focus(); el('sbfPhone').style.borderColor='#ff5a4d'; alert(t.errPhone); return; }
+    var lead={name:el('sbfName').value.trim(),phone:phone,city:el('sbfCity').value.trim(),
+      service:el('sbfSvc').value, lang:isAr()?'ar':'en',
+      message:'Chat lead — '+messages.slice(-4).map(function(m){return m.role+': '+m.content;}).join(' | ')};
+    el('sbfSubmit').disabled=true;
+    try{ await fetch('/api/lead',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(lead)}); }catch(e){}
+    el('sbfSubmit').disabled=false; closeForm(); add('bot', t.thanks);
+  }
+  function open(){ root.classList.add('open'); el('sbBadge').style.display='none';
+    if(!greeted){ greeted=true; applyLang(); add('bot', L().greet); } else applyLang();
+    setTimeout(function(){el('sbInput').focus();},100);
+  }
+  function close(){ root.classList.remove('open'); root.classList.remove('form'); }
+
+  el('sbLaunch').onclick=function(){ root.classList.contains('open')?close():open(); };
+  el('sbClose').onclick=close;
+  el('sbSend').onclick=function(){send();};
+  el('sbInput').addEventListener('keydown',function(e){ if(e.key==='Enter'){e.preventDefault();send();} });
+  el('sbfSubmit').onclick=submitLead; el('sbfCancel').onclick=closeForm;
+  applyLang();
+})();
+</script>
+<!-- ===== /Sedra AI Chatbot ===== -->
+
 </body>
 </html>
