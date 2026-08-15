@@ -29,17 +29,27 @@ YOUR GOAL: genuinely help AND collect the visitor's details. Answer their questi
 
 RULES: Be accurate; if you don't know something, say you'll connect them with the Sedra team rather than guessing. Stay on Sedra-related topics; if asked something unrelated, answer briefly and steer back warmly. Always be encouraging and make the visitor feel taken care of.`;
 
+/* Small & fast models FIRST so replies come back in ~1-3s.
+   The big models stay only as a last-resort fallback. */
 const MODELS = [
-  '@cf/meta/llama-3.3-70b-instruct-fp8-fast',
-  '@cf/meta/llama-4-scout-17b-16e-instruct',
   '@cf/meta/llama-3.1-8b-instruct-fast',
   '@cf/qwen/qwen2.5-7b-instruct',
-  '@cf/mistralai/mistral-small-3.1-24b-instruct',
-  '@cf/meta/llama-3.1-8b-instruct'
+  '@cf/meta/llama-3.1-8b-instruct-fp8',
+  '@cf/meta/llama-3.3-70b-instruct-fp8-fast',
+  '@cf/meta/llama-4-scout-17b-16e-instruct'
 ];
+
+const PER_MODEL_TIMEOUT_MS = 9000; // if a model stalls, abandon it fast and try the next
 
 function cors(){return{'Access-Control-Allow-Origin':'*','Access-Control-Allow-Methods':'POST, OPTIONS','Access-Control-Allow-Headers':'Content-Type'};}
 function json(o,s=200){return new Response(JSON.stringify(o),{status:s,headers:{'Content-Type':'application/json; charset=utf-8',...cors()}});}
+
+function withTimeout(promise, ms){
+  return Promise.race([
+    promise,
+    new Promise((_,rej)=>setTimeout(()=>rej(new Error('model-timeout')), ms))
+  ]);
+}
 
 export function onRequestOptions(){return new Response(null,{headers:cors()});}
 
@@ -50,16 +60,19 @@ export async function onRequestPost(context){
     const body = await request.json().catch(()=>({}));
     const history = Array.isArray(body.messages) ? body.messages
         .filter(m=>m && (m.role==='user'||m.role==='assistant') && typeof m.content==='string')
-        .slice(-12) : [];
+        .slice(-10) : [];
     const system = (env.SYSTEM_PROMPT && env.SYSTEM_PROMPT.trim()) ? env.SYSTEM_PROMPT : SYSTEM_DEFAULT;
     const messages = [{role:'system', content: system}, ...history];
     const list = (env.MODEL ? [env.MODEL] : []).concat(MODELS);
     let lastErr="";
     for(const model of list){
       try{
-        const r = await env.AI.run(model, { messages, max_tokens: 640, temperature: 0.6 });
+        const r = await withTimeout(
+          env.AI.run(model, { messages, max_tokens: 320, temperature: 0.5 }),
+          PER_MODEL_TIMEOUT_MS
+        );
         const reply = r && (r.response || (r.result && r.result.response));
-        if(reply){ return json({ reply: String(reply).trim() }); }
+        if(reply){ return json({ reply: String(reply).trim(), model }); }
       }catch(e){ lastErr = String(e && e.message || e); }
     }
     return json({ reply:"", error: lastErr || "no model responded" }, 500);
