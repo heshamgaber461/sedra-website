@@ -64,7 +64,12 @@ function findName(history){
   }
   return "";
 }
-async function saveLead(lead){try{await fetch(LEAD_DB+"/leads.json",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(lead)});}catch(e){}}
+function findPhoneIn(history){for(let i=history.length-1;i>=0;i--){const h=history[i];if(!h||h.role!=='user')continue;const p=findPhone(h.content);if(p)return p;}return "";}
+/* light city/area detector (best-effort) — the full text always stays in notes anyway */
+const CITIES=["القاهره","القاهرة","cairo","الجيزه","الجيزة","giza","الاسكندريه","الاسكندرية","اسكندريه","alexandria","الشيخ زايد","شيخ زايد","زايد","sheikh zayed","zayed","اكتوبر","أكتوبر","october","التجمع","القاهره الجديده","القاهرة الجديدة","new cairo","العاصمه الاداريه","العاصمة الإدارية","new capital","المنصوره","المنصورة","طنطا","دبي","dubai","الرياض","riyadh","الامارات","السعوديه","السعودية"];
+function findCity(history){const t=history.map(h=>String(h.content||"")).join("  ").toLowerCase();for(const c of CITIES){if(t.includes(c.toLowerCase()))return c;}return "";}
+/* upsert by a deterministic per-phone key so the SAME lead gets updated, never duplicated */
+async function upsertLead(key,patch){try{await fetch(LEAD_DB+"/leads/"+key+".json",{method:"PATCH",headers:{"Content-Type":"application/json"},body:JSON.stringify(patch)});}catch(e){}}
 
 export function onRequestOptions(){return new Response(null,{headers:cors()});}
 
@@ -77,19 +82,22 @@ export async function onRequestPost(context){
         .filter(m=>m && (m.role==='user'||m.role==='assistant') && typeof m.content==='string')
         .slice(-10) : [];
 
-    /* If the visitor just typed a phone number, save them as a lead in the CRM
-       (runs in the background so it never slows down the reply). */
+    /* If the visitor gave a phone number anywhere in the chat, upsert them as ONE lead
+       (same phone = same lead, updated as they add more info like their address).
+       Runs in the background so it never slows down the reply. */
     try{
-      const lastUser = [...history].reverse().find(m=>m.role==='user');
-      const phone = lastUser ? findPhone(lastUser.content) : "";
+      const phone = findPhoneIn(history);
       if(phone){
         const nowIso = new Date().toISOString();
-        const convo = history.slice(-6).map(m=>(m.role==='user'?'👤':'🤖')+' '+m.content).join('  |  ').slice(0,500);
-        const lead = { name: findName(history) || phone, phone, email:"", branch:"Egypt",
-          stage:"New", source:"Website Chatbot", service:"", area:"", city:"", owner:"",
+        const convo = history.slice(-8).map(m=>(m.role==='user'?'👤':'🤖')+' '+m.content).join('  |  ').slice(0,700);
+        const city = findCity(history);
+        const patch = { name: findName(history) || phone, phone, branch:"Egypt",
+          stage:"New", source:"Website Chatbot", owner:"",
           notes:"Chat: "+convo, note:"Chat: "+convo, lang:(body.lang==='ar'||body.lang==='en')?body.lang:"",
-          created:nowIso, createdAt:nowIso, date:nowIso.slice(0,10), ts:Date.now() };
-        if(context.waitUntil) context.waitUntil(saveLead(lead)); else saveLead(lead);
+          created:nowIso, createdAt:nowIso, date:nowIso.slice(0,10), updatedAt:nowIso, ts:Date.now() };
+        if(city){ patch.area=city; patch.city=city; }
+        const key = "chat_"+phone.replace(/\D/g,"");
+        if(context.waitUntil) context.waitUntil(upsertLead(key,patch)); else upsertLead(key,patch);
       }
     }catch(e){}
     const system = (env.SYSTEM_PROMPT && env.SYSTEM_PROMPT.trim()) ? env.SYSTEM_PROMPT : SYSTEM_DEFAULT;
