@@ -100,6 +100,19 @@ export async function onRequestPost(context){
         if(context.waitUntil) context.waitUntil(upsertLead(key,patch)); else upsertLead(key,patch);
       }
     }catch(e){}
+
+    /* Registration confirmation: shown once, on the turn the visitor actually types a phone.
+       Points them to WhatsApp (free — no business-initiated message is sent). */
+    let confirmSuffix = "";
+    try{
+      const lastUser = [...history].reverse().find(m=>m.role==='user');
+      if(lastUser && findPhone(lastUser.content)){
+        confirmSuffix = (body.lang==='en')
+          ? "\n\n✅ Done! We've saved your request and the Sedra team will contact you very soon. To reach us now on WhatsApp 👉 https://wa.me/201125441197"
+          : "\n\n✅ تمام يا فندم! سجّلنا طلبك وفريق سيدرا هيكلّمك في أقرب وقت. لو حابب تكلّمنا دلوقتي على واتساب 👉 https://wa.me/201125441197";
+      }
+    }catch(e){}
+
     const system = (env.SYSTEM_PROMPT && env.SYSTEM_PROMPT.trim()) ? env.SYSTEM_PROMPT : SYSTEM_DEFAULT;
     const messages = [{role:'system', content: system}, ...history];
     const list = (env.MODEL ? [env.MODEL] : []).concat(MODELS);
@@ -111,7 +124,7 @@ export async function onRequestPost(context){
           PER_MODEL_TIMEOUT_MS
         );
         const reply = r && (r.response || (r.result && r.result.response));
-        if(reply){ return json({ reply: String(reply).trim(), model }); }
+        if(reply){ return json({ reply: String(reply).trim() + confirmSuffix, model }); }
       }catch(e){ lastErr = String(e && e.message || e); }
     }
     return json({ reply:"", error: lastErr || "no model responded" }, 500);
