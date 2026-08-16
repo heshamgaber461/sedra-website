@@ -36,8 +36,8 @@ const MODELS = [
   '@cf/qwen/qwen2.5-7b-instruct',
   '@cf/meta/llama-3.1-8b-instruct-fp8',
   '@cf/meta/llama-3.3-70b-instruct-fp8-fast',
-  '@cf/meta/llama-4-scout-17b-16e-instruct'
-];
+  '@cf/meta/llama-4-scout-17b-16e-instruct']
+;
 
 const PER_MODEL_TIMEOUT_MS = 9000; // if a model stalls, abandon it fast and try the next
 
@@ -51,6 +51,21 @@ function withTimeout(promise, ms){
   ]);
 }
 
+/* ---- auto lead-capture straight from the chat conversation ---- */
+const LEAD_DB = "https://sedra-crm-default-rtdb.firebaseio.com";
+function toAscii(s){return String(s||"").replace(/[٠-٩]/g,d=>"٠١٢٣٤٥٦٧٨٩".indexOf(d)).replace(/[۰-۹]/g,d=>"۰۱۲۳۴۵۶۷۸۹".indexOf(d));}
+/* Egyptian mobile: 01[0125]+8 digits, with or without +20 / 0020 country code */
+function findPhone(t){const d=toAscii(t).replace(/\D/g,"");const m=d.match(/(?:0020|20)?0?(1[0125]\d{8})(?!\d)/);return m?("0"+m[1]):"";}
+/* best-effort name only from an explicit marker, else we fall back to the phone */
+function findName(history){
+  for(let i=history.length-1;i>=0;i--){const h=history[i];if(!h||h.role!=='user')continue;
+    const m=String(h.content).match(/(?:اسمي|إسمي|my name is|i'?m called|this is)\s*[:\-]?\s*([\p{L}][\p{L} ]{1,28})/iu);
+    if(m){const n=m[1].trim().replace(/\s+/g," ").split(" ").slice(0,3).join(" ");if(n)return n;}
+  }
+  return "";
+}
+async function saveLead(lead){try{await fetch(LEAD_DB+"/leads.json",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(lead)});}catch(e){}}
+
 export function onRequestOptions(){return new Response(null,{headers:cors()});}
 
 export async function onRequestPost(context){
@@ -61,6 +76,22 @@ export async function onRequestPost(context){
     const history = Array.isArray(body.messages) ? body.messages
         .filter(m=>m && (m.role==='user'||m.role==='assistant') && typeof m.content==='string')
         .slice(-10) : [];
+
+    /* If the visitor just typed a phone number, save them as a lead in the CRM
+       (runs in the background so it never slows down the reply). */
+    try{
+      const lastUser = [...history].reverse().find(m=>m.role==='user');
+      const phone = lastUser ? findPhone(lastUser.content) : "";
+      if(phone){
+        const nowIso = new Date().toISOString();
+        const convo = history.slice(-6).map(m=>(m.role==='user'?'👤':'🤖')+' '+m.content).join('  |  ').slice(0,500);
+        const lead = { name: findName(history) || phone, phone, email:"", branch:"Egypt",
+          stage:"New", source:"Website Chatbot", service:"", area:"", city:"", owner:"",
+          notes:"Chat: "+convo, note:"Chat: "+convo, lang:(body.lang==='ar'||body.lang==='en')?body.lang:"",
+          created:nowIso, createdAt:nowIso, date:nowIso.slice(0,10), ts:Date.now() };
+        if(context.waitUntil) context.waitUntil(saveLead(lead)); else saveLead(lead);
+      }
+    }catch(e){}
     const system = (env.SYSTEM_PROMPT && env.SYSTEM_PROMPT.trim()) ? env.SYSTEM_PROMPT : SYSTEM_DEFAULT;
     const messages = [{role:'system', content: system}, ...history];
     const list = (env.MODEL ? [env.MODEL] : []).concat(MODELS);
