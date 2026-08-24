@@ -163,182 +163,16 @@
     <div style="height:100vh"></div><div style="height:100vh"></div><div style="height:100vh"></div>
     <div style="height:100vh"></div><div style="height:100vh"></div><div style="height:100vh"></div><div style="height:100vh"></div>
   </div>
-<section class="iot live" id="iot">
-  <div class="iot-scene">
-    <div class="iot-bg" id="bgOv"></div>
-    <div class="iot-bg-day" id="dayOv"></div>
-    <div class="iot-sky" id="skyOv"></div>
-    <div class="iot-warm" id="warmOv"></div>
-    <div class="iot-night" id="nightOv"></div>
-    <div class="iz z-living"></div><div class="iz z-kitchen"></div><div class="iz z-facade"></div><div class="iz z-garden"></div>
-    <div class="iot-tint" id="tint"></div>
-    <div class="iot-party"></div>
-    <div class="idrape l" id="drapeL"></div><div class="idrape r" id="drapeR"></div>
-    <!-- cinema scene -->
-    <div class="iot-cinema" id="cinema" aria-hidden="true">
-      <svg viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice">
-        <defs>
-          <linearGradient id="cwall" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0c141d"/><stop offset="1" stop-color="#04070b"/></linearGradient>
-          <linearGradient id="csky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#12325c"/><stop offset="40%" stop-color="#7a4b8c"/><stop offset="60%" stop-color="#e08b3e"/><stop offset="80%" stop-color="#e2532e"/><stop offset="100%" stop-color="#3a1526"/></linearGradient>
-          <radialGradient id="csun" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#fff3d6"/><stop offset="42%" stop-color="#ffd27a"/><stop offset="100%" stop-color="rgba(255,180,90,0)"/></radialGradient>
-          <radialGradient id="cspill" cx="50%" cy="36%" r="62%"><stop offset="0" stop-color="rgba(226,150,90,.55)"/><stop offset="55%" stop-color="rgba(120,90,150,.18)"/><stop offset="100%" stop-color="rgba(0,0,0,0)"/></radialGradient>
-          <radialGradient id="cvig" cx="50%" cy="40%" r="78%"><stop offset="52%" stop-color="rgba(0,0,0,0)"/><stop offset="100%" stop-color="rgba(0,0,0,.9)"/></radialGradient>
-        </defs>
-        <rect width="1600" height="900" fill="url(#cwall)"/>
-        <rect width="1600" height="900" fill="url(#cspill)"/>
-        <!-- ceiling downlights -->
-        <g fill="#ffcf8a" opacity=".45"><circle cx="300" cy="66" r="5"/><circle cx="640" cy="50" r="5"/><circle cx="960" cy="50" r="5"/><circle cx="1300" cy="66" r="5"/></g>
-        <!-- acoustic side panels -->
-        <g stroke="rgba(255,255,255,.045)" stroke-width="2">
-          <line x1="70" y1="120" x2="70" y2="640"/><line x1="150" y1="120" x2="150" y2="660"/><line x1="230" y1="130" x2="230" y2="680"/>
-          <line x1="1530" y1="120" x2="1530" y2="640"/><line x1="1450" y1="120" x2="1450" y2="660"/><line x1="1370" y1="130" x2="1370" y2="680"/>
-        </g>
-        <!-- projector beam -->
-        <path d="M800 620 L470 250 L1130 250 Z" fill="rgba(255,240,210,.035)"/>
-        <!-- SCREEN -->
-        <g class="cine-screen">
-          <rect x="366" y="150" width="868" height="430" rx="8" fill="#000"/>
-          <clipPath id="cclip"><rect x="378" y="176" width="844" height="378" rx="3"/></clipPath>
-          <g clip-path="url(#cclip)">
-            <rect x="378" y="176" width="844" height="378" fill="url(#csky)"/>
-            <circle cx="800" cy="432" r="150" fill="url(#csun)"/>
-            <circle cx="800" cy="432" r="44" fill="#fff6e0"/>
-            <path d="M378 470 L520 360 L640 442 L770 340 L900 452 L1040 360 L1160 452 L1222 410 L1222 554 L378 554 Z" fill="#3a2233" opacity=".85"/>
-            <path d="M378 522 L560 432 L720 502 L900 420 L1080 506 L1222 446 L1222 554 L378 554 Z" fill="#190e1b"/>
-            <rect x="378" y="500" width="844" height="54" fill="#c96a34" opacity=".22"/>
-          </g>
-          <!-- letterbox inside screen -->
-          <rect x="378" y="176" width="844" height="30" fill="#000" opacity=".88"/>
-          <rect x="378" y="524" width="844" height="30" fill="#000" opacity=".88"/>
-          <rect x="378" y="176" width="844" height="378" fill="url(#cspill)" opacity=".14"/>
-        </g>
-        <!-- foreground sofa + heads -->
-        <path d="M0 900 L0 762 Q0 720 60 716 L560 690 Q684 684 684 762 L684 900 Z" fill="#020407"/>
-        <path d="M916 900 L916 762 Q916 684 1040 690 L1540 716 Q1600 720 1600 762 L1600 900 Z" fill="#020407"/>
-        <ellipse cx="356" cy="700" rx="52" ry="58" fill="#010305"/>
-        <ellipse cx="1244" cy="700" rx="52" ry="58" fill="#010305"/>
-        <rect width="1600" height="900" fill="url(#cvig)"/>
-      </svg>
-    </div>
-    <div class="iot-vig"></div>
-    <div class="iot-bars t"></div><div class="iot-bars b"></div>
-    <div class="iscan"></div><div class="isecmark"></div>
-    <div class="ithermo"><div class="ring" id="thRing"></div><div><div class="tv" id="thVal">23°</div><div class="tl">CLIMATE</div></div></div>
-    <div class="iev">
-      <div class="evcard"><img loading="lazy" decoding="async" src="assets/beat5-ev.jpg" alt="EV charging"><div class="fday" style="background-image:url(assets/beat5-ev-day.jpg)"></div><div class="evbadge">EV · <b id="evPct">41%</b> · <span id="evEtaC">~41 min</span></div></div>
-    </div>
-    <div class="icam-dot" style="left:42%;top:64%" data-cam="0"><svg viewBox="0 0 24 24"><path d="M3 7h13v10H3zM16 10l5-3v10l-5-3"/></svg></div>
-    <div class="icam-dot" style="left:74%;top:52%" data-cam="1"><svg viewBox="0 0 24 24"><path d="M3 7h13v10H3zM16 10l5-3v10l-5-3"/></svg></div>
-    <div class="ihud">
-      <div class="ibadge b-armed"><span class="d"></span>System Armed</div>
-      <div class="ibadge b-ev"><span class="d"></span>EV · Charging</div>
-    </div>
-    <div class="iscene-tag" id="sceneTag"><span class="sd"></span><span id="sceneTagT">Morning</span></div>
-
-    <!-- live energy dashboard -->
-    <div class="ienergy" id="energy">
-      <div class="en-h"><span class="en-dot"></span>LIVE ENERGY</div>
-      <div class="en-rows">
-        <div class="en-row"><span class="en-ic use">⌂</span><div class="en-txt"><span class="en-l">Home usage</span><b id="enUse">0.4 kW</b></div></div>
-        <div class="en-row"><span class="en-ic sun">☀</span><div class="en-txt"><span class="en-l">Solar now</span><b id="enSolar">0.0 kW</b></div></div>
-        <div class="en-row"><span class="en-ic grid" id="enGridIc">⚡</span><div class="en-txt"><span class="en-l" id="enGridL">From grid</span><b id="enGrid">0.4 kW</b></div></div>
+<section class="iot live" id="iot" style="min-height:auto">
+  <div style="max-width:1180px;margin:0 auto;padding:64px 20px">
+    <div style="position:relative;border-radius:24px;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.5)">
+      <img src="assets/iot-room.jpg" alt="Sedra Smart Villa 3D Experience" loading="lazy" style="width:100%;height:min(60vh,540px);object-fit:cover;display:block;filter:brightness(.5)">
+      <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px">
+        <div class="ey" data-ar="تجربة ثلاثية الأبعاد مباشرة" style="color:#e6c874;letter-spacing:.22em;font-size:.8rem;margin-bottom:12px">LIVE 3D EXPERIENCE</div>
+        <h2 data-ar="جرّب فيلا سيدرا الذكية بنفسك" style="color:#fff;font-size:clamp(1.7rem,4.5vw,2.8rem);line-height:1.2;margin:0 0 14px;max-width:660px">Try Your Smart Villa</h2>
+        <p data-ar="ادخل الفيلا ثلاثية الأبعاد، اتمشّى بين الغرف، وتحكّم في الإضاءة والستائر والأمان والكاميرات — تجربة حيّة بالكامل." style="color:rgba(255,255,255,.86);max-width:580px;line-height:1.85;margin:0 0 26px;font-size:1.02rem">Step inside the 3D villa, walk between the rooms, and control lighting, curtains, security and cameras — a fully live experience.</p>
+        <a class="xbtn xbtn-primary" href="Sma.html" data-ar="⚡ ابدأ التجربة ثلاثية الأبعاد">&#9889; Launch 3D Experience</a>
       </div>
-      <div class="en-bar"><i id="enBar"></i></div>
-      <div class="en-save" id="enSave">Solar covers 0%</div>
-    </div>
-
-  </div>
-
-  <div class="iot-head" id="head">
-    <span class="ibadge2">⚡ LIVE SMART-HOME DEMO — <b>control the villa</b></span>
-    <h2>Now try it yourself</h2>
-    <p>Tap any device below and watch the villa respond — lights, climate, curtains, EV, sound, cameras and more.</p>
-  </div>
-
-  <div class="iot-ui" id="ui">
-    <div class="iscenes" id="scenes">
-      <button class="iscene" data-scene="morning">☀️ Morning</button>
-      <button class="iscene" data-scene="goodbye">👋 Goodbye</button>
-    </div>
-
-    <div class="irail" id="rail">
-      <div class="ichip" data-dev="lights"><svg viewBox="0 0 24 24"><path d="M9 18h6M10 22h4M12 2a7 7 0 00-4 12c.6.5 1 1.3 1 2h6c0-.7.4-1.5 1-2a7 7 0 00-4-12z"/></svg>Lights</div>
-      <div class="ichip" data-dev="climate"><svg viewBox="0 0 24 24"><path d="M14 14V5a2 2 0 10-4 0v9a4 4 0 104 0z"/></svg>Climate</div>
-      <div class="ichip" data-dev="curtains"><svg viewBox="0 0 24 24"><path d="M4 3h16M5 3v18M19 3v18M9 3v18M15 3v18"/></svg>Curtains</div>
-      <div class="ichip" data-dev="ev"><svg viewBox="0 0 24 24"><path d="M7 3h7l-1 7h4l-8 11 2-8H6l1-10z"/></svg>EV</div>
-      <div class="ichip" data-dev="security"><svg viewBox="0 0 24 24"><path d="M12 2 4 6v6c0 5 3.5 8 8 10 4.5-2 8-5 8-10V6l-8-4z"/></svg>Security</div>
-      <div class="ichip" data-dev="cameras"><svg viewBox="0 0 24 24"><path d="M3 7h13v10H3zM16 10l5-3v10l-5-3"/></svg>Cameras</div>
-      <div class="ichip" data-dev="intercom"><svg viewBox="0 0 24 24"><path d="M12 2a7 7 0 00-7 7v4l-2 3h18l-2-3V9a7 7 0 00-7-7zM9 21a3 3 0 006 0"/></svg>Intercom</div>
-    </div>
-  </div>
-
-  <!-- panels -->
-  <div class="ipanel" id="panel">
-    <h4><span id="panelTitle">Lights</span><span class="x" id="panelX">✕</span></h4>
-    <div class="ptab" data-p="lights">
-      <div class="zrow"><b>All Lights</b><div class="tgl" data-zone="all"><i></i></div></div>
-      <div class="zrow"><b>Living Room</b><div class="tgl" data-zone="living"><i></i></div></div>
-      <div class="zrow"><b>Kitchen</b><div class="tgl" data-zone="kitchen"><i></i></div></div>
-      <div class="zrow"><b>Facade</b><div class="tgl" data-zone="facade"><i></i></div></div>
-      <div class="zrow"><b>Garden</b><div class="tgl" data-zone="garden"><i></i></div></div>
-    </div>
-    <div class="ptab clima" data-p="climate">
-      <div class="st">THERMOSTAT</div><div class="big"><span id="climBig">23</span>°</div>
-      <div class="ctrls"><button class="rbtn" data-clim="-1">−</button><button class="rbtn" data-clim="1">+</button></div>
-      <div class="hint" id="climHint">Comfortable</div>
-    </div>
-    <div class="ptab" data-p="curtains">
-      <div class="curwrap">
-        <div class="curval">Curtains — <b id="curPct">Open</b></div>
-        <input type="range" min="0" max="100" step="1" value="100" id="curRange" class="curslider" aria-label="Curtain opening">
-        <div class="seg" id="curSeg"><button data-cur="100">Open</button><button data-cur="50">Half</button><button data-cur="0">Closed</button></div>
-      </div>
-    </div>
-    <div class="ptab clima" data-p="ev">
-      <div class="st">EV CHARGER</div><div class="big"><span id="evBig">41</span>%</div>
-      <div class="ctrls"><button class="rbtn" id="evToggle" style="width:auto;border-radius:50px;padding:0 20px;font-size:14px">Stop</button></div>
-      <div class="hint" id="evHint">Charging · ~41 min to full</div>
-    </div>
-    <div class="ptab" data-p="security">
-      <div class="zrow"><b>Arm System</b><div class="tgl" data-sec="1"><i></i></div></div>
-      <div class="hint" style="font-size:11px;color:rgba(255,255,255,.5);margin-top:8px">Arming enables perimeter scanning & alerts.</div>
-    </div>
-  </div>
-
-  <!-- cameras modal -->
-  <div class="icams" id="cams">
-    <div class="wrap">
-      <div class="top"><b>📹 Live Cameras · 4 online</b><button class="cx" id="camClose">Close ✕</button></div>
-      <div class="camgrid">
-        <div class="feed" style="background:url(assets/beat0-hero.jpg) center/cover"><div class="fday" style="background-image:url(assets/beat0-hero-day.jpg)"></div><div class="noise"></div><div class="scanl"></div><span class="rec">REC</span><span class="lbl">CAM 01 · Front</span><span class="ts feedts"></span></div>
-        <div class="feed" style="background:url(assets/beat5-ev.jpg) center/cover"><div class="fday" style="background-image:url(assets/beat5-ev-day.jpg)"></div><div class="noise"></div><div class="scanl"></div><span class="rec">REC</span><span class="lbl">CAM 02 · Garage</span><span class="ts feedts"></span></div>
-        <div class="feed" style="background:url(assets/beat2-security.jpg) center/cover"><div class="fday" style="background-image:url(assets/beat2-security-day.jpg)"></div><div class="noise"></div><div class="scanl"></div><span class="rec">REC</span><span class="lbl">CAM 03 · Gate</span><span class="ts feedts"></span></div>
-        <div class="feed" style="background:url(assets/beat6-final.jpg) center/cover"><div class="fday" style="background-image:url(assets/beat6-final-day.jpg)"></div><div class="noise"></div><div class="scanl"></div><span class="rec">REC</span><span class="lbl">CAM 04 · Perimeter</span><span class="ts feedts"></span></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- intercom -->
-  <div class="iintercom" id="intercom">
-    <div class="vid" style="background:url(assets/intercom-delivery.jpg) center/cover"><div class="scanl"></div><span class="rec">● LIVE</span></div>
-    <div class="body"><b>Front Door</b><p>📦 Delivery — someone's at your door…</p>
-      <div class="acts"><button class="a-open" id="icOpen">Unlock</button><button class="a-ign" id="icIgnore">Ignore</button></div>
-    </div>
-  </div>
-
-  <!-- phone -->
-  <div class="iphone">
-    <div class="scr">
-      <div class="ph-h"><b>My Villa</b><span class="lv">● Live</span></div>
-      <div class="big" id="phScene">Custom</div><div class="sub" id="phSub">Tap a device</div>
-      <div class="grid">
-        <div class="cell" id="cLights"><div class="cl">LIGHTS</div><div class="cv" id="phLights">0 on</div></div>
-        <div class="cell" id="cClim"><div class="cl">CLIMATE</div><div class="cv" id="phClim">23°</div></div>
-        <div class="cell" id="cCur"><div class="cl">CURTAINS</div><div class="cv" id="phCur">Open</div></div>
-        <div class="cell" id="cEv"><div class="cl">EV</div><div class="cv" id="phEv">80%</div></div>
-        <div class="cell" id="cSec"><div class="cl">SECURITY</div><div class="cv" id="phSec">Off</div></div>
-      </div>
-      <div class="ph-hint">👆 Tap any tile to control</div>
     </div>
   </div>
 </section>
@@ -740,6 +574,7 @@ if(hero){ hero.addEventListener('mousemove',function(e){
 /* ===== Sedra interactive smart-home simulator ===== */
 (function(){
 const iot=document.getElementById('iot');
+if(!document.getElementById('bgOv'))return;/* demo replaced by Sma.html */
 const bgOv=document.getElementById('bgOv'),dayOv=document.getElementById('dayOv'),nightOv=document.getElementById('nightOv'),warmOv=document.getElementById('warmOv'),skyOv=document.getElementById('skyOv');
 const S={lights:{living:false,kitchen:false,facade:false,garden:false},clim:23,cur:100,ev:{on:true,level:41},sec:false,snd:{on:false,track:0},scene:null,tod:100};
 var todSun=0;
