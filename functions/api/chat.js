@@ -1,8 +1,13 @@
 /* Sedra Electric — AI chat (Cloudflare Pages Function, free Workers AI)
-   Route: POST /api/chat   Body: { messages:[{role,content}], lang }
+   Route: POST /api/chat   Body: { messages:[{role,content}], lang, sid?, stream?, ts_token? }
    - Requires a Workers-AI binding named "AI".
-   - Optional env vars (set in Pages > Settings > Variables): MODEL, SYSTEM_PROMPT
-     (SYSTEM_PROMPT lets you tune the assistant's knowledge/voice without editing code). */
+   - Optional env vars (Pages > Settings > Variables):
+       MODEL           force a specific model id
+       SYSTEM_PROMPT   override the assistant's knowledge/voice without editing code
+       LEAD_DB_URL     Firebase RTDB base url for saving chat transcripts (default below)
+       CHATS_NODE      RTDB node for transcripts (default "chats")
+       TURNSTILE_SECRET  if set, requires a valid Cloudflare Turnstile token (anti-spam)
+   - Optional binding: RATE_KV (KV namespace) → simple per-IP rate limit. */
 
 const SYSTEM_DEFAULT = `You are "Sedra Assistant" — the smart, friendly assistant on the Sedra Electric website. You represent the brand and talk in Sedra's voice: confident, warm, engineering-led, helpful, and human. Keep answers concise and useful. Never sound robotic.
 
@@ -29,106 +34,162 @@ YOUR GOAL: genuinely help AND collect the visitor's details. Answer their questi
 
 RULES: Be accurate; if you don't know something, say you'll connect them with the Sedra team rather than guessing. Stay on Sedra-related topics; if asked something unrelated, answer briefly and steer back warmly. Always be encouraging and make the visitor feel taken care of.`;
 
-/* Small & fast models FIRST so replies come back in ~1-3s.
-   The big models stay only as a last-resort fallback. */
+/* Curated knowledge / FAQ — grounds the assistant so it answers accurately without inventing.
+   Edit this freely (or override everything via the SYSTEM_PROMPT env var). */
+const KNOWLEDGE = `
+EXTRA KNOWLEDGE & FAQ (use naturally; never read it out like a list):
+• KNX vs wireless: KNX is the global wired standard — the most reliable and future-proof for full villas/buildings; wireless (e.g. Zigbee/Wi-Fi based) suits ready/finished flats where wiring is hard. We advise the right mix per project after the site survey.
+• Existing/finished home? Yes — we have wireless and retrofit solutions that don't need to break walls. Best answered after a quick visit.
+• One app for everything: lighting, AC, curtains, cameras, doors, energy — from your phone, local or from abroad. Works with Alexa / Google Assistant.
+• Scenes: one touch runs many devices together (e.g. "Goodbye" turns off lights/AC and arms security; "Movie" dims lights and closes curtains).
+• Security: CCTV with phone alerts and live view, smart door locks, access control, fire and intrusion alarms, video door phone.
+• Solar: cuts the electricity bill via net-metering; rough payback ~5–7 years (estimate only, depends on consumption and system size). We handle design, permits, install and maintenance.
+• EV charging: home and compound chargers, safe dedicated circuits.
+• After-sales: training on handover + maintenance and support contracts. We stand behind the work after the sale.
+• Timeline: depends on project size and scope; given after the survey. Never promise an exact number without a survey.
+• Warranty: equipment carries manufacturer warranty; we provide workmanship support — details confirmed in the quotation.
+• Do NOT invent prices, specific brand names, discount percentages, or delivery dates. If asked, explain it depends on the project and offer a free site visit or WhatsApp +201125441197.
+• Working hours: Sunday–Thursday roughly 10:00–18:00 Cairo time (Friday/Saturday lighter). If a visitor writes outside hours, reassure them the team will reply the next working period and offer WhatsApp for anything urgent.
+`;
+
 const MODELS = [
+  '@cf/meta/llama-3.3-70b-instruct-fp8-fast',
+  '@cf/meta/llama-4-scout-17b-16e-instruct',
   '@cf/meta/llama-3.1-8b-instruct-fast',
   '@cf/qwen/qwen2.5-7b-instruct',
-  '@cf/meta/llama-3.1-8b-instruct-fp8',
-  '@cf/meta/llama-3.3-70b-instruct-fp8-fast',
-  '@cf/meta/llama-4-scout-17b-16e-instruct']
-;
-
-const PER_MODEL_TIMEOUT_MS = 9000; // if a model stalls, abandon it fast and try the next
+  '@cf/mistralai/mistral-small-3.1-24b-instruct',
+  '@cf/meta/llama-3.1-8b-instruct'
+];
 
 function cors(){return{'Access-Control-Allow-Origin':'*','Access-Control-Allow-Methods':'POST, OPTIONS','Access-Control-Allow-Headers':'Content-Type'};}
 function json(o,s=200){return new Response(JSON.stringify(o),{status:s,headers:{'Content-Type':'application/json; charset=utf-8',...cors()}});}
 
-function withTimeout(promise, ms){
-  return Promise.race([
-    promise,
-    new Promise((_,rej)=>setTimeout(()=>rej(new Error('model-timeout')), ms))
-  ]);
+/* Live date/time in Cairo — injected each request so the assistant always knows "today"
+   (the AI model has a fixed training cutoff and no real clock of its own). */
+function nowCairo(){
+  try{
+    const f = new Intl.DateTimeFormat('en-GB', { timeZone:'Africa/Cairo', weekday:'long',
+      year:'numeric', month:'long', day:'numeric', hour:'2-digit', minute:'2-digit', hour12:false });
+    return f.format(new Date());
+  }catch(e){ return new Date().toISOString(); }
+}
+function datePreamble(){
+  return `REAL CURRENT DATE & TIME (Africa/Cairo): ${nowCairo()}.
+This is the real "today" — always treat it as the present moment. We are in this exact month and year right now; never assume, state, or imply any earlier date (your training data is older than today — ignore it for anything time-related). Always speak in the PRESENT tense about Sedra: we ARE open and operating today. If the visitor asks about the date, day, current time, "this month", latest offers, delivery timing, or anything time-sensitive, base it on the date above. Greet by time of day when natural (صباح الخير / مساء الخير).`;
 }
 
-/* ---- auto lead-capture straight from the chat conversation ---- */
-const LEAD_DB = "https://sedra-crm-default-rtdb.firebaseio.com";
-function toAscii(s){return String(s||"").replace(/[٠-٩]/g,d=>"٠١٢٣٤٥٦٧٨٩".indexOf(d)).replace(/[۰-۹]/g,d=>"۰۱۲۳۴۵۶۷۸۹".indexOf(d));}
-/* Egyptian mobile: 01[0125]+8 digits, with or without +20 / 0020 country code */
-function findPhone(t){const d=toAscii(t).replace(/\D/g,"");const m=d.match(/(?:0020|20)?0?(1[0125]\d{8})(?!\d)/);return m?("0"+m[1]):"";}
-/* best-effort name only from an explicit marker, else we fall back to the phone */
-function findName(history){
-  for(let i=history.length-1;i>=0;i--){const h=history[i];if(!h||h.role!=='user')continue;
-    const m=String(h.content).match(/(?:اسمي|إسمي|my name is|i'?m called|this is)\s*[:\-]?\s*([\p{L}][\p{L} ]{1,28})/iu);
-    if(m){const n=m[1].trim().replace(/\s+/g," ").split(" ").slice(0,3).join(" ");if(n)return n;}
-  }
-  return "";
+/* Friendly fallback shown when every AI model fails, so the visitor is never left hanging. */
+function fallbackReply(lang){
+  return (lang==='ar')
+    ? "معلش حصل ضغط بسيط على المساعد دلوقتي 🙏 بس فريق سيدرا جاهز يساعدك على طول — كلّمنا واتساب على +201125441197 أو اضغط \"اطلب عرض سعر\" ونتواصل معاك."
+    : "Sorry — the assistant is a little busy right now 🙏 But the Sedra team is ready to help you directly. WhatsApp us at +201125441197 or tap \"Request a quote\" and we'll reach out.";
 }
-function findPhoneIn(history){for(let i=history.length-1;i>=0;i--){const h=history[i];if(!h||h.role!=='user')continue;const p=findPhone(h.content);if(p)return p;}return "";}
-/* light city/area detector (best-effort) — the full text always stays in notes anyway */
-const CITIES=["القاهره","القاهرة","cairo","الجيزه","الجيزة","giza","الاسكندريه","الاسكندرية","اسكندريه","alexandria","الشيخ زايد","شيخ زايد","زايد","sheikh zayed","zayed","اكتوبر","أكتوبر","october","التجمع","القاهره الجديده","القاهرة الجديدة","new cairo","العاصمه الاداريه","العاصمة الإدارية","new capital","المنصوره","المنصورة","طنطا","دبي","dubai","الرياض","riyadh","الامارات","السعوديه","السعودية"];
-function findCity(history){const t=history.map(h=>String(h.content||"")).join("  ").toLowerCase();for(const c of CITIES){if(t.includes(c.toLowerCase()))return c;}return "";}
-/* upsert by a deterministic per-phone key so the SAME lead gets updated, never duplicated */
-async function upsertLead(key,patch){try{await fetch(LEAD_DB+"/leads/"+key+".json",{method:"PATCH",headers:{"Content-Type":"application/json"},body:JSON.stringify(patch)});}catch(e){}}
+
+/* Optional Cloudflare Turnstile verification (only enforced if TURNSTILE_SECRET is set). */
+async function turnstileOK(env, token, ip){
+  if(!env.TURNSTILE_SECRET) return true;            // not configured → skip
+  if(!token) return false;
+  try{
+    const body = new URLSearchParams();
+    body.append('secret', env.TURNSTILE_SECRET);
+    body.append('response', token);
+    if(ip) body.append('remoteip', ip);
+    const r = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', { method:'POST', body });
+    const j = await r.json().catch(()=>({success:false}));
+    return !!j.success;
+  }catch(e){ return true; }                          // never block on our own error
+}
+
+/* Optional simple per-IP rate limit (only if a KV namespace named RATE_KV is bound). */
+async function rateLimited(env, ip){
+  if(!env.RATE_KV || !ip) return false;
+  try{
+    const key = 'r:'+ip+':'+Math.floor(Date.now()/60000);   // per-minute bucket
+    const cur = parseInt(await env.RATE_KV.get(key) || '0', 10);
+    if(cur >= 20) return true;                               // max 20 messages/min/IP
+    await env.RATE_KV.put(key, String(cur+1), { expirationTtl: 120 });
+    return false;
+  }catch(e){ return false; }
+}
+
+/* Fire-and-forget: save the running transcript to Firebase so you can see what people ask. */
+function logChat(env, sid, messages, lang, ctx){
+  try{
+    const DB = env.LEAD_DB_URL || "https://sedra-crm-default-rtdb.firebaseio.com";
+    const node = env.CHATS_NODE || "chats";
+    const id = (sid && String(sid).replace(/[^\w-]/g,'').slice(0,40)) || ('s'+Date.now());
+    const rec = {
+      sid: id, lang: String(lang||'').slice(0,4), turns: messages.length,
+      messages: messages.slice(-20),
+      updated: new Date().toISOString(), ts: Date.now()
+    };
+    const p = fetch(`${DB}/${node}/${id}.json`, { method:'PUT', headers:{'Content-Type':'application/json'}, body: JSON.stringify(rec) });
+    if(ctx && ctx.waitUntil) ctx.waitUntil(p); else p.catch(()=>{});
+  }catch(e){}
+}
 
 export function onRequestOptions(){return new Response(null,{headers:cors()});}
 
 export async function onRequestPost(context){
   const { request, env } = context;
+  const ip = request.headers.get('CF-Connecting-IP') || '';
   try{
     if(!env.AI){ return json({reply:"", error:"AI binding missing"}, 500); }
     const body = await request.json().catch(()=>({}));
-    const history = Array.isArray(body.messages) ? body.messages
+    const lang = (body.lang==='ar') ? 'ar' : (body.lang || '');
+
+    // ---- basic anti-abuse ----
+    if(await rateLimited(env, ip)){
+      return json({ reply: fallbackReply(lang||'en') });
+    }
+    if(!(await turnstileOK(env, body.ts_token, ip))){
+      return json({ reply: fallbackReply(lang||'en') });
+    }
+
+    let history = Array.isArray(body.messages) ? body.messages
         .filter(m=>m && (m.role==='user'||m.role==='assistant') && typeof m.content==='string')
-        .slice(-10) : [];
+        .map(m=>({role:m.role, content:String(m.content).slice(0,2000)}))   // cap message size
+        .slice(-14) : [];
+    if(history.length > 40) history = history.slice(-40);
 
-    /* If the visitor gave a phone number anywhere in the chat, upsert them as ONE lead
-       (same phone = same lead, updated as they add more info like their address).
-       Runs in the background so it never slows down the reply. */
-    try{
-      const phone = findPhoneIn(history);
-      if(phone){
-        const nowIso = new Date().toISOString();
-        const convo = history.slice(-8).map(m=>(m.role==='user'?'👤':'🤖')+' '+m.content).join('  |  ').slice(0,700);
-        const city = findCity(history);
-        const patch = { name: findName(history) || phone, phone, branch:"Egypt",
-          stage:"New", source:"Website Chatbot", owner:"",
-          notes:"Chat: "+convo, note:"Chat: "+convo, lang:(body.lang==='ar'||body.lang==='en')?body.lang:"",
-          created:nowIso, createdAt:nowIso, date:nowIso.slice(0,10), updatedAt:nowIso, ts:Date.now() };
-        if(city){ patch.area=city; patch.city=city; }
-        const key = "chat_"+phone.replace(/\D/g,"");
-        if(context.waitUntil) context.waitUntil(upsertLead(key,patch)); else upsertLead(key,patch);
-      }
-    }catch(e){}
-
-    /* Registration confirmation: shown once, on the turn the visitor actually types a phone.
-       Points them to WhatsApp (free — no business-initiated message is sent). */
-    let confirmSuffix = "";
-    try{
-      const lastUser = [...history].reverse().find(m=>m.role==='user');
-      if(lastUser && findPhone(lastUser.content)){
-        confirmSuffix = (body.lang==='en')
-          ? "\n\n✅ Done! We've saved your request and the Sedra team will contact you very soon. To reach us now on WhatsApp 👉 https://wa.me/201125441197"
-          : "\n\n✅ تمام يا فندم! سجّلنا طلبك وفريق سيدرا هيكلّمك في أقرب وقت. لو حابب تكلّمنا دلوقتي على واتساب 👉 https://wa.me/201125441197";
-      }
-    }catch(e){}
-
-    const system = (env.SYSTEM_PROMPT && env.SYSTEM_PROMPT.trim()) ? env.SYSTEM_PROMPT : SYSTEM_DEFAULT;
+    const base = (env.SYSTEM_PROMPT && env.SYSTEM_PROMPT.trim()) ? env.SYSTEM_PROMPT : SYSTEM_DEFAULT;
+    const system = datePreamble() + "\n\n" + base + "\n" + KNOWLEDGE;
     const messages = [{role:'system', content: system}, ...history];
     const list = (env.MODEL ? [env.MODEL] : []).concat(MODELS);
+
+    // save transcript (fire-and-forget)
+    logChat(env, body.sid, history, lang, context);
+
+    const wantStream = body.stream === true;
+
+    // ---------- streaming path ----------
+    if(wantStream){
+      for(const model of list){
+        try{
+          const stream = await env.AI.run(model, { messages, max_tokens: 640, temperature: 0.6, stream: true });
+          return new Response(stream, { headers: { 'Content-Type':'text/event-stream; charset=utf-8', 'Cache-Control':'no-cache', ...cors() } });
+        }catch(e){ /* try next model */ }
+      }
+      // all failed → send fallback as a single SSE chunk the widget can read
+      const enc = new TextEncoder();
+      const rs = new ReadableStream({ start(c){
+        c.enqueue(enc.encode('data: '+JSON.stringify({response: fallbackReply(lang||'en')})+'\n\n'));
+        c.enqueue(enc.encode('data: [DONE]\n\n')); c.close();
+      }});
+      return new Response(rs, { headers:{ 'Content-Type':'text/event-stream; charset=utf-8', ...cors() } });
+    }
+
+    // ---------- non-streaming path ----------
     let lastErr="";
     for(const model of list){
       try{
-        const r = await withTimeout(
-          env.AI.run(model, { messages, max_tokens: 320, temperature: 0.5 }),
-          PER_MODEL_TIMEOUT_MS
-        );
+        const r = await env.AI.run(model, { messages, max_tokens: 640, temperature: 0.6 });
         const reply = r && (r.response || (r.result && r.result.response));
-        if(reply){ return json({ reply: String(reply).trim() + confirmSuffix, model }); }
+        if(reply){ return json({ reply: String(reply).trim() }); }
       }catch(e){ lastErr = String(e && e.message || e); }
     }
-    return json({ reply:"", error: lastErr || "no model responded" }, 500);
+    return json({ reply: fallbackReply(lang||'en'), error: lastErr || "no model responded" });
   }catch(e){
-    return json({ reply:"", error: String(e && e.message || e) }, 500);
+    return json({ reply: fallbackReply(''), error: String(e && e.message || e) });
   }
 }
