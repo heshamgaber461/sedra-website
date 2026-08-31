@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Sedra · إحصائيات الشات بوت</title>
+<style>
+  :root{--bg:#05131f;--card:#0d2233;--line:rgba(255,255,255,.10);--txt:#eaf4fb;--mut:#8fb0c2;--acc:#3fe0f0;--acc2:#12b6d8}
+  *{box-sizing:border-box}
+  body{margin:0;background:linear-gradient(160deg,#04101a,#082033);color:var(--txt);font-family:system-ui,"Segoe UI",Tahoma,sans-serif;min-height:100vh;padding:28px}
+  h1{font-size:1.5rem;margin:0 0 4px;display:flex;align-items:center;gap:10px}
+  .sub{color:var(--mut);font-size:.9rem;margin-bottom:22px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;max-width:900px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px 20px}
+  .card .k{color:var(--mut);font-size:.85rem;margin-bottom:6px}
+  .card .v{font-size:2.1rem;font-weight:800;background:linear-gradient(135deg,var(--acc),var(--acc2));-webkit-background-clip:text;background-clip:text;color:transparent;line-height:1.1}
+  .wide{grid-column:1/-1}
+  .row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px dashed var(--line);font-size:.95rem}
+  .row:last-child{border:none}
+  .bar{height:8px;border-radius:6px;background:linear-gradient(90deg,var(--acc2),var(--acc));margin-top:4px}
+  input,button{font-family:inherit;font-size:15px;border-radius:10px;border:1px solid var(--line);padding:11px 14px}
+  input{background:#0a1c2b;color:#fff;outline:none}
+  button{background:linear-gradient(135deg,var(--acc2),var(--acc));color:#03121a;font-weight:800;border:none;cursor:pointer}
+  .gate{max-width:360px;display:flex;gap:8px;margin-top:10px}
+  .muted{color:var(--mut);font-size:.85rem;margin-top:16px}
+  a{color:var(--acc)}
+</style>
+</head>
+<body>
+  <h1>📊 إحصائيات الشات بوت — Sedra</h1>
+  <div class="sub" id="updated">لوحة بسيطة بتقرأ الأرقام من السيرفر مباشرة.</div>
+
+  <div id="gate" class="gate" hidden>
+    <input id="key" type="password" placeholder="مفتاح الدخول (STATS_KEY)">
+    <button id="go">دخول</button>
+  </div>
+
+  <div id="board" class="grid" hidden>
+    <div class="card"><div class="k">محادثات النهاردة</div><div class="v" id="chatsToday">—</div></div>
+    <div class="card"><div class="k">إجمالي المحادثات</div><div class="v" id="chatsTotal">—</div></div>
+    <div class="card"><div class="k">عملاء النهاردة</div><div class="v" id="leadsToday">—</div></div>
+    <div class="card"><div class="k">عملاء آخر ٧ أيام</div><div class="v" id="leads7">—</div></div>
+    <div class="card"><div class="k">إجمالي العملاء</div><div class="v" id="leadsTotal">—</div></div>
+    <div class="card"><div class="k">متوسط رسائل المحادثة</div><div class="v" id="avgTurns">—</div></div>
+    <div class="card wide"><div class="k">أكتر الخدمات طلباً</div><div id="svc"></div></div>
+  </div>
+
+  <div id="err" class="muted"></div>
+  <div class="muted">التحديث بيحصل كل ما تفتح الصفحة. الأرقام بتتحسب في السيرفر — الداتا نفسها مش بتظهر هنا.</div>
+
+<script>
+(function(){
+  var qs=new URLSearchParams(location.search), key=qs.get('key')||'';
+  var board=document.getElementById('board'), gate=document.getElementById('gate'), err=document.getElementById('err');
+  function n(x){return (x==null?'—':Number(x).toLocaleString('en'));}
+  function load(k){
+    err.textContent='جاري التحميل…';
+    fetch('/api/stats'+(k?('?key='+encodeURIComponent(k)):'')).then(function(r){return r.json();}).then(function(j){
+      if(!j.ok){ if(j.error==='unauthorized'){ gate.hidden=false; board.hidden=true; err.textContent= k?'المفتاح غير صحيح.':''; return; } err.textContent='خطأ: '+(j.error||''); return; }
+      gate.hidden=true; board.hidden=false; err.textContent='';
+      document.getElementById('updated').textContent='آخر تحديث: '+new Date(j.updated).toLocaleString('ar-EG');
+      document.getElementById('chatsToday').textContent=n(j.chats.today);
+      document.getElementById('chatsTotal').textContent=n(j.chats.total);
+      document.getElementById('avgTurns').textContent=n(j.chats.avgTurns);
+      document.getElementById('leadsToday').textContent=n(j.leads.today);
+      document.getElementById('leads7').textContent=n(j.leads.last7d);
+      document.getElementById('leadsTotal').textContent=n(j.leads.total);
+      var max=(j.topServices[0]&&j.topServices[0].count)||1, host=document.getElementById('svc'); host.innerHTML='';
+      if(!j.topServices.length){ host.innerHTML='<div class="row"><span>لسه مفيش بيانات كافية</span></div>'; }
+      j.topServices.forEach(function(s){
+        var d=document.createElement('div'); d.className='row';
+        d.innerHTML='<div style="flex:1"><div style="display:flex;justify-content:space-between"><span>'+s.name+'</span><b>'+n(s.count)+'</b></div><div class="bar" style="width:'+Math.max(8,Math.round(s.count/max*100))+'%"></div></div>';
+        host.appendChild(d);
+      });
+    }).catch(function(e){ err.textContent='تعذّر الاتصال بالسيرفر.'; });
+  }
+  document.getElementById('go').onclick=function(){ load(document.getElementById('key').value.trim()); };
+  document.getElementById('key').addEventListener('keydown',function(e){ if(e.key==='Enter') document.getElementById('go').click(); });
+  load(key); // try without a key first; if gated, the input appears
+})();
+</script>
+</body>
+</html>
