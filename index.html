@@ -979,6 +979,13 @@ if(innerWidth>820){ setTimeout(()=>{ ringIntercom(); },6000); }
 #sbot .sb-btn:hover{transform:translateY(-3px) scale(1.04)}
 #sbot .sb-btn svg{width:28px;height:28px;fill:#04121c}
 #sbot .sb-badge{position:absolute;top:-4px;right:-4px;background:#ff5a4d;color:#fff;font-size:11px;font-weight:800;border-radius:50px;padding:2px 7px;box-shadow:0 2px 8px rgba(0,0,0,.3)}
+#sbot .sb-bubble{position:absolute;left:74px;bottom:8px;max-width:250px;background:#fff;color:#0a1826;font-size:13.5px;line-height:1.45;padding:12px 30px 12px 14px;border-radius:16px 16px 16px 4px;box-shadow:0 14px 34px rgba(10,40,60,.28);cursor:pointer;animation:sbbub .35s ease}
+#sbot .sb-bubble::after{content:"";position:absolute;left:-7px;bottom:12px;border:7px solid transparent;border-right-color:#fff;border-left:0}
+#sbot.open .sb-bubble{display:none}
+#sbot .sb-bubble-x{position:absolute;top:4px;right:6px;background:none;border:none;color:#9fb0bd;font-size:16px;line-height:1;cursor:pointer;padding:2px}
+#sbot .sb-bubble #sbBubbleTxt{display:block}
+@keyframes sbbub{from{opacity:0;transform:translateY(8px) scale(.96)}to{opacity:1;transform:none}}
+body.ar #sbot .sb-bubble{direction:rtl;text-align:right}
 #sbot .sb-panel{position:absolute;left:0;bottom:74px;width:min(370px,92vw);height:min(560px,74vh);background:#0a1826;border:1px solid rgba(63,224,240,.28);border-radius:20px;box-shadow:0 30px 80px rgba(0,0,0,.55);display:none;flex-direction:column;overflow:hidden}
 #sbot.open .sb-panel{display:flex;animation:sbpop .25s ease}
 @keyframes sbpop{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
@@ -1022,6 +1029,10 @@ if(innerWidth>820){ setTimeout(()=>{ ringIntercom(); },6000); }
     <svg viewBox="0 0 24 24"><path d="M12 3C6.5 3 2 6.8 2 11.5c0 2.4 1.2 4.6 3.1 6.1L4 22l4.7-1.6c1 .3 2.1.4 3.3.4 5.5 0 10-3.8 10-8.5S17.5 3 12 3z"/></svg>
     <span class="sb-badge" id="sbBadge">1</span>
   </button>
+  <div class="sb-bubble" id="sbBubble" role="button" tabindex="0" hidden>
+    <button class="sb-bubble-x" id="sbBubbleX" aria-label="Dismiss">&times;</button>
+    <span id="sbBubbleTxt"></span>
+  </div>
 
   <div class="sb-panel" role="dialog" aria-label="Sedra Assistant">
     <div class="sb-head">
@@ -1059,7 +1070,9 @@ if(innerWidth>820){ setTimeout(()=>{ ringIntercom(); },6000); }
   var T={
     en:{title:"Sedra Assistant",status:"Online — replies in seconds",ph:"Type your message…",
         greet:"I'm Sedra's assistant. Ask me anything about smart home, security, solar or EV charging — or request a free quote.",
-        quote:"⚡ Request a quote",chips:["Smart home","Solar energy","Request a quote","💬 WhatsApp"],
+        quote:"⚡ Request a quote",chips:["🏠 Smart home","☀️ Solar energy","🚗 EV charging","📅 Book a free visit","💰 Pricing","⚡ Request a quote","💬 WhatsApp"],
+        bubble:"Need help? Ask me about smart home, solar or a free quote 👋",
+        waIntro:"Hello Sedra 👋 I was chatting on your website about:",waAsk:"and I'd like to know more.",
         formT:"Request a free quote",formP:"Leave your details and our team will contact you shortly.",
         name:"Name",phone:"Phone / WhatsApp",city:"City",svc:"Service",send:"Send",back:"Back to chat",
         services:["Smart Home / KNX","Security & CCTV","Networks & Low current","Solar energy","EV charging","Home cinema","Other"],
@@ -1067,7 +1080,9 @@ if(innerWidth>820){ setTimeout(()=>{ ringIntercom(); },6000); }
         errPhone:"Please enter a valid phone number.",err:"Sorry, something went wrong. Please try again or WhatsApp us: +201125441197."},
     ar:{title:"مساعد سيدرا",status:"متصل — بيرد في ثواني",ph:"اكتب رسالتك…",
         greet:"أنا مساعد سيدرا. اسألني أي حاجة عن السمارت هوم، الأمن، الطاقة الشمسية أو شحن السيارات — أو اطلب عرض سعر مجاني.",
-        quote:"⚡ اطلب عرض سعر",chips:["سمارت هوم","طاقة شمسية","اطلب عرض سعر","💬 واتساب"],
+        quote:"⚡ اطلب عرض سعر",chips:["🏠 سمارت هوم","☀️ طاقة شمسية","🚗 شحن سيارات","📅 احجز زيارة مجانية","💰 الأسعار","⚡ اطلب عرض سعر","💬 واتساب"],
+        bubble:"محتاج مساعدة؟ اسألني عن السمارت هوم أو الطاقة الشمسية أو اطلب عرض سعر 👋",
+        waIntro:"مرحبًا سيدرا 👋 كنت بتكلم على موقعكم بخصوص:",waAsk:"وحابب أعرف تفاصيل أكتر.",
         formT:"اطلب عرض سعر مجاني",formP:"سيب بياناتك وفريق سيدرا هيتواصل معاك في أقرب وقت.",
         name:"الاسم",phone:"التليفون / واتساب",city:"المدينة",svc:"الخدمة",send:"إرسال",back:"رجوع للمحادثة",
         services:["سمارت هوم / KNX","أمن وكاميرات","شبكات وتيار خفيف","طاقة شمسية","شحن سيارات","هوم سينما","أخرى"],
@@ -1079,7 +1094,25 @@ if(innerWidth>820){ setTimeout(()=>{ ringIntercom(); },6000); }
   var sid='s'+Date.now().toString(36)+Math.random().toString(36).slice(2,7);
   function findPhone(s){var m=String(s).replace(/[^\d+]/g,' ').match(/\+?\d[\d ]{8,}\d/g);if(!m)return'';for(var i=0;i<m.length;i++){var d=m[i].replace(/\D/g,'');if(d.length>=10&&d.length<=13)return m[i].trim();}return'';}
   function greetPrefix(){var h=new Date().getHours();if(isAr())return h<12?'صباح الخير 👋 ':(h<18?'مساء الخير 👋 ':'مساء الخير 👋 ');return h<12?'Good morning 👋 ':(h<18?'Good afternoon 👋 ':'Good evening 👋 ');}
-  function openWhatsApp(){var msg=encodeURIComponent(isAr()?'مرحبًا سيدرا، عايز أستفسر عن':'Hello Sedra, I have a question about');window.open('https://wa.me/201125441197?text='+msg,'_blank','noopener');}
+  // Branch WhatsApp routing — pick the right number from what the visitor said.
+  var WA={eg:'201125441197',ae:'971529818538',sa:'966542499681'};
+  function detectBranch(){
+    var t=messages.map(function(m){return m.content;}).join(' ').toLowerCase();
+    // Arabic first — \b word boundaries don't work with Arabic script, so match directly.
+    if(/دبي|الامارات|الإمارات|ابوظبي|أبوظبي|الشارقة|امارات|اﻹمارات/.test(t)) return 'ae';
+    if(/الرياض|السعودية|السعوديه|جدة|جده|الدمام|سعودي/.test(t)) return 'sa';
+    // English (word boundaries safe here)
+    if(/\b(uae|u\.a\.e|dubai|abu ?dhabi|sharjah|emirates?)\b/.test(t)) return 'ae';
+    if(/\b(ksa|k\.s\.a|saudi|riyadh|jeddah|dammam)\b/.test(t)) return 'sa';
+    return 'eg';
+  }
+  function openWhatsApp(){
+    var t=L(), br=detectBranch(), num=WA[br];
+    // summarise what the visitor was chatting about (their own messages)
+    var topics=messages.filter(function(m){return m.role==='user';}).map(function(m){return m.content;}).slice(-3).join(' — ');
+    var msg=topics ? (t.waIntro+' '+topics+' '+t.waAsk) : (isAr()?'مرحبًا سيدرا 👋 عايز أستفسر عن خدماتكم.':'Hello Sedra 👋 I would like to know more about your services.');
+    window.open('https://wa.me/'+num+'?text='+encodeURIComponent(msg),'_blank','noopener');
+  }
   var el=function(id){return document.getElementById(id);};
   var body=el('sbBody');
 
@@ -1090,12 +1123,24 @@ if(innerWidth>820){ setTimeout(()=>{ ringIntercom(); },6000); }
     el('sbLName').textContent=t.name; el('sbLPhone').textContent=t.phone; el('sbLCity').textContent=t.city; el('sbLSvc').textContent=t.svc;
     el('sbfSubmit').textContent=t.send; el('sbfCancel').textContent=t.back;
     var svc=el('sbfSvc'); svc.innerHTML=''; t.services.forEach(function(s){var o=document.createElement('option');o.textContent=s;svc.appendChild(o);});
+    var bt=el('sbBubbleTxt'); if(bt) bt.textContent=t.bubble;
     renderChips();
   }
   function renderChips(){
     var t=L(), c=el('sbChips'); c.innerHTML='';
-    t.chips.forEach(function(txt){var b=document.createElement('button');b.className='sb-chip';b.textContent=txt;
-      b.onclick=function(){ if(txt===t.chips[3]) openWhatsApp(); else if(txt===t.chips[2]) openForm(); else send(txt); }; c.appendChild(b);});
+    // what each starter chip actually asks the assistant (kept natural, no leading emoji)
+    var ask=isAr()
+      ? ["عايز أعرف أكتر عن السمارت هوم و الـ KNX","عايز أعرف عن أنظمة الطاقة الشمسية و توفير الفاتورة","عندكم شواحن سيارات كهربائية للبيت؟","احجز زيارة معاينة مجانية","الأسعار بتبدأ من كام؟"]
+      : ["Tell me about smart home & KNX","Tell me about solar energy & saving the bill","Do you install home EV chargers?","Book a free site visit","How much does it cost?"];
+    t.chips.forEach(function(txt,idx){
+      var b=document.createElement('button'); b.className='sb-chip'; b.textContent=txt;
+      b.onclick=function(){
+        if(idx===t.chips.length-1) openWhatsApp();               // last chip = WhatsApp
+        else if(idx===t.chips.length-2 || idx===3) openForm();   // Request a quote / Book a visit → form
+        else send(ask[idx]||txt);                                // send a clean question
+      };
+      c.appendChild(b);
+    });
   }
   function add(role,text){
     var d=document.createElement('div'); d.className='sb-msg '+(role==='user'?'sb-user':'sb-bot'); d.textContent=text;
@@ -1110,8 +1155,11 @@ if(innerWidth>820){ setTimeout(()=>{ ringIntercom(); },6000); }
     text=(text||el('sbInput').value).trim(); if(!text||busy) return;
     el('sbInput').value=''; add('user',text); messages.push({role:'user',content:text});
     if(!leadSent){ var ph=findPhone(text); if(ph){ leadSent=true;
+      var brMap0={eg:'Egypt',ae:'UAE',sa:'KSA'};
       fetch('/api/lead',{method:'POST',headers:{'Content-Type':'application/json'},
-        body:JSON.stringify({phone:ph,name:'',city:'',service:'Chatbot',lang:isAr()?'ar':'en',message:'Auto-captured from chat: '+text.slice(0,200)})}).catch(function(){});
+        body:JSON.stringify({phone:ph,name:'',city:'',service:'Chatbot',lang:isAr()?'ar':'en',branch:brMap0[detectBranch()],
+          transcript:messages.slice(-10).map(function(m){return m.role+': '+m.content;}).join('\n'),
+          message:'Auto-captured from chat: '+text.slice(0,200)})}).catch(function(){});
     }}
     busy=true; typing(true);
     try{
@@ -1140,8 +1188,11 @@ if(innerWidth>820){ setTimeout(()=>{ ringIntercom(); },6000); }
   async function submitLead(){
     var t=L(), phone=el('sbfPhone').value.trim();
     if(phone.replace(/\D/g,'').length<7){ el('sbfPhone').focus(); el('sbfPhone').style.borderColor='#ff5a4d'; alert(t.errPhone); return; }
+    var brMap={eg:'Egypt',ae:'UAE',sa:'KSA'};
     var lead={name:el('sbfName').value.trim(),phone:phone,city:el('sbfCity').value.trim(),
       service:el('sbfSvc').value, lang:isAr()?'ar':'en', sid:sid, website:(el('sbfHp')?el('sbfHp').value:''),
+      branch:brMap[detectBranch()],
+      transcript:messages.slice(-10).map(function(m){return m.role+': '+m.content;}).join('\n'),
       message:'Chat lead — '+messages.slice(-4).map(function(m){return m.role+': '+m.content;}).join(' | ')};
     el('sbfSubmit').disabled=true;
     try{ await fetch('/api/lead',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(lead)}); }catch(e){}
@@ -1153,7 +1204,22 @@ if(innerWidth>820){ setTimeout(()=>{ ringIntercom(); },6000); }
   }
   function close(){ root.classList.remove('open'); root.classList.remove('form'); }
 
-  el('sbLaunch').onclick=function(){ root.classList.contains('open')?close():open(); };
+  // Proactive welcome bubble — nudges the visitor a few seconds after landing (once per session).
+  var bubbleShown=false, bubbleDismissed=false;
+  function showBubble(){
+    if(bubbleShown||bubbleDismissed||root.classList.contains('open')) return;
+    bubbleShown=true; var b=el('sbBubble'); if(!b) return;
+    var bt=el('sbBubbleTxt'); if(bt) bt.textContent=L().bubble;
+    b.hidden=false;
+    setTimeout(function(){ if(!root.classList.contains('open')&&!bubbleDismissed){ var bb=el('sbBubble'); if(bb) bb.hidden=true; } },12000);
+  }
+  function hideBubble(){ bubbleDismissed=true; var b=el('sbBubble'); if(b) b.hidden=true; }
+  el('sbBubble').addEventListener('click',function(){ hideBubble(); open(); });
+  el('sbBubble').addEventListener('keydown',function(e){ if(e.key==='Enter'||e.key===' '){e.preventDefault(); hideBubble(); open();} });
+  el('sbBubbleX').addEventListener('click',function(e){ e.stopPropagation(); hideBubble(); });
+  setTimeout(showBubble, 7000);
+
+  el('sbLaunch').onclick=function(){ hideBubble(); root.classList.contains('open')?close():open(); };
   el('sbClose').onclick=close;
   el('sbSend').onclick=function(){send();};
   el('sbInput').addEventListener('keydown',function(e){ if(e.key==='Enter'){e.preventDefault();send();} });
