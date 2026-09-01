@@ -41,6 +41,23 @@ async function turnstileOK(env, token, ip){
   }catch(e){ return true; }
 }
 
+/* Optional: ask the free Workers-AI model for a 1–2 line summary of the chat, so the
+   sales team sees at a glance what the visitor wanted. Falls back silently if AI is off. */
+async function aiSummary(env, transcript, lang){
+  if(!env.AI || !transcript) return '';
+  try{
+    const ask = (lang==='ar')
+      ? 'لخّص محادثة العميل دي في سطر أو سطرين بالعربي: إيه اللي محتاجه/مهتم بيه وأي تفاصيل مهمة (المدينة، نوع المكان، الخدمة). من غير مقدمات.'
+      : 'Summarise this customer chat in 1–2 short lines for the sales team: what they want/are interested in and any key detail (city, property type, service). No preamble.';
+    const r = await env.AI.run('@cf/meta/llama-3.1-8b-instruct-fast', {
+      messages:[{role:'system',content:ask},{role:'user',content:String(transcript).slice(0,2500)}],
+      max_tokens:120, temperature:0.3
+    });
+    const s = r && (r.response || (r.result && r.result.response));
+    return s ? String(s).trim().slice(0,400) : '';
+  }catch(e){ return ''; }
+}
+
 /* Instant team alert — Telegram and/or a generic webhook. Never blocks the response. */
 function notifyTeam(env, lead, ctx){
   const jobs=[];
@@ -50,8 +67,10 @@ function notifyTeam(env, lead, ctx){
 `🔔 New Sedra lead (${lead.source})
 👤 ${lead.name}
 📱 ${lead.phone}
+🌍 ${lead.branch||'—'}
 🏙️ ${lead.city||'—'}
-🛠️ ${lead.service||'—'}
+🛠️ ${lead.service||'—'}${lead.summary?`
+🤖 ${lead.summary}`:''}
 🗒️ ${(lead.notes||'').slice(0,300)}
 🕒 ${lead.created}`;
       jobs.push(fetch(`https://api.telegram.org/bot${env.TG_TOKEN}/sendMessage`,{
@@ -83,16 +102,21 @@ export async function onRequestPost(context){
     if(phone.replace(/\D/g,'').length < 8){ return json({ ok:false, error:"valid phone required" }, 400); }
 
     const node   = (env && env.LEAD_NODE)   ? env.LEAD_NODE   : "leads";
-    const branch = (env && env.LEAD_BRANCH) ? env.LEAD_BRANCH : "Egypt";
+    const branch = clip(b.branch,20) || ((env && env.LEAD_BRANCH) ? env.LEAD_BRANCH : "Egypt");
     const DB     = (env && env.LEAD_DB_URL) ? env.LEAD_DB_URL : DB_DEFAULT;
     const nowIso = new Date().toISOString();
     const name = clip(b.name,80) || phone;
     const city = clip(b.city,40);
     const note = clip(b.message,500);
+    const lang = clip(b.lang,4);
+
+    // AI summary of the chat for the sales team (safe/optional)
+    const summary = await aiSummary(env, clip(b.transcript,2500), lang);
+
     const lead = {
       name, phone, email:"", branch, stage:"New", source:"Website Chatbot",
       service: clip(b.service,60), area: city, city: city, notes: note, note: note,
-      owner:"", lang: clip(b.lang,4), created: nowIso, createdAt: nowIso,
+      summary, owner:"", lang, created: nowIso, createdAt: nowIso,
       date: nowIso.slice(0,10), ts: Date.now(), ip
     };
 
