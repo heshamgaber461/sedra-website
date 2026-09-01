@@ -36,6 +36,7 @@ BRANCHES & CONTACTS (give the RIGHT branch based on where the visitor is — thi
 • KSA 🇸🇦 (Riyadh): 7783 Ibn Katheer St, King Abdulaziz District, Riyadh. Phone & WhatsApp: +966 54 249 9681.
 • Email (all branches): Info@sedra-electric.com · Website: www.sedra-electric.com
 BRANCH ROUTING RULE: When the visitor mentions a country/city, or you already know it, ALWAYS give the matching branch's phone/WhatsApp — Dubai/UAE → the UAE number, Riyadh/Saudi/KSA → the KSA number, Egypt/Cairo/anywhere in Egypt → the Egypt number. If you don't yet know their country, ask briefly ("انت معانا في مصر ولا الإمارات ولا السعودية؟" / "Are you in Egypt, the UAE, or Saudi Arabia?") before giving a number, then give the right one. Never give the Egypt number to a Gulf visitor or vice-versa.
+CRITICAL — PHONE NUMBERS: NEVER invent, guess, or type a phone number from memory. The ONLY three valid Sedra numbers are EXACTLY: Egypt +20 112 544 1197, UAE +971 52 981 8538, KSA +966 54 249 9681. Copy the digits character-for-character — any other number is WRONG. If unsure which branch, don't type a number; ask the country first, or point them to the "Request a quote" button.
 
 YOUR GOAL: genuinely help AND collect the visitor's details. Answer their question well first, then naturally ask for their NAME, PHONE (WhatsApp), CITY/COUNTRY, and which SERVICE they're interested in, and invite them to press the "Request a quote" button so the team calls them. If they want a human, are in a hurry, or you're unsure — give the WhatsApp of THEIR branch (see routing rule above) or email Info@sedra-electric.com, and suggest the quote button.
 
@@ -70,6 +71,34 @@ const MODELS = [
 
 function cors(){return{'Access-Control-Allow-Origin':'*','Access-Control-Allow-Methods':'POST, OPTIONS','Access-Control-Allow-Headers':'Content-Type'};}
 function json(o,s=200){return new Response(JSON.stringify(o),{status:s,headers:{'Content-Type':'application/json; charset=utf-8',...cors()}});}
+
+/* ---- Branch detection + phone safety ----
+   Free LLMs sometimes INVENT a plausible-looking phone number. We never let a wrong
+   number reach a customer: we detect the visitor's branch from the conversation and
+   rewrite any phone-like sequence in the reply to the correct, verified branch number. */
+const BRANCH_NUM = { eg:'+20 112 544 1197', ae:'+971 52 981 8538', sa:'+966 54 249 9681' };
+const VALID_DIGITS = ['201125441197','971529818538','966542499681'];
+function detectBranch(text){
+  const t = String(text||'').toLowerCase();
+  if(/دبي|الامارات|الإمارات|ابوظبي|أبوظبي|الشارقة|امارات|اﻹمارات/.test(t)) return 'ae';
+  if(/الرياض|السعودية|السعوديه|جدة|جده|الدمام|سعودي/.test(t)) return 'sa';
+  if(/\b(uae|u\.a\.e|dubai|abu ?dhabi|sharjah|emirates?)\b/.test(t)) return 'ae';
+  if(/\b(ksa|k\.s\.a|saudi|riyadh|jeddah|dammam)\b/.test(t)) return 'sa';
+  return 'eg';
+}
+function fixPhones(reply, branch){
+  if(!reply) return reply;
+  const correct = BRANCH_NUM[branch] || BRANCH_NUM.eg;
+  // Match phone-like sequences (a run of digits/spaces/()/- at least ~9 digits long).
+  return String(reply).replace(/\+?\d[\d ()\-]{7,}\d/g, function(m){
+    const digits = m.replace(/\D/g,'');
+    if(digits.length < 9 || digits.length > 15) return m;      // not a phone → leave it
+    for(let i=0;i<VALID_DIGITS.length;i++){                     // already a valid Sedra number → keep
+      const v=VALID_DIGITS[i]; if(digits===v || digits.endsWith(v.slice(-9))) return m;
+    }
+    return correct;                                            // hallucinated number → replace with the real branch number
+  });
+}
 
 /* Live date/time in Cairo — injected each request so the assistant always knows "today"
    (the AI model has a fixed training cutoff and no real clock of its own). */
@@ -168,34 +197,42 @@ export async function onRequestPost(context){
     logChat(env, body.sid, history, lang, context);
 
     const wantStream = body.stream === true;
+    // which branch is this visitor? (used to guarantee the right phone number)
+    const branch = detectBranch(history.map(m=>m.content).join(' '));
 
-    // ---------- streaming path ----------
-    if(wantStream){
+    // Run the models once, sanitise the reply, reuse for either path.
+    async function generate(){
+      let lastErr="";
       for(const model of list){
         try{
-          const stream = await env.AI.run(model, { messages, max_tokens: 640, temperature: 0.6, stream: true });
-          return new Response(stream, { headers: { 'Content-Type':'text/event-stream; charset=utf-8', 'Cache-Control':'no-cache', ...cors() } });
-        }catch(e){ /* try next model */ }
+          const r = await env.AI.run(model, { messages, max_tokens: 640, temperature: 0.6 });
+          const reply = r && (r.response || (r.result && r.result.response));
+          if(reply) return { text: fixPhones(String(reply).trim(), branch) };
+        }catch(e){ lastErr = String(e && e.message || e); }
       }
-      // all failed → send fallback as a single SSE chunk the widget can read
+      return { text: fallbackReply(lang||'en'), error: lastErr || "no model responded" };
+    }
+
+    // ---------- streaming path (buffered so numbers are corrected, then re-emitted) ----------
+    if(wantStream){
+      const out = await generate();
       const enc = new TextEncoder();
-      const rs = new ReadableStream({ start(c){
-        c.enqueue(enc.encode('data: '+JSON.stringify({response: fallbackReply(lang||'en')})+'\n\n'));
+      // split into small chunks for a light typing feel (numbers already verified)
+      const words = out.text.split(/(\s+)/);
+      const group = Math.max(1, Math.ceil(words.length/60));
+      const rs = new ReadableStream({ async start(c){
+        for(let i=0;i<words.length;i+=group){
+          c.enqueue(enc.encode('data: '+JSON.stringify({response: words.slice(i,i+group).join('')})+'\n\n'));
+          await new Promise(r=>setTimeout(r, 14));
+        }
         c.enqueue(enc.encode('data: [DONE]\n\n')); c.close();
       }});
-      return new Response(rs, { headers:{ 'Content-Type':'text/event-stream; charset=utf-8', ...cors() } });
+      return new Response(rs, { headers:{ 'Content-Type':'text/event-stream; charset=utf-8', 'Cache-Control':'no-cache', ...cors() } });
     }
 
     // ---------- non-streaming path ----------
-    let lastErr="";
-    for(const model of list){
-      try{
-        const r = await env.AI.run(model, { messages, max_tokens: 640, temperature: 0.6 });
-        const reply = r && (r.response || (r.result && r.result.response));
-        if(reply){ return json({ reply: String(reply).trim() }); }
-      }catch(e){ lastErr = String(e && e.message || e); }
-    }
-    return json({ reply: fallbackReply(lang||'en'), error: lastErr || "no model responded" });
+    const out = await generate();
+    return json({ reply: out.text, error: out.error });
   }catch(e){
     return json({ reply: fallbackReply(''), error: String(e && e.message || e) });
   }
