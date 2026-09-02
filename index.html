@@ -979,10 +979,10 @@ if(innerWidth>820){ setTimeout(()=>{ ringIntercom(); },6000); }
 #sbot .sb-btn:hover{transform:translateY(-3px) scale(1.04)}
 #sbot .sb-btn svg{width:28px;height:28px;fill:#04121c}
 #sbot .sb-badge{position:absolute;top:-4px;right:-4px;background:#ff5a4d;color:#fff;font-size:11px;font-weight:800;border-radius:50px;padding:2px 7px;box-shadow:0 2px 8px rgba(0,0,0,.3)}
-#sbot .sb-bubble{position:absolute;left:74px;bottom:8px;max-width:250px;background:#fff;color:#0a1826;font-size:13.5px;line-height:1.45;padding:12px 30px 12px 14px;border-radius:16px 16px 16px 4px;box-shadow:0 14px 34px rgba(10,40,60,.28);cursor:pointer;animation:sbbub .35s ease}
-#sbot .sb-bubble::after{content:"";position:absolute;left:-7px;bottom:12px;border:7px solid transparent;border-right-color:#fff;border-left:0}
+#sbot .sb-bubble{position:absolute;left:70px;bottom:12px;white-space:nowrap;background:#fff;color:#0a1826;font-size:12px;font-weight:600;line-height:1;padding:8px 24px 8px 11px;border-radius:12px 12px 12px 3px;box-shadow:0 8px 20px rgba(10,40,60,.18);cursor:pointer;animation:sbbub .3s ease}
+#sbot .sb-bubble::after{content:"";position:absolute;left:-6px;bottom:9px;border:6px solid transparent;border-right-color:#fff;border-left:0}
 #sbot.open .sb-bubble{display:none}
-#sbot .sb-bubble-x{position:absolute;top:4px;right:6px;background:none;border:none;color:#9fb0bd;font-size:16px;line-height:1;cursor:pointer;padding:2px}
+#sbot .sb-bubble-x{position:absolute;top:2px;right:4px;background:none;border:none;color:#b3c1cc;font-size:13px;line-height:1;cursor:pointer;padding:2px}
 #sbot .sb-bubble #sbBubbleTxt{display:block}
 @keyframes sbbub{from{opacity:0;transform:translateY(8px) scale(.96)}to{opacity:1;transform:none}}
 body.ar #sbot .sb-bubble{direction:rtl;text-align:right}
@@ -1071,7 +1071,7 @@ body.ar #sbot .sb-bubble{direction:rtl;text-align:right}
     en:{title:"Sedra Assistant",status:"Online — replies in seconds",ph:"Type your message…",
         greet:"I'm Sedra's assistant. Ask me anything about smart home, security, solar or EV charging — or request a free quote.",
         quote:"⚡ Request a quote",chips:["🏠 Smart home","☀️ Solar energy","🚗 EV charging","📅 Book a free visit","💰 Pricing","⚡ Request a quote","💬 WhatsApp"],
-        bubble:"Need help? Ask me about smart home, solar or a free quote 👋",
+        bubble:"Need help? 👋",
         waIntro:"Hello Sedra 👋 I was chatting on your website about:",waAsk:"and I'd like to know more.",
         formT:"Request a free quote",formP:"Leave your details and our team will contact you shortly.",
         name:"Name",phone:"Phone / WhatsApp",city:"City",svc:"Service",send:"Send",back:"Back to chat",
@@ -1081,7 +1081,7 @@ body.ar #sbot .sb-bubble{direction:rtl;text-align:right}
     ar:{title:"مساعد سيدرا",status:"متصل — بيرد في ثواني",ph:"اكتب رسالتك…",
         greet:"أنا مساعد سيدرا. اسألني أي حاجة عن السمارت هوم، الأمن، الطاقة الشمسية أو شحن السيارات — أو اطلب عرض سعر مجاني.",
         quote:"⚡ اطلب عرض سعر",chips:["🏠 سمارت هوم","☀️ طاقة شمسية","🚗 شحن سيارات","📅 احجز زيارة مجانية","💰 الأسعار","⚡ اطلب عرض سعر","💬 واتساب"],
-        bubble:"محتاج مساعدة؟ اسألني عن السمارت هوم أو الطاقة الشمسية أو اطلب عرض سعر 👋",
+        bubble:"محتاج مساعدة؟ 👋",
         waIntro:"مرحبًا سيدرا 👋 كنت بتكلم على موقعكم بخصوص:",waAsk:"وحابب أعرف تفاصيل أكتر.",
         formT:"اطلب عرض سعر مجاني",formP:"سيب بياناتك وفريق سيدرا هيتواصل معاك في أقرب وقت.",
         name:"الاسم",phone:"التليفون / واتساب",city:"المدينة",svc:"الخدمة",send:"إرسال",back:"رجوع للمحادثة",
