@@ -31,6 +31,19 @@ function normPhone(raw){
   return digits ? ('+'+digits) : '';
 }
 
+/* Optional per-IP rate limit (only if a KV namespace named RATE_KV is bound).
+   Real visitors submit a lead once; more than a handful/minute from one IP is abuse. */
+async function rateLimited(env, ip){
+  if(!env.RATE_KV || !ip) return false;
+  try{
+    const key = 'l:'+ip+':'+Math.floor(Date.now()/60000);   // per-minute bucket
+    const cur = parseInt(await env.RATE_KV.get(key) || '0', 10);
+    if(cur >= 8) return true;                                // max 8 leads/min/IP
+    await env.RATE_KV.put(key, String(cur+1), { expirationTtl: 120 });
+    return false;
+  }catch(e){ return false; }
+}
+
 async function turnstileOK(env, token, ip){
   if(!env.TURNSTILE_SECRET) return true;
   if(!token) return false;
@@ -96,6 +109,8 @@ export async function onRequestPost(context){
 
     // honeypot — real users never fill the hidden "website" field
     if(clip(b.website,50)){ return json({ ok:true }); }
+    // rate limit — silently accept (don't tip off abusers) but skip saving
+    if(await rateLimited(env, ip)){ return json({ ok:true }); }
     if(!(await turnstileOK(env, b.ts_token, ip))){ return json({ ok:false, error:"verification failed" }, 400); }
 
     const phone = normPhone(b.phone);
