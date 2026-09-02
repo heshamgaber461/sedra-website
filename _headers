@@ -1,0 +1,20 @@
+# Security headers for Sedra Electric (Cloudflare Pages)
+# Applied to every route. Tuned to the site's real needs:
+#  - only external resource is Google Fonts
+#  - no external scripts anywhere; inline scripts/styles are used (need 'unsafe-inline')
+#  - the 3D "Try your home" demo uses blob: workers/URLs
+#  - all data calls are same-origin (/api/*)
+/*
+  X-Frame-Options: SAMEORIGIN
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: geolocation=(), microphone=(), camera=(), payment=(), usb=(), interest-cohort=()
+  Strict-Transport-Security: max-age=31536000
+  Cross-Origin-Opener-Policy: same-origin
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' blob:; worker-src 'self' blob:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data: blob: https:; media-src 'self' data: blob:; connect-src 'self' blob: data: https://script.google.com; frame-ancestors 'self'; base-uri 'self'; form-action 'self' https://script.google.com https://wa.me; object-src 'none'; upgrade-insecure-requests
+
+# Keep the internal stats endpoint/page out of search engines
+/stats.html
+  X-Robots-Tag: noindex, nofollow
+/api/*
+  X-Robots-Tag: noindex, nofollow
