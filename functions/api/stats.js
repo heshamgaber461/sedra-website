@@ -20,7 +20,9 @@ export async function onRequestGet(context){
   const { request, env } = context;
   try{
     const url = new URL(request.url);
-    if(env.STATS_KEY && url.searchParams.get('key') !== env.STATS_KEY){
+    // Fail closed: the stats read real lead/chat counts, so they must NEVER be public.
+    // Access requires STATS_KEY to be configured AND matched. No key set = no access.
+    if(!env.STATS_KEY || url.searchParams.get('key') !== env.STATS_KEY){
       return json({ ok:false, error:"unauthorized" }, 401);
     }
     const DB   = env.LEAD_DB_URL || DB_DEFAULT;
