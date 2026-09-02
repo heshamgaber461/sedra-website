@@ -104,6 +104,9 @@ export async function onRequestPost(context){
     const node   = (env && env.LEAD_NODE)   ? env.LEAD_NODE   : "leads";
     const branch = clip(b.branch,20) || ((env && env.LEAD_BRANCH) ? env.LEAD_BRANCH : "Egypt");
     const DB     = (env && env.LEAD_DB_URL) ? env.LEAD_DB_URL : DB_DEFAULT;
+    // If a Firebase secret is set, authenticate the write so the DB can be fully locked
+    // to the public. Backward-compatible: with no secret, behaves exactly as before.
+    const auth   = (env && env.FB_SECRET) ? ('?auth='+encodeURIComponent(env.FB_SECRET)) : '';
     const nowIso = new Date().toISOString();
     const name = clip(b.name,80) || phone;
     const city = clip(b.city,40);
@@ -120,7 +123,7 @@ export async function onRequestPost(context){
       date: nowIso.slice(0,10), ts: Date.now(), ip
     };
 
-    const r = await fetch(`${DB}/${node}.json`, {
+    const r = await fetch(`${DB}/${node}.json${auth}`, {
       method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(lead)
     });
     if(!r.ok){ return json({ ok:false, error:"db "+r.status }, 502); }

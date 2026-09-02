@@ -153,13 +153,14 @@ function logChat(env, sid, messages, lang, ctx){
   try{
     const DB = env.LEAD_DB_URL || "https://sedra-crm-default-rtdb.firebaseio.com";
     const node = env.CHATS_NODE || "chats";
+    const auth = env.FB_SECRET ? ('?auth='+encodeURIComponent(env.FB_SECRET)) : '';
     const id = (sid && String(sid).replace(/[^\w-]/g,'').slice(0,40)) || ('s'+Date.now());
     const rec = {
       sid: id, lang: String(lang||'').slice(0,4), turns: messages.length,
       messages: messages.slice(-20),
       updated: new Date().toISOString(), ts: Date.now()
     };
-    const p = fetch(`${DB}/${node}/${id}.json`, { method:'PUT', headers:{'Content-Type':'application/json'}, body: JSON.stringify(rec) });
+    const p = fetch(`${DB}/${node}/${id}.json${auth}`, { method:'PUT', headers:{'Content-Type':'application/json'}, body: JSON.stringify(rec) });
     if(ctx && ctx.waitUntil) ctx.waitUntil(p); else p.catch(()=>{});
   }catch(e){}
 }
